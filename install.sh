@@ -125,7 +125,7 @@ function install_packages(){
 } 
 
 function install_ezlite(){	
-	git clone https://github.com/secrectvn/ezlite.git /usr/local/ezlite  ;
+	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezlite  ;
 	chmod +x /usr/local/ezlite/ezlite.sh ;
 	ln -s /usr/local/ezlite/ezlite.sh /usr/bin/ezlite ;
 }
