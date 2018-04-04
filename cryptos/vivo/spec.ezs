@@ -1,0 +1,38 @@
+#Specifications
+COIN_NAME='Vivo'
+CRYPTO_NAME=vivo
+CODE_NAME=vivo
+MN_DEAMON=vivod
+MN_CLI=vivo-cli
+MN_TX=vivo-tx
+RPC_PORT=9998
+MN_PORT=9999
+MN_REQUIRED=1000
+GIT_URL=https://github.com/vivocoin/vivo/
+MN_VERSION=0.12.1.7
+
+
+#function compile
+function build_vivo(){
+	cd /root/ezlite/build
+	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezlite/build/${CRYPTO_NAME}/
+	./autogen.sh
+	./configure
+	make && make install	
+	cp ${MN_DEAMON} ${MN_CLI} ${MN_TX} /root/ezlite/daemon
+	ln -s /root/ezlite/daemon/${MN_TX} /usr/bin/${MN_TX}
+	ln -s /root/ezlite/daemon/${MN_CLI} /usr/bin/${MN_CLI}
+	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+}
+
+#Command
+START_MN='masternode start ' # need ${walletpassphrase}
+STATUS_MN='getmasternodestatus'
+STAKING_MN='getstakingstatus'
+BALANCE_MN='getbalance'
+GETINFO_MN='getinfo'
+PRIVKEY_MN='dumpprivkey ' # need wallet address 
+UNLOCK_MN='walletpassphrase' # need timeout
+CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase

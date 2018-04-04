@@ -1,0 +1,31 @@
+#Specifications
+COIN_NAME='Cheese'
+CRYPTO_NAME=cheese
+CODE_NAME=cheese
+MN_DEAMON=cheesed
+MN_CLI=cheesed
+RPC_PORT=	
+MN_PORT=
+MN_REQUIRED=
+GIT_URL=https://github.com/CheeseCoin/CheeseMasternode
+MN_VERSION=1.0.1
+#function compile
+function build_vantaur(){
+	cd /root/ezlite/build
+	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
+	make -f makefile.unix USE_UPNP=-
+	cp ${MN_DEAMON} /root/ezlite/daemon
+	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+}
+
+#Command
+START_MN='masternode start ' # need ${walletpassphrase}
+STATUS_MN='masternode status'
+STAKING_MN='getstakinginfo'
+BALANCE_MN='getbalance'
+GETINFO_MN='getinfo'
+PRIVKEY_MN='dumpprivkey ' # need wallet address 
+UNLOCK_MN='walletpassphrase' # need timeout
+CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase

@@ -1,0 +1,37 @@
+#Specifications
+COIN_NAME='Shekel'
+CRYPTO_NAME=shekel
+CODE_NAME=jew
+MN_DEAMON=shekeld
+MN_CLI=shekel-cli
+MN_TX=shekel-tx
+RPC_PORT=5501
+MN_PORT=5500
+MN_REQUIRED=25000
+GIT_URL=https://github.com/shekeltechnologies/JewNew
+MN_VERSION=1.3.0.0
+
+
+#function compile
+function build_shekel(){
+	cd /root/ezlite/build
+	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezlite/build/${CRYPTO_NAME}/
+	./autogen.sh
+	./configure
+	make && make install	
+	cp ${MN_DEAMON} ${MN_CLI} /root/ezlite/daemon
+	ln -s /root/ezlite/daemon/${MN_TX} /usr/bin/${MN_TX}
+	ln -s /root/ezlite/daemon/${MN_CLI} /usr/bin/${MN_CLI}
+	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+}
+#Command
+START_MN='masternode start ' # need ${walletpassphrase}
+STATUS_MN='getmasternodestatus'
+STAKING_MN='getstakingstatus'
+BALANCE_MN='getbalance'
+GETINFO_MN='getinfo'
+PRIVKEY_MN='dumpprivkey ' # need wallet address 
+UNLOCK_MN='walletpassphrase' # need timeout
+CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase

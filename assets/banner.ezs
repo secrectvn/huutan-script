@@ -1,0 +1,49 @@
+
+bla=$(tput setaf 0)
+red=$(tput setaf 1)
+gre=$(tput setaf 2)
+yel=$(tput setaf 3)
+blu=$(tput setaf 4)
+mag=$(tput setaf 5)
+cyan=$(tput setaf 6)
+white=$(tput setaf 7)
+end=$(tput sgr0)
+error=$(tput cup 22 12)
+bold=$(tput bold)
+version=0.1
+#main_banner
+text0='╔══════════════════════════════════════╗'
+text1='║ ╔═╗╔═╗╔╦╗╔═╗╔═╗╔╦╗╔═╗╦═╗╔╗╔╔═╗╔╦╗╔═╗ ║'
+text2='║ ║╣ ╔═╝║║║╠═╣╚═╗ ║ ║╣ ╠╦╝║║║║ ║ ║║║╣  ║'
+text3='║ ╚═╝╚═╝╩ ╩╩ ╩╚═╝ ╩ ╚═╝╩╚═╝╚╝╚═╝═╩╝╚═╝ ║'
+text4='║    ╦  ╦╔╦╗╔═╗                        ║'
+text5='║    ║  ║ ║ ║╣       by SecrectVN      ║'
+text6='║    ╩═╝╩ ╩ ╚═╝ https://secrectvn.com  ║'
+text7='║ AUTO INSTALL - MANAGEMENT MASTERNODE ║'
+text8="║                    Version:$version       ║"
+text9='╚══════════════════════════════════════╝'
+# Function Banner
+function show_main_banner(){
+	tput setaf 2
+	tput cup 1 12
+	echo "$text0"
+	tput cup 2 12 
+	echo "$text1"
+	tput cup 3 12
+	echo "$text2"
+	tput cup 4 12 
+	echo "$text3"
+	tput cup 5 12 
+	echo "$text4"
+	tput cup 6 12 
+	echo "$text5"
+	tput cup 7 12 
+	echo "$text6"
+	tput cup 8 12 
+	echo "$text7"
+	tput cup 9 12 
+	echo "$text8"
+	tput cup 10 12 
+	echo "$text9"
+	tput sgr0
+}

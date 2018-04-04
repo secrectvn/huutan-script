@@ -1,0 +1,3 @@
+echo -e "alias cheesed='cheesed --datadir=/root/masternode/cheese/ --conf=/root/masternode/cheese/cheese.conf'" > ~/.bashrc
+
+source ~/.bashrc

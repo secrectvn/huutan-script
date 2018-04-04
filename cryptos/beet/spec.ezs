@@ -1,0 +1,31 @@
+#Specifications
+COIN_NAME='BeetleCoin'
+CRYPTO_NAME=beetle
+CODE_NAME=beet
+MN_DEAMON=beetled
+MN_CLI=beetled
+RPC_PORT=47620
+MN_PORT=45823
+MN_REQUIRED=50000
+GIT_URL=https://github.com/beetledev/BeetleCoin.git
+MN_VERSION=2.1.0.3
+
+#function compile
+function build_beetle(){
+	cd /root/ezlite/build
+	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
+	make -f makefile.unix USE_UPNP=-
+	cp ${MN_DEAMON} /root/ezlite/daemon
+	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+}
+#Command
+START_MN='masternode start ' # need ${walletpassphrase}
+STATUS_MN='masternode status'
+STAKING_MN='getstakinginfo'
+BALANCE_MN='getbalance'
+GETINFO_MN='getinfo'
+PRIVKEY_MN='dumpprivkey ' # need wallet address 
+UNLOCK_MN='walletpassphrase' # need timeout
+CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase

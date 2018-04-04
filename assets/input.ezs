@@ -1,0 +1,36 @@
+#!/bin/bash
+# DIR 
+EZ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+EZ_DATA=/root/ezlite
+MN_DIR=/root/masternode
+# SOURCE 
+for assets in $EZ_DIR/assets/*.ezs ; do source $assets; done
+
+#ACTION
+# INPUT CODE NAME
+input_crypto_name(){
+read -p  " $gre Nhap ten CODENAME ( viet thuong ) cua coin do :  $end " CODE_NAME
+}
+# INPUT WALLETPASS
+input_walletpassphrase(){
+read -s -p  " $gre Nhap Walletpassphrase  :  $end " walletpassphrase
+}
+# INPUT GENKEY
+input_genkey(){
+read -p  "$gre Nhap Masternode Genkey ( chay lenh masternode genkey): $end"  mn_genkey ; 
+}
+# INPUT TXHASH
+input_txhash (){
+read -p  "$gre Nhap TXHASH (chay lenh masternode outputs): $end" tx_hash ;
+}
+# INPUT TXID
+input_txid(){
+	echo -e  "$gre Choice TXID 0 or 1: $end"
+		select tx_id in 0 1
+			do
+			case $tx_id in 
+			0|1) break ;;
+			*) echo "$red Chon sai TXID. Vui long chon lai $end ";;
+			esac
+			done
+}

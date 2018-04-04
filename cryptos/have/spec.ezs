@@ -1,0 +1,30 @@
+#Specifications
+COIN_NAME='HaveCoin'
+CRYPTO_NAME=havecoin
+CODE_NAME=have
+MN_DEAMON=havecoind
+MN_CLI=havecoind
+RPC_PORT=34788
+MN_PORT=34787
+MN_REQUIRED=2500
+GIT_URL=https://github.com/scryclip/havecoin.git
+MN_VERSION=V1.0.0.2a
+#function compile
+function build_havecoin(){
+	cd /root/ezlite/build
+	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
+	make -f makefile.unix USE_UPNP=-
+	cp ${MN_DEAMON} /root/ezlite/daemon
+	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+}
+#Command
+START_MN='masternode start ' # need ${walletpassphrase}
+STATUS_MN='masternode status'
+STAKING_MN='getstakinginfo'
+BALANCE_MN='getbalance'
+GETINFO_MN='getinfo'
+PRIVKEY_MN='dumpprivkey ' # need wallet address 
+UNLOCK_MN='walletpassphrase' # need timeout
+CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase
