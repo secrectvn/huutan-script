@@ -1,14 +1,11 @@
 #!/bin/bash
 # DIR 
-EZ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-EZ_DATA=/root/ezlite
-MN_DIR=/root/masternode
+
 # SOURCE 
-for assets in $EZ_DIR/assets/*.ezs ; do source $assets; done
 
 #ACTION
 # INPUT CODE NAME
-input_crypto_name(){
+input_code_name(){
 read -p  " $gre Nhap ten CODENAME ( viet thuong ) cua coin do :  $end " CODE_NAME
 }
 # INPUT WALLETPASS

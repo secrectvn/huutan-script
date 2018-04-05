@@ -1,33 +1,32 @@
 #!/bin/bash
 # DIR 
-EZ_DIR=/usr/local/ezlite
-EZ_DATA=/root/ezlite
-MN_DIR=/root/masternode
 # SOURCE 
-for assets in $EZ_DIR/assets/*.ezs ; do source $assets; done
-
+source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
-	show_main_banner
-	tput cup 15 15		
+	show_main_banner	
 		echo "1- CAI DAT MASTERNODE"
 		echo "2- START DEAMON"
 		echo "3- START MASTERNODE"
 		echo "4- MASTERNODE STATUS"
 		echo "5- STAKING INFO"
 		echo "6- BALANCE"
-		echo "8- EXIT"
+		echo "7- EXIT"
 }
 # Action Main Menu
+
 function action_main_menu(){
+		source /usr/local/ezlite/assets/action.ezs
         local choice
-        read -p "Enter choice [ 1 - 4] " choice
-        case $choice in
-                1)      install_masternode ;;
+        read -p "Enter choice [ 1 - 7] " choice
+		case $choice in						
+                1)   	install_masternode ;;
                 2)      start_deamon ;;
-                3)      echo "$blu EZLITE chua ho tro end " && sleep 20 && break  ;;
-                4)      exit 0 ;;
-                0)      exit 0;;
+                3)      start_mn && sleep 2 ;;
+                4)      status_mn && sleep 2 ;;
+                5)      staking_mn && sleep 2 ;;
+				6)      balance_mn && sleep 2 ;;
+				7)      exit 0;;
                 *) echo -e "$red $error Phim chon sai. Vui long chon lai ! $end" && sleep 2
         esac
 }

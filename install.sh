@@ -143,6 +143,6 @@ function install_ezlite(){
 	install_swap
 	echo "$gre Install EZLITE ....... $end"
 	install_ezlite 	 &> /root/ezlite/logs/install.log
-	chmod +x /usr/local/ezlite/assets/report.sh
-	echo -e  "0 0 * * * root /usr/local/ezlite/assets/report.sh"  >> /etc/crontab
+	chmod +x /urs/local/ezlite/assets/report.sh
+	echo -e  "0 0 * * * root /urs/local/ezlite/assets/report.sh"  >> /etc/crontab
 	reboot_confirm
