@@ -4,11 +4,11 @@ CRYPTO_NAME=cheese
 CODE_NAME=cheese
 MN_DEAMON=cheesed
 MN_CLI=cheesed
-RPC_PORT=	
-MN_PORT=
-MN_REQUIRED=
+RPC_PORT=44700	
+MN_PORT=44766
+MN_REQUIRED=250000
 GIT_URL=https://github.com/CheeseCoin/CheeseMasternode
-MN_VERSION=1.0.1
+MN_VERSION=3.0.0.0
 #function compile
 function build_vantaur(){
 	cd /root/ezlite/build
