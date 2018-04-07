@@ -29,5 +29,6 @@ function action_main_menu(){
 				7)      exit 0;;
                 *) echo -e "$red $error Phim chon sai. Vui long chon lai ! $end" && sleep 2
         esac
+		
 }
 # Action Sub-Menu-1
