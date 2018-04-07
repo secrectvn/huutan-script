@@ -1,17 +1,20 @@
 #!/bin/bash
-	mn_address=$(ip route get 1 | awk '{print $NF;exit}');
 	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
-	echo -e "╔════════════════════════════════════════════════════════════════════╗"
-	printf "%s %-15s %-2s %-10s %-2s %-35s %-2s\n" ║ CRYPTO_NAME ║ BALANCE ║ MN_STATUS ║ 
+	echo -e "╔══════════════════════════════════════╗"
+	printf "%-15s %-2s %-4s %-2s\n" CRYPTO_NAME ║ BALANCE ║
 	for CODE_NAME  in $DEAMON_RUN  ; do
 	source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 	MN_CMD="$MN_CLI --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 	BALANCE=$(${MN_CMD} ${BALANCE_MN})
-	STATUS=$(${MN_CMD} ${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')		
-	echo -e "══════════════════════════════════════════════════════════════════════"
-	printf "%s %-15s %-2s %-10.2f %-2s %-35s %-2s\n" ║ "${CRYPTO_NAME}" ║ "$BALANCE" ║ "$STATUS" ║ 
+	echo -e ""
+	printf "%-15s %-2s %-4.2f%-2s\n" "${CRYPTO_NAME}" ║ "$BALANCE" ║
 done
-	echo -e "╚════════════════════════════════════════════════════════════════════╝"
-	
-	
-	
+	echo -e "╚══════════════════════════════════════╝"
+
+
+
+
+#printf "%-5s %-10s %-4s\n" 
+#printf "%-5s %-s %-4.2f\n" "CRYPTO NAME" "${CRYPTO_NAME}" "$BALANCE"
+#printf "%-5s %-10s %-4.2f\n" 2 James 90.9989 
+#printf "%-5s %-10s %-4.2f\n" 3 Jeff 77.564

@@ -4,31 +4,33 @@
 source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
-	show_main_banner	
-		echo "1- CAI DAT MASTERNODE"
-		echo "2- START DEAMON"
-		echo "3- START MASTERNODE"
-		echo "4- MASTERNODE STATUS"
-		echo "5- STAKING INFO"
-		echo "6- BALANCE"
-		echo "7- EXIT"
+cat << _EOF_		
+		1/- CAI DAT MASTERNODE
+		2/- START DEAMON
+		3/- START MASTERNODE
+		4/- MASTERNODE STATUS
+		5/- STAKING INFO
+		6/- BALANCE	
+		
+_EOF_
 }
 # Action Main Menu
-
 function action_main_menu(){
 		source /usr/local/ezlite/assets/action.ezs
         local choice
-        read -p "Enter choice [ 1 - 7] " choice
+		tput cup 18 15
+        read -p "$gre Enter choice [ 1- 6 ] hoac [q/Q] de thoat : $end" choice	
 		case $choice in						
                 1)   	install_masternode ;;
                 2)      start_deamon ;;
-                3)      start_mn && sleep 2 ;;
-                4)      status_mn && sleep 2 ;;
-                5)      staking_mn && sleep 2 ;;
-				6)      balance_mn && sleep 2 ;;
-				7)      exit 0;;
-                *) echo -e "$red $error Phim chon sai. Vui long chon lai ! $end" && sleep 2
-        esac
-		
+                3)      start_mn ;;
+                4)      status_mn ;;
+                5)      staking_mn ;;
+				6)      balance_mn ;;
+				[0qQ])      exit 0;;
+                *)	tput cup 20 15 
+					echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
+		 esac
+		tput cup 22 16
+		pause	
 }
-# Action Sub-Menu-1

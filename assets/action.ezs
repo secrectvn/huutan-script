@@ -51,7 +51,7 @@ start_deamon(){
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 			$MN_DEAMON --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf
-			
+			sleep 2
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -75,7 +75,7 @@ else
 			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs	
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${UNLOCK_MN} $walletpassphrase 32000000
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${START_MN} $walletpassphrase
-			
+			sleep 2
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -98,7 +98,7 @@ else
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${STATUS_MN}
-			
+			sleep 2
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -121,7 +121,7 @@ else
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${BALANCE_MN}
-			
+			sleep 2
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -143,7 +143,7 @@ else
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${STAKING_MN}
 			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${GETINFO_MN}
-			
+			sleep 2
 			break
 		else [ $CODE_NAME !='q' ]
 			break ;
@@ -154,13 +154,11 @@ else
 
 # Pause
 pause(){
-  read -p "Press [Enter] key to continue..." fackEnterKey
+  read -p "Nhan [Enter] de tiep tuc ..." fackEnterKey
  }
  
  #Install Masternode 
-install_masternode(){	
-	tput clear
-	show_main_banner
+install_masternode(){
 	source /usr/local/ezlite/assets/input.ezs	
 	input_code_name		
 	check_cryptos		
