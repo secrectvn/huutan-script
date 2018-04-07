@@ -1,6 +1,5 @@
 #!/bin/bash
-mn_overview(){
-        mn_address=$(ip route get 1 | awk '{print $NF;exit}');
+mn_overview(){       
         DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 		echo -e "╔════════════════════════════════════════════════════════════════════╗"
 		echo -e "║                      MASTERNODE OVERVIEW                           ║"
