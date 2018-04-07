@@ -5,18 +5,22 @@ source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
 cat << _EOF_		
-		1/- CAI DAT MASTERNODE
+		1/- INSTALL MASTERNODE
 		2/- START DEAMON
 		3/- START MASTERNODE
 		4/- MASTERNODE STATUS
 		5/- STAKING INFO
-		6/- BALANCE	
-		
+		6/- BALANCE
+		7/- OVERVIEW MASTERNODE
+		8/- UPDATE EZLITE	
+		0/- EXIT
 _EOF_
 }
 # Action Main Menu
 function action_main_menu(){
 		source /usr/local/ezlite/assets/action.ezs
+		source /usr/local/ezlite/assets/update.ezs
+		source /usr/local/ezlite/assets/dashboard.ezs
         local choice
 		tput cup 18 15
         read -p "$gre Enter choice [ 1- 6 ] hoac [q/Q] de thoat : $end" choice	
@@ -27,7 +31,9 @@ function action_main_menu(){
                 4)      status_mn ;;
                 5)      staking_mn ;;
 				6)      balance_mn ;;
-				[0qQ])      exit 0;;
+				7)		mn_overview ;;
+				8)		update_script ;;
+				[0qQ])  exit 0;;
                 *)	tput cup 20 15 
 					echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
 		 esac
