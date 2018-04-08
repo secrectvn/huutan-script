@@ -1,18 +1,50 @@
-#!/bin/bash
-mn_overview(){       
-        DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
-		echo -e "╔════════════════════════════════════════════════════════════════════╗"
-		echo -e "║                      MASTERNODE OVERVIEW                           ║"
-		echo -e "╔════════════════════════════════════════════════════════════════════╗"
-		echo -e "║ CRYPTO_NAME     ║ BALANCE    ║               MN_STATUS             ║"
-        for CODE_NAME  in $DEAMON_RUN  ; do
-        source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-        MN_CMD="$MN_CLI --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
-        BALANCE=$(${MN_CMD} ${BALANCE_MN})
-        STATUS=$(${MN_CMD} ${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
-        echo -e "══════════════════════════════════════════════════════════════════════"
-        printf "%s %-15s %-2s %-10.2f %-2s %-35s %-2s\n" ║ "${CRYPTO_NAME}" ║ "$BALANCE" ║ "$STATUS" ║
+#/bin/bash
+mn_overview(){
+	tput clear
+	divider===============================
+	divider=$divider$divider
+	header="%-2s %-15s %-11s %-10s\n"
+	format="%-2s %-15s %-11.2f %-10s\n"
+	width=43
+	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
+	printf "%$width.${width}s\n" "$divider"
 
-done
-        echo -e "╚════════════════════════════════════════════════════════════════════╝"
+	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+	for CODE_NAME  in $DEAMON_RUN  ; do
+		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
+		BALANCE=$(${BALANCE_MN})
+		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')		
+		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
+		
+	done
+}
+
+ls_balance(){
+        tput clear
+        divider=+++++++++++++++++++++
+        divider=$divider$divider
+        header="%-2s %-25s\n"
+        format="%-2s %-25s\n"
+        width=25
+        #printf "%$width.${width}s\n" "$divider"
+if [ -z "$(ls -A /root/ezlite/report/ )" ];
+then
+	   echo "$red Khong co deamon nao dang chay ! $end "
+	   break
+else
+		PS3="Vui long chon coin ban muon check balance hoac 'q' de thoat : "
+		list_ins=$(ls -1 /root/ezlite/report/ | sed -e 's/\.csv$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+                source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
+                LS_BALANCE=$(cat /root/ezlite/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
+                printf "$header" "+" "${COIN_NAME}"
+                printf "%$width.${width}s\n" "$divider"
+                printf "$format" "$LS_BALANCE"
+				printf ""
+		else [ $CODE_NAME !='q' ]
+			break ;
+		fi
+		done
+	fi
 }

@@ -50,8 +50,7 @@ start_deamon(){
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-			$MN_DEAMON --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf
-			sleep 2
+			${DEAMON_MN}			
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -60,7 +59,7 @@ start_deamon(){
 	fi
 }
 # Start MASTERNODE 
-start_mn(){
+mn_start(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
@@ -72,10 +71,9 @@ else
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
 			input_walletpassphrase
-			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs	
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${UNLOCK_MN} $walletpassphrase 32000000
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${START_MN} $walletpassphrase
-			sleep 2
+			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs
+			${UNLOCK_MN} $walletpassphrase 32000000
+			${START_MN} $walletpassphrase
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -85,7 +83,7 @@ else
 }
 
 # Status masternode
-status_mn(){
+mn_status(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
@@ -97,8 +95,7 @@ else
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${STATUS_MN}
-			sleep 2
+			${STATUS_MN}
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -108,7 +105,7 @@ else
 }
 
 # Getbalance
-balance_mn(){
+mn_balance(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
@@ -120,8 +117,7 @@ else
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${BALANCE_MN}
-			sleep 2
+			${BALANCE_MN}	
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -129,8 +125,8 @@ else
 		done
 	fi
 }
-
-staking_mn(){
+# Staking info
+mn_staking(){
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
 	   echo "$red Khong co deamon nao dang chay ! $end "
@@ -141,9 +137,7 @@ else
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${STAKING_MN}
-			$MN_CLI --datadir=$MN_DIR/${CRYPTO_NAME}/ --conf=$MN_DIR/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ${GETINFO_MN}
-			sleep 2
+			${STAKING_MN}		
 			break
 		else [ $CODE_NAME !='q' ]
 			break ;
@@ -151,14 +145,33 @@ else
 		done
 	fi
 }
-
+# Getinfo
+mn_info(){
+if [ -z "$(ls -A /root/ezlite/running/ )" ];
+then
+	   echo "$red Khong co deamon nao dang chay ! $end "
+	   break
+else
+		PS3="Vui long chon coin ban muon check staking hoac 'q' de thoat : "
+		list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs			
+			${GETINFO_MN}			
+			break
+		else [ $CODE_NAME !='q' ]
+			break ;
+		fi
+		done
+	fi
+}
 # Pause
 pause(){
   read -p "Nhan [Enter] de tiep tuc ..." fackEnterKey
- }
+}
  
  #Install Masternode 
-install_masternode(){
+mn_install(){
 	source /usr/local/ezlite/assets/input.ezs	
 	input_code_name		
 	check_cryptos		
@@ -167,6 +180,6 @@ install_masternode(){
 	input_txid
 	create_config	
 	echo " $gre Compile deamon $CRYPTO_NAME $end "
-	#build_${CRYPTO_NAME}	
-	touch $EZ_DATA/installed/${CODE_NAME}	
+	build_git	
+	touch /root/ezlite/installed/${CODE_NAME}	
 }

@@ -3,15 +3,15 @@ COIN_NAME='BeetleCoin'
 CRYPTO_NAME=beetle
 CODE_NAME=beet
 MN_DEAMON=beetled
-MN_CLI=beetled
 RPC_PORT=47620
 MN_PORT=45823
 MN_REQUIRED=50000
 GIT_URL=https://github.com/beetledev/BeetleCoin.git
 MN_VERSION=2.1.0.3
-
+#
+DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
-function build_beetle(){
+function build_git(){
 	cd /root/ezlite/build
 	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
 	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
@@ -21,11 +21,11 @@ function build_beetle(){
 	rm -rf /root/ezlite/build/${CRYPTO_NAME}
 }
 #Command
-START_MN='masternode start ' # need ${walletpassphrase}
-STATUS_MN='masternode status'
-STAKING_MN='getstakinginfo'
-BALANCE_MN='getbalance'
-GETINFO_MN='getinfo'
-PRIVKEY_MN='dumpprivkey ' # need wallet address 
-UNLOCK_MN='walletpassphrase' # need timeout
-CHANGEPASS_MN='walletpassphrasechange' # need oldpassphrase and newpassphrase
+DEAMON_MN="${MN_DEAMON} ${DATA_DIR}"
+START_MN="${MN_DEAMON} ${DATA_DIR} masternode start " # need ${walletpassphrase}
+STATUS_MN="${MN_DEAMON} ${DATA_DIR} masternode status"
+STAKING_MN="${MN_DEAMON} ${DATA_DIR} getstakinginfo"
+BALANCE_MN="${MN_DEAMON} ${DATA_DIR} getbalance"
+GETINFO_MN="${MN_DEAMON} ${DATA_DIR} getinfo"
+PRIVKEY_MN="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address 
+UNLOCK_MN="${MN_DEAMON} ${DATA_DIR} walletpassphrase" # need timeout

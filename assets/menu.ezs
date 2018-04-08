@@ -4,39 +4,38 @@
 source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
-cat << _EOF_		
-		1/- INSTALL MASTERNODE
-		2/- START DEAMON
-		3/- START MASTERNODE
-		4/- MASTERNODE STATUS
-		5/- STAKING INFO
-		6/- BALANCE
-		7/- OVERVIEW MASTERNODE
-		8/- UPDATE EZLITE	
-		0/- EXIT
+cat << _EOF_
+1/- OVERVIEW MASTERNODE
+2/- BALANCE REPORT
+3/- START DEAMON
+4/- START MASTERNODE
+5/- MASTERNODE STATUS
+6/- STAKING INFO
+7/- BALANCE
+8/- INSTALL MASTERNODE
+9/- UPDATE EZLITE	
+0/- EXIT
 _EOF_
 }
 # Action Main Menu
 function action_main_menu(){
-		source /usr/local/ezlite/assets/action.ezs
-		source /usr/local/ezlite/assets/update.ezs
-		source /usr/local/ezlite/assets/dashboard.ezs
-        local choice
-		tput cup 18 15
-        read -p "$gre Enter choice [ 1- 6 ] hoac [q/Q] de thoat : $end" choice	
-		case $choice in						
-                1)   	install_masternode ;;
-                2)      start_deamon ;;
-                3)      start_mn ;;
-                4)      status_mn ;;
-                5)      staking_mn ;;
-				6)      balance_mn ;;
-				7)		mn_overview ;;
-				8)		update_script ;;
-				[0qQ])  exit 0;;
-                *)	tput cup 20 15 
-					echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
-		 esac
-		tput cup 22 16
-		pause	
+	source /usr/local/ezlite/assets/action.ezs
+	source /usr/local/ezlite/assets/update.ezs
+	source /usr/local/ezlite/assets/dashboard.ezs
+	local choice
+	read -p "$gre Enter choice [ 1- 8 ] hoac [q/Q] de thoat : $end" choice	
+	case $choice in
+					1) mn_overview ;;
+					2) ls_balance ;;
+					3) start_deamon ;;
+					4) mn_start ;;
+					5) mn_status ;;
+					6) mn_staking ;;
+					7) mn_balance ;;
+					8) mn_install ;;
+					9) update_script ;;
+				[0qQ]) exit 0;;
+					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
+	 esac
+	pause	
 }
