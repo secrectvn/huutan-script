@@ -4,6 +4,6 @@ for CODE_NAME  in $DEAMON_RUN  ; do
 	source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 	DATE=$(date +%d-%m-%y)
 	BALANCE=$(${BALANCE_MN})
-	echo -e "$DATE ; ${BALANCE_MN}" >> /root/ezlite/report/${CODE_NAME}.csv
+	echo -e "$DATE ; $BALANCE" >> /root/ezlite/report/${CODE_NAME}.csv
 done
 
