@@ -125,7 +125,7 @@ function install_packages(){
 } 
 
 function install_ezlite(){	
-	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezlite  ;
+	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezlite/  ;
 	chmod +x /usr/local/ezlite/ezlite.sh ;
 	ln -s /usr/local/ezlite/ezlite.sh /usr/bin/ezlite ;
 }
@@ -143,6 +143,6 @@ function install_ezlite(){
 	install_swap
 	echo "$gre Install EZLITE ....... $end"
 	install_ezlite 	 &> /root/ezlite/logs/install.log
-	chmod +x /urs/local/ezlite/assets/report.sh
+	chmod +x /usr/local/ezlite/assets/report.sh
 	echo -e  "0 0 * * * root /urs/local/ezlite/assets/report.sh"  >> /etc/crontab
 	reboot_confirm
