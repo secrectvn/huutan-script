@@ -5,16 +5,19 @@ source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
 cat << _EOF_
-1/- OVERVIEW MASTERNODE
-2/- BALANCE REPORT
-3/- START DEAMON
-4/- START MASTERNODE
-5/- MASTERNODE STATUS
-6/- STAKING INFO
-7/- BALANCE
-8/- INSTALL MASTERNODE
-9/- UPDATE EZLITE	
-0/- EXIT
+	1/- OVERVIEW MASTERNODE
+	2/- BALANCE REPORT
+	3/- START / STOP DEAMON 
+		3A/ - START DEAMON
+		3B/ - STOP DEAMON
+	4/- MANAGEMENT MASTERNODE
+		4A/- START MASTERNODE
+		4B/- UNLOCK WALLET
+		4C/- MASTERNODE STATUS
+		4D/- STAKING STATUS
+		4E/- MASTERNODE DEBUG
+	5/- INSTALL MASTERNODE
+	6/- EXIT
 _EOF_
 }
 # Action Main Menu
@@ -23,17 +26,21 @@ function action_main_menu(){
 	source /usr/local/ezlite/assets/update.ezs
 	source /usr/local/ezlite/assets/dashboard.ezs
 	local choice
-	read -p "$gre Enter choice [ 1- 8 ] hoac [q/Q] de thoat : $end" choice	
+	read -p "$gre Enter choice [ 1- 6 ] hoac [q/Q] de thoat : $end" choice	
 	case $choice in
 					1) mn_overview ;;
 					2) ls_balance ;;
-					3) start_deamon ;;
-					4) mn_start ;;
-					5) mn_status ;;
-					6) mn_staking ;;
-					7) mn_balance ;;
-					8) mn_install ;;
-					9) update_script ;;
+					[3][3A]) start_deamon ;;
+					[3B]) stop_deamon ;;
+					# 
+					[4A]}) mn_start ;;
+					[4B]) unlock_wallet ;;
+					[4C]) mn_status;;
+					[4D]) mn_staking ;;
+					[4E]) echo " dang update"
+					#
+					5) mn_install ;;
+					6) update_script ;;
 				[0qQ]) exit 0;;
 					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
 	 esac
