@@ -31,14 +31,12 @@ function action_main_menu(){
 					1) mn_overview ;;
 					2) ls_balance ;;
 					[3][3A]) start_deamon ;;
-					[3B]) stop_deamon ;;
-					# 
-					[4A]}) mn_start ;;
+					[3B]) stop_deamon ;;					
+					[4A]) mn_start ;;
 					[4B]) unlock_wallet ;;
 					[4C]) mn_status;;
 					[4D]) mn_staking ;;
-					[4E]) echo " dang update"
-					#
+					[4E]) echo " dang update";;				
 					5) mn_install ;;
 					6) update_script ;;
 				[0qQ]) exit 0;;
