@@ -58,7 +58,28 @@ start_deamon(){
 		done
 	fi
 }
-# Start MASTERNODE 
+
+stop_deamon(){
+	source /usr/local/ezlite/assets/input.ezs
+	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	then
+		echo "$red Khong co deamon nao dang chay ! $end "
+		break;
+	else
+			PS3="Vui long chon coin ban muon stop masternode hoac 'q' de thoat : "
+			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			select CODE_NAME in $list_ins; do
+			if [ -n "$CODE_NAME" ]; then
+			kill $(cat /root/ezlite/running/${CODE_NAME}.csv)
+			break ;
+			else [ $CODE_NAME !="q" ]
+				break ;
+			fi
+			done
+		fi
+
+}
+# START MASTERNODE 
 mn_start(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -74,6 +95,7 @@ else
 			source /usr/local/ezlite/cryptos/$CODE_NAME/spec.ezs
 			${UNLOCK_MN} $walletpassphrase 32000000
 			${START_MN} $walletpassphrase
+			${UNLOCK_MN} $walletpassphrase 32000000
 			break
 		else [ $CODE_NAME !="q" ]
 			break ;
@@ -82,7 +104,7 @@ else
 	fi
 }
 
-# Status masternode
+# MASTERNODE STATUS
 mn_status(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -104,7 +126,7 @@ else
 	fi
 }
 
-# Getbalance
+# BALANCE
 mn_balance(){
 		source /usr/local/ezlite/assets/input.ezs
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -125,7 +147,7 @@ else
 		done
 	fi
 }
-# Staking info
+# STAKINGINFO
 mn_staking(){
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
@@ -145,7 +167,7 @@ else
 		done
 	fi
 }
-# Getinfo
+# GETINFO
 mn_info(){
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
 then
@@ -165,9 +187,12 @@ else
 		done
 	fi
 }
-# Pause
+
+
+# PAUSE
 pause(){
-  read -p "Nhan [Enter] de tiep tuc ..." fackEnterKey
+	echo -n ""
+	read -p "Nhan [Enter] de tiep tuc ..." fackEnterKey
 }
  
  #Install Masternode 

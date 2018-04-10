@@ -1,11 +1,13 @@
 #/bin/bash
 mn_overview(){
 	tput clear
+	source /usr/local/ezlite/assets/banner.ezs
+	show_main_banner
 	divider===============================
 	divider=$divider$divider
-	header="%-2s %-15s %-11s %-10s\n"
-	format="%-2s %-15s %-11.2f %-10s\n"
-	width=43
+	header="%-2s %-15s %-10s %-25s\n"
+	format="%-2s %-15s %-10.2f %-25s\n"
+	width=55
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
 
@@ -17,11 +19,14 @@ mn_overview(){
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
 		
 	done
+	printf "%$width.${width}s\n" "$divider"	
 }
 
 ls_balance(){
         tput clear
-        divider=+++++++++++++++++++++
+		source /usr/local/ezlite/assets/banner.ezs
+		show_main_banner
+        divider===============================
         divider=$divider$divider
         header="%-2s %-25s\n"
         format="%-2s %-25s\n"
@@ -29,7 +34,7 @@ ls_balance(){
         #printf "%$width.${width}s\n" "$divider"
 if [ -z "$(ls -A /root/ezlite/report/ )" ];
 then
-	   echo "$red Khong co deamon nao dang chay ! $end "
+	   echo "$red Khong tim thay file balance ! $end "
 	   break
 else
 		PS3="Vui long chon coin ban muon check balance hoac 'q' de thoat : "
@@ -46,5 +51,6 @@ else
 			break ;
 		fi
 		done
+		printf "%$width.${width}s\n" "$divider"	
 	fi
 }

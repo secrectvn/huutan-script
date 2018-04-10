@@ -10,7 +10,7 @@ blu=$(tput setaf 4)
 end=$(tput sgr0)
 error=$(tput cup 22 12)
 bold=$(tput bold)
-version=0.1
+version=1.0.0
 #BANNER
 show_main_banner(){	
 echo -n $fg_green

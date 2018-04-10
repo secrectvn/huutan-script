@@ -16,9 +16,9 @@ DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${C
 function build_git(){
 	cd /root/ezlite/build
 	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
-	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
-	make -f makefile.unix USE_UPNP=-
-	cp ${MN_DEAMON} ${MN_CLI} ${MN_TX} /root/ezlite/daemon
+	cd /root/ezlite/build/${CRYPTO_NAME}
+	./autogen.sh && ./configure	&& make 
+	cp src/${MN_DEAMON} src/${MN_CLI} src/${MN_TX} /root/ezlite/daemon
 	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
 	ln -s /root/ezlite/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
 	ln -s /root/ezlite/daemon/${MN_TX}  /usr/bin/${MN_TX}
