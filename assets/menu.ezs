@@ -4,22 +4,35 @@
 source /usr/local/ezlite/assets/banner.ezs
 # Main Menu
 function display_main_menu(){
-cat << _EOF_
+cat << _main_menu_
 	1/- OVERVIEW MASTERNODE
 	2/- BALANCE REPORT
-	3/- START / STOP DEAMON 
-		3A/ - START DEAMON
-		3B/ - STOP DEAMON
+	3/- START or STOP DEAMON 
 	4/- MANAGEMENT MASTERNODE
-		4A/- START MASTERNODE
-		4B/- UNLOCK WALLET
-		4C/- MASTERNODE STATUS
-		4D/- STAKING STATUS
-		4E/- MASTERNODE DEBUG
 	5/- INSTALL MASTERNODE
 	6/- EXIT
-_EOF_
+_main_menu_
 }
+# DEAMON MENU 
+display_deamon_menu(){
+cat << deamon_menu
+DEAMON MENUA 
+1/ - START DEAMON
+2/ - STOP DEAMON
+deamon_menu
+}
+# DEAMON MENU 
+display_mag_menu(){
+cat << management_masternode
+MANAGEMENT MASTERNODE MENU
+	1/- START MASTERNODE
+	2/- UNLOCK WALLET
+	3/- MASTERNODE STATUS
+	4/- STAKING STATUS
+	5/- MASTERNODE DEBUG
+management_masternode
+}
+
 # Action Main Menu
 function action_main_menu(){
 	source /usr/local/ezlite/assets/action.ezs
@@ -30,15 +43,43 @@ function action_main_menu(){
 	case $choice in
 					1) mn_overview ;;
 					2) ls_balance ;;
-					[3][3A]) start_deamon ;;
-					[3B]) stop_deamon ;;					
-					[4A]) mn_start ;;
-					[4B]) unlock_wallet ;;
-					[4C]) mn_status;;
-					[4D]) mn_staking ;;
-					[4E]) echo " dang update";;				
+					3) display_deamon_menu && action_deamon_menu ;;
+					4) display_mag_menu &&  action_mag_menu ;;
 					5) mn_install ;;
-					6) update_script ;;
+					6) exit 0 ;;
+				[0qQ]) exit 0;;
+					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
+	 esac
+	pause	
+}
+
+function action_deamon_menu(){
+	source /usr/local/ezlite/assets/action.ezs
+	source /usr/local/ezlite/assets/update.ezs
+	source /usr/local/ezlite/assets/dashboard.ezs
+	local choice
+	read -p "$gre Enter choice [ 1 - 2 ] hoac [q/Q] de thoat : $end" choice	
+	case $choice in
+					1) start_deamon ;;
+					2) stop_deamon ;;			
+				[0qQ]) exit 0;;
+					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
+	 esac
+	pause	
+}
+
+function action_mag_menu(){
+	source /usr/local/ezlite/assets/action.ezs
+	source /usr/local/ezlite/assets/update.ezs
+	source /usr/local/ezlite/assets/dashboard.ezs
+	local choice
+	read -p "$gre Enter choice [ 1 - 2 ] hoac [q/Q] de thoat : $end" choice	
+	case $choice in
+					1) mn_start ;;
+					2) unlock_wallet ;;		
+					3) mn_status ;;
+					4) mn_staking ;;
+					5) echo " Tinh nang dang cap nhat " ;;
 				[0qQ]) exit 0;;
 					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
 	 esac

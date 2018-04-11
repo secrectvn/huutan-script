@@ -59,6 +59,7 @@ start_deamon(){
 	fi
 }
 
+#STOP DEAMON
 stop_deamon(){
 	source /usr/local/ezlite/assets/input.ezs
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -70,7 +71,7 @@ stop_deamon(){
 			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
-			kill $(cat /root/ezlite/running/${CODE_NAME}.csv)
+			kill $(cat /root/ezlite/running/${CODE_NAME}.pid)
 			break ;
 			else [ $CODE_NAME !="q" ]
 				break ;
@@ -125,6 +126,7 @@ else
 		done
 	fi
 }
+
 # MASTERNODE STATUS
 mn_status(){
 		source /usr/local/ezlite/assets/input.ezs
@@ -168,6 +170,7 @@ else
 		done
 	fi
 }
+
 # STAKINGINFO
 mn_staking(){
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -188,6 +191,7 @@ else
 		done
 	fi
 }
+
 # GETINFO
 mn_info(){
 if [ -z "$(ls -A /root/ezlite/running/ )" ];
@@ -211,8 +215,10 @@ else
 
 # PAUSE
 pause(){
-	echo -n ""
+	echo -e ""
 	read -p "Nhan [Enter] de tiep tuc ..." fackEnterKey
+	echo -e ""
+	
 }
  
  #Install Masternode 
