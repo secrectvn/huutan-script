@@ -23,11 +23,9 @@ read -p  "$gre Nhap TXHASH (chay lenh masternode outputs): $end" tx_hash ;
 # INPUT TXID
 input_txid(){
 	echo -e  "$gre Choice TXID 0 or 1: $end"
-		select tx_id in 0 1
-			do
-			case $tx_id in 
-			0|1) break ;;
-			*) echo "$red Chon sai TXID. Vui long chon lai $end ";;
-			esac
-			done
+	case $choice in
+					0) tx_id=0
+					1) tx_id=1
+					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
+	 esac
 }
