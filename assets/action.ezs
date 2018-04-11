@@ -39,7 +39,7 @@ create_config(){
 }
 
 # START DEAMON
-start_deamon(){
+deamon_start(){
 	source /usr/local/ezlite/assets/input.ezs
 	if [ -z "$(ls -A /root/ezlite/installed/ )" ]; then
 	   echo "Ban chua cai dat MASTERNODE nao ca."
@@ -51,7 +51,7 @@ start_deamon(){
 		if [ -n "$CODE_NAME" ]; then
 			source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
 			${DEAMON_MN}			
-			break
+			break 
 		else [ $CODE_NAME !="q" ]
 			break ;
 		fi
@@ -60,7 +60,7 @@ start_deamon(){
 }
 
 #STOP DEAMON
-stop_deamon(){
+deamon_stop(){
 	source /usr/local/ezlite/assets/input.ezs
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
 	then
