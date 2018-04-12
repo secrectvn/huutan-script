@@ -60,12 +60,12 @@ function action_deamon_menu(){
 	local choice
 	read -p "$gre Enter choice [ 1 - 2 ] hoac [q/Q] de thoat : $end" choice	
 	case $choice in
-					1) start_deamon ;;
-					2) stop_deamon ;;			
+					1) deamon_start ;;
+					2) deamon_stop ;;			
 				[0qQ]) exit 0;;
 					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
 	 esac
-	pause	
+	break ;
 }
 
 function action_mag_menu(){
@@ -83,5 +83,6 @@ function action_mag_menu(){
 				[0qQ]) exit 0;;
 					*) echo "$red Phim chon sai. Vui long chon lai ! $end " ;;
 	 esac
+	break ;
 	pause	
 }
