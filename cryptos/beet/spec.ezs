@@ -14,7 +14,7 @@ DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${C
 function build_git(){
 	cd /root/ezlite/build
 	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
-	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
+	cd /root/ezlite/build/${CRYPTO_NAME}/src/
 	make -f makefile.unix USE_UPNP=-
 	cp ${MN_DEAMON} /root/ezlite/daemon
 	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
@@ -27,5 +27,5 @@ STATUS_MN="${MN_DEAMON} ${DATA_DIR} masternode status"
 STAKING_MN="${MN_DEAMON} ${DATA_DIR} getstakinginfo"
 BALANCE_MN="${MN_DEAMON} ${DATA_DIR} getbalance"
 GETINFO_MN="${MN_DEAMON} ${DATA_DIR} getinfo"
-PRIVKEY_MN="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address 
+PRIVKEY_MN="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address
 UNLOCK_MN="${MN_DEAMON} ${DATA_DIR} walletpassphrase" # need timeout

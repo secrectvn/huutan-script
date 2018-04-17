@@ -112,12 +112,13 @@ create_config(){
 deamon_start(){
 	if [ -z "$(ls -A /root/ezlite/installed/ )" ]; then
 	   echo "$red No cryptos are installed ! $NC"
-	   break
-		else
+	   break;
+	else
 		echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
 		list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
-		if [ -n "$CODE_NAME" ]; then
+			condition=$(ls -1 /root/ezlite/installed/ | grep $CODE_NAME | sed -e 's/\.pid$//')
+			if [ $CODE_NAME !=$condition ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			${DEAMON_START}
 			exit 0 ;
@@ -145,6 +146,31 @@ deamon_stop(){
 			fi
 			done
 		fi
+	}
+
+	deamon_start_and_stop(){
+	  if [ -z "$(ls -A /root/ezlite/installed/ )" ]; then
+	    echo "$red No cryptos are installed ! $NC"
+	    break;
+	  else
+	    echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
+	    list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
+	    select CODE_NAME in $list_ins; do
+	    condition=$(ls -1 /root/ezlite/installed/ | grep $CODE_NAME | sed -e 's/\.pid$//')
+	    source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	    if [ $CODE_NAME !=$condition ]; then
+	    echo -e "$yellow${CRYPTO_NAME} deamon has been running !$NC"
+	    read -r -p " $red If you want to stop ${CRYPTO_NAME} deamon,  choice [Y]ES or [N]O for quit ? $NCS" confirm
+	    case "$confirm" in
+	        [yY]) ${DEAMON_STOP}  ;;
+	        [nN]) exit  ;;
+	    esac
+	  else ${DEAMON_START} ;
+
+	  fi
+	  fi
+	    done
+	  fi
 	}
 # masternode control
 ## masternode start
@@ -371,7 +397,7 @@ function action_main_menu(){
 			case $choice in
 		      1)  mn_overview ;;
 		      2)  mn_install ;;
-					3)  deamon_start ;;
+					3)  deamon_start_and_stop ;;
 		      4)  mn_start ;;
 		      5)  wl_unlock ;;
 		      6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
