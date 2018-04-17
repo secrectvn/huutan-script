@@ -169,14 +169,14 @@ deamon_stop(){
 							echo -e " $red If you want to stop ${CRYPTO_NAME} deamon , please choice [Y] or choose [N]o quit !"
 							read -r -p "choice  [Y/N] ? $NC" confirm
 							case "$confirm" in
-						        [yY]) ${DEAMON_MN} stop && break ;;
+						        [yY]) ${DEAMON_START} stop && break ;;
 						        [nN]) break  ;;
 								*   ) echo -e " $red Wrong key , please choice again !" && pause  ;;
 						    esac
 						  else
 					  		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 				  			echo -e "$red ${CRYPTO_NAME} deamon start $NC "
-						 	${DEAMON_MN};
+						 	${DEAMON_START};
 							break;
 						fi
 					 fi
