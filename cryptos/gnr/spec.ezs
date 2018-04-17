@@ -13,20 +13,20 @@ MN_VERSION=1.0.0.1
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
 function build_git(){
-	cd /root/ezlite/build
-	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
-	cd /root/ezlite/build/${CRYPTO_NAME}/src/ 
+	cd /root/ezmn/build
+	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
+	cd /root/ezmn/build/${CRYPTO_NAME}/src/ 
 	make -f makefile.unix USE_UPNP=-
-	cp ${MN_DEAMON} /root/ezlite/daemon
-	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
-	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+	cp ${MN_DEAMON} /root/ezmn/daemon
+	ln -s /root/ezmn/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
 #Command
-DEAMON_MN="${MN_DEAMON} ${DATA_DIR}"
-START_MN="${MN_DEAMON} ${DATA_DIR} masternode start " # need ${walletpassphrase}
-STATUS_MN="${MN_DEAMON} ${DATA_DIR} masternode status"
-STAKING_MN="${MN_DEAMON} ${DATA_DIR} getstakinginfo"
-BALANCE_MN="${MN_DEAMON} ${DATA_DIR} getbalance"
-GETINFO_MN="${MN_DEAMON} ${DATA_DIR} getinfo"
-PRIVKEY_MN="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address 
-UNLOCK_MN="${MN_DEAMON} ${DATA_DIR} walletpassphrase" # need timeout
+DEAMON_START="${MN_DEAMON} ${DATA_DIR}"
+MN_START="${MN_DEAMON} ${DATA_DIR} masternode start " # need ${walletpassphrase}
+MN_STARTUS="${MN_DEAMON} ${DATA_DIR} masternode status"
+WL_STAKTING="${MN_DEAMON} ${DATA_DIR} getstakinginfo"
+WL_BALANCE="${MN_DEAMON} ${DATA_DIR} getbalance"
+WL_INFO="${MN_DEAMON} ${DATA_DIR} getinfo"
+WL_PRIVKEY="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address 
+WL_UNLOCK="${MN_DEAMON} ${DATA_DIR} walletpassphrase" # need timeout

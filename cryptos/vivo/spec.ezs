@@ -14,22 +14,22 @@ MN_VERSION=0.12.1.7
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
 function build_git(){
-	cd /root/ezlite/build
-	git clone ${GIT_URL} /root/ezlite/build/${CRYPTO_NAME}
-	cd /root/ezlite/build/${CRYPTO_NAME}
+	cd /root/ezmn/build
+	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
+	cd /root/ezmn/build/${CRYPTO_NAME}
 	./autogen.sh && ./configure	&& make 
-	cp src/${MN_DEAMON} src/${MN_CLI} src/${MN_TX} /root/ezlite/daemon
-	ln -s /root/ezlite/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
-	ln -s /root/ezlite/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
-	ln -s /root/ezlite/daemon/${MN_TX}  /usr/bin/${MN_TX}
-	rm -rf /root/ezlite/build/${CRYPTO_NAME}
+	cp src/${MN_DEAMON} src/${MN_CLI} src/${MN_TX} /root/ezmn/daemon
+	ln -s /root/ezmn/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
+	ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
+	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
 #Command
-DEAMON_MN="${MN_DEAMON} ${DATA_DIR}"
-START_MN="${MN_CLI} ${DATA_DIR} masternode start " # need ${walletpassphrase}
-STATUS_MN="${MN_CLI} ${DATA_DIR} masternode status"
-STAKING_MN="${MN_CLI} ${DATA_DIR} getstakingstatus"
-BALANCE_MN="${MN_CLI} ${DATA_DIR} getbalance"
-GETINFO_MN="${MN_CLI} ${DATA_DIR} getinfo"
-PRIVKEY_MN="${MN_CLI} ${DATA_DIR} dumpprivkey " # need wallet address 
-UNLOCK_MN="${MN_CLI} ${DATA_DIR} walletpassphrase" # need timeout
+DEAMON_START="${MN_DEAMON} ${DATA_DIR}"
+MN_START="${MN_CLI} ${DATA_DIR} masternode start " # need ${walletpassphrase}
+MN_STARTUS="${MN_CLI} ${DATA_DIR} masternode status"
+WL_STAKTING="${MN_CLI} ${DATA_DIR} getstakingstatus"
+WL_BALANCE="${MN_CLI} ${DATA_DIR} getbalance"
+WL_INFO="${MN_CLI} ${DATA_DIR} getinfo"
+WL_PRIVKEY="${MN_CLI} ${DATA_DIR} dumpprivkey " # need wallet address 
+WL_UNLOCK="${MN_CLI} ${DATA_DIR} walletpassphrase" # need timeout

@@ -122,7 +122,7 @@ deamon_start(){
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			${DEAMON_START}
 			exit 0 ;
-		else [ $CODE_NAME !="q" ]
+		else [ $CODE_NAME != "q" ]
 			exit 0 ;
 		fi
 		done
@@ -141,7 +141,7 @@ deamon_stop(){
 			if [ -n "$CODE_NAME" ]; then
 			kill $(cat /root/ezlite/running/${CODE_NAME}.csv)
 				exit 0 ;
-			else [ $CODE_NAME !="q" ]
+			else [ $CODE_NAME != "q" ]
 				exit 0 ;
 			fi
 			done
@@ -189,7 +189,7 @@ mn_start(){
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
-		   exit 0 ;
+		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to start-masternode or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
@@ -198,9 +198,9 @@ mn_start(){
 				input_walletpassphrase
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${MN_START} $walletpassphrase
-				exit 0 ;
-			else [ $CODE_NAME !="q" ]
-				exit 0 ;
+				break ;
+			else [ $CODE_NAME != "q" ]
+				break ;
 			fi
 			done
 		fi
@@ -219,7 +219,7 @@ mn_status(){
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${MN_STARTUS}
 				exit 0 ;
-			else [ $CODE_NAME !="q" ]
+			else [ $CODE_NAME != "q" ]
 				exit 0 ;
 			fi
 			done
@@ -240,7 +240,7 @@ mn_debug(){
 					source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 					${MN_STARTUS}
 					exit 0 ;
-				else [ $CODE_NAME !="q" ]
+				else [ $CODE_NAME != "q" ]
 					exit 0 ;
 				fi
 				done
@@ -303,7 +303,7 @@ wl_unlock(){
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${WL_UNLOCK} $walletpassphrase 32000000
 				break
-			else [ $CODE_NAME !="q" ]
+			else [ $CODE_NAME != "q" ]
 				break ;
 			fi
 			done
@@ -324,7 +324,7 @@ wl_balance(){
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 				${WL_BALANCE}
 				break
-			else [ $CODE_NAME !="q" ]
+			else [ $CODE_NAME != "q" ]
 				break ;
 			fi
 			done
