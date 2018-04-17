@@ -359,13 +359,11 @@ mn_overview(){
 	width=55
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
-
 	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DEAMON_RUN  ; do
 		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-		BALANCE=$(${WL_BALANCE})
-		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
-		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
+		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
+		printf "$format" " " "${COIN_NAME}" "${WL_BALANCE}" "$STATUS"
 
 	done
 	printf "%$width.${width}s\n" "$divider"
@@ -375,9 +373,9 @@ rp_balance(){
 	main_banner
 	divider===============================
 	divider=$divider$divider
+	width=55
 	header="%-2s %-15s %-10s %-25s\n"
 	format="%-2s %-15s %-10.2f %-25s\n"
-	width=55
 	printf "%$width.${width}s\n" "$divider"
 	if [ -z "$(ls -A /root/ezlite/report/ )" ];
 	then
