@@ -175,8 +175,7 @@ deamon_stop(){
 						    esac
 						  else
 					  		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-				  			echo -e "$red ${CRYPTO_NAME} deamon start $NC "
-						 	${DEAMON_START};
+				  			${DEAMON_START} && echo -e "$red ${CRYPTO_NAME} deamon start $NC" ;
 							break;
 						fi
 					 fi
@@ -332,6 +331,7 @@ wl_balance(){
 	}
 # pause script
 pause(){
+		echo -e " "
 		read -p "${yellow} Press [Enter] to continue ... ${NC}" fackEnterKey
 	}
 
