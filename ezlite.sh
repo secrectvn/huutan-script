@@ -363,7 +363,7 @@ mn_overview(){
 	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DEAMON_RUN  ; do
 		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-		BALANCE=$(${BALANCE_MN})
+		BALANCE=$(${WL_BALANCE})
 		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
 
