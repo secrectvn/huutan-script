@@ -11,7 +11,7 @@ white=$(tput setaf 7)
 NC=$(tput sgr0)
 # VAR
 DIR_EZMN="/usr/local/ezlite"
-MN_DATA="/root/masterode"
+MN_DATA="/root/masternode"
 LS_CRYPTOS="$DIR_EZMN/cryptos"
 EZ_CONFIG="$DIR_EZMN/assets/config/"
 number_cols=$(((($(tput cols) - 45)) / 5))
@@ -24,10 +24,10 @@ main_banner(){
 	echo -e ""
 	cat << _banner_
    ███████╗███████╗███╗   ███╗███╗   ██╗
-   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║
-   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║
-   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║
-   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║
+   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
+   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
+   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
+   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
    ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
 _banner_
 }
