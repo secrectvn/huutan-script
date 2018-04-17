@@ -23,11 +23,11 @@ function install_confirm(){
     # call with a prompt string or use a default
     read -r -p " $red Ban co chac muon update EZLITE script ? [y/N] $end" confirm
     case "$confirm" in
-        [yY][eE][sS]|[yY]) 
+        [yY][eE][sS]|[yY])
             true
             ;;
         *)
-            exit 
+            exit
             ;;
     esac
 }
@@ -37,8 +37,9 @@ function update_ezlite(){
 	unlink /usr/bin/ezlite
 	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezlite  ;
 	chmod +x /usr/local/ezlite/ezlite.sh ;
+  chmod +x /usr/local/ezlite/assets/report.sh ;
 	ln -s /usr/local/ezlite/ezlite.sh /usr/bin/ezlite ;
 }
 
-echo "$yel Update EZLITE ....... $end"  
+echo "$yel Update EZLITE ....... $end"
 update_ezlite
