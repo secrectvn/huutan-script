@@ -149,30 +149,40 @@ deamon_stop(){
 	}
 
 	deamon_start_and_stop(){
-	  if [ -z "$(ls -A /root/ezlite/installed/ )" ]; then
-	    echo "$red No cryptos are installed ! $NC"
-	    break;
-	  else
-	    echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
-	    list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
-	    select CODE_NAME in $list_ins; do
-	    condition=$(ls -1 /root/ezlite/running/ | grep $CODE_NAME | sed -e 's/\.pid$//')
-	    source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-	    if [ $CODE_NAME == $condition ]; then
-	    echo -e "$yellow${CRYPTO_NAME} deamon has been running !$NC"
-	    read -r -p " $red If you want to stop ${CRYPTO_NAME} deamon,  choice [Y]ES or [N]O for quit ? $NC" confirm
-	    case "$confirm" in
-	        [yY]) ${DEAMON_STOP}  ;;
-	        [nN]) exit  ;;
-	    esac
-	  else
-				echo -e "$red ${CRYPTO_NAME} deamon start $NC "
-			 	${DEAMON_START} ;
-				break;
-	  fi
-	    done
-	  fi
-	}
+		if [ -z "$(ls -A /root/ezlite/installed/ )" ] ;
+			then
+				echo "$red No cryptos are installed ! $NC"
+		  	    break;
+	  	    else
+	  	    	echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
+			    list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
+			    select CODE_NAME in $list_ins; do
+			    	if [ $CODE_NAME != "q" ];
+					then
+						condition=$(ls -1 /root/ezlite/running/ | grep $CODE_NAME | sed -e 's/\.pid$//')
+						if [ "$CODE_NAME" == "$condition" ] ;
+						then
+							source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+							echo -e "$yellow${CRYPTO_NAME} deamon has been running !$NC"
+							echo -e " $green Y) ${CRYPTO_NAME} deamon stop"
+							echo -e " $green N) Quit "
+							echo -e " $red If you want to stop ${CRYPTO_NAME} deamon , please choice [Y] or choose [N]o quit !"
+							read -r -p "choice  [Y/N] ? $NC" confirm
+							case "$confirm" in
+						        [yY]) ${DEAMON_MN} stop && break ;;
+						        [nN]) break  ;;
+								*   ) echo -e " $red Wrong key , please choice again !" && pause  ;;
+						    esac
+						  else
+					  		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+				  			echo -e "$red ${CRYPTO_NAME} deamon start $NC "
+						 	${DEAMON_MN};
+							break;
+						fi
+					 fi
+		 		done
+	  	    fi
+		}
 # masternode control
 ## masternode start
 mn_start(){
