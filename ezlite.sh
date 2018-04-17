@@ -156,11 +156,11 @@ deamon_stop(){
 	    echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
 	    list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
 	    select CODE_NAME in $list_ins; do
-	    condition=$(ls -1 /root/ezlite/installed/ | grep $CODE_NAME | sed -e 's/\.pid$//')
+	    condition=$(ls -1 /root/ezlite/running/ | grep $CODE_NAME | sed -e 's/\.pid$//')
 	    source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-	    if [ $CODE_NAME !=$condition ]; then
+	    if [ $CODE_NAME == $condition ]; then
 	    echo -e "$yellow${CRYPTO_NAME} deamon has been running !$NC"
-	    read -r -p " $red If you want to stop ${CRYPTO_NAME} deamon,  choice [Y]ES or [N]O for quit ? $NCS" confirm
+	    read -r -p " $red If you want to stop ${CRYPTO_NAME} deamon,  choice [Y]ES or [N]O for quit ? $NC" confirm
 	    case "$confirm" in
 	        [yY]) ${DEAMON_STOP}  ;;
 	        [nN]) exit  ;;
@@ -168,6 +168,7 @@ deamon_stop(){
 	  else
 				echo -e "$red ${CRYPTO_NAME} deamon start $NC "
 			 	${DEAMON_START} ;
+				break;
 	  fi
 	    done
 	  fi
