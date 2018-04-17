@@ -165,9 +165,9 @@ deamon_stop(){
 	        [yY]) ${DEAMON_STOP}  ;;
 	        [nN]) exit  ;;
 	    esac
-	  else ${DEAMON_START} ;
-
-	  fi
+	  else
+				echo -e "$red ${CRYPTO_NAME} deamon start $NC "
+			 	${DEAMON_START} ;
 	  fi
 	    done
 	  fi
