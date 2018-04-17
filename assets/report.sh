@@ -6,4 +6,3 @@ for CODE_NAME  in $DEAMON_RUN  ; do
 	BALANCE=$(${BALANCE_MN})
 	echo -e "$DATE ; $BALANCE" >> /root/ezlite/report/${CODE_NAME}.csv
 done
-
