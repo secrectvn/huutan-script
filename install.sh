@@ -29,7 +29,7 @@ tput setaf 1
 tput bold
 cat << _alert
 ╔═════════════════════════════════════╗
-║         EZLITE-MASTERNODE           ║
+║         ezmn-MASTERNODE           ║
 ║    chi ho tro Ubuntu 16.04 x64      ║
 ╚═════════════════════════════════════╝
 _alert
@@ -38,7 +38,7 @@ tput sgr0
 #Function
 function install_confirm(){
     # call with a prompt string or use a default
-    read -r -p " $red Ban co chac muon cai dat EZLITE script ? [y/N] $end" confirm
+    read -r -p " $red Ban co chac muon cai dat ezmn script ? [y/N] $end" confirm
     case "$confirm" in
         [yY][eE][sS]|[yY])
             true
@@ -102,11 +102,11 @@ function install_packages(){
 	apt install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler -y;
 }
 
-function install_ezlite(){
-	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezlite/  ;
-	chmod +x /usr/local/ezlite/ezlite.sh ;
-	chmod +x /usr/local/ezlite/assets/report.sh ;
-	ln -s /usr/local/ezlite/ezlite.sh /usr/bin/ezlite ;
+function install_ezmn(){
+	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn/  ;
+	chmod +x /usr/local/ezmn/ezmn.sh ;
+	chmod +x /usr/local/ezmn/assets/report.sh ;
+	ln -s /usr/local/ezmn/ezmn.sh /usr/bin/ezmn ;
 }
 
 # ACTION
@@ -114,13 +114,13 @@ function install_ezlite(){
 	check_distro
 	install_confirm
 	mkdir -p /root/masternode/
-	mkdir -p /root/ezlite/{build,daemon,logs,installed,balance,running,report} ;
-	install_log='/root/ezlite/logs/install.log'
+	mkdir -p /root/ezmn/{build,daemon,logs,installed,balance,running,report} ;
+	install_log='/root/ezmn/logs/install.log'
 	echo "$gre Install Package ....... $end"
-	install_packages 	&> /root/ezlite/logs/install.log
+	install_packages 	&> /root/ezmn/logs/install.log
 	echo "$gre Install SWAP ....... $end"
 	install_swap
-	echo "$gre Install EZLITE ....... $end"
-	install_ezlite 	 &> /root/ezlite/logs/install.log
-	echo -e  "0 0 * * * root /usr/local/ezlite/assets/report.sh"  >> /etc/crontab
+	echo "$gre Install ezmn ....... $end"
+	install_ezmn 	 &> /root/ezmn/logs/install.log
+	echo -e  "0 0 * * * root /usr/local/ezmn/assets/report.sh"  >> /etc/crontab
 	reboot_confirm

@@ -10,7 +10,7 @@ cyan=$(tput setaf 6)
 white=$(tput setaf 7)
 NC=$(tput sgr0)
 # VAR
-DIR_EZMN="/usr/local/ezlite"
+DIR_EZMN="/usr/local/ezmn"
 MN_DATA="/root/masternode"
 LS_CRYPTOS="$DIR_EZMN/cryptos"
 EZ_CONFIG="$DIR_EZMN/assets/config/"
@@ -110,12 +110,12 @@ create_config(){
 # deamon control
 ##deamon_start
 deamon_start(){
-	if [ -z "$(ls -A /root/ezlite/installed/ )" ]; then
+	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	   echo "$red No cryptos are installed ! $NC"
 	   break;
 	else
 		echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
-		list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
+		list_ins=$(ls -1 /root/ezmn/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
@@ -129,16 +129,16 @@ deamon_start(){
 }
 ##deamon_stop
 deamon_stop(){
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		echo -e "$red Could not find deamon are running ! $NC "
 		break;
 	else
 			echo -e "$green Please select the cryptos you want to stop-deamon or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
-			kill $(cat /root/ezlite/running/${CODE_NAME}.csv)
+			kill $(cat /root/ezmn/running/${CODE_NAME}.csv)
 				break ;
 			else [ $CODE_NAME != "q" ]
 				break ;
@@ -149,13 +149,13 @@ deamon_stop(){
 # masternode control
 ## masternode start
 mn_start(){
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to start-masternode or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				input_walletpassphrase
@@ -170,13 +170,13 @@ mn_start(){
 }
 ## masternode status
 mn_status(){
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
@@ -190,12 +190,12 @@ mn_status(){
 	}
 ## masternode debug
 mn_debug(){
-		if [ -z "$(ls -A /root/ezlite/running/ )" ];
+		if [ -z "$(ls -A /root/ezmn/running/ )" ];
 		then			   echo -e "$red Could not find deamon are running ! $NC "
 			   break ;
 		else
 				echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
-				list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+				list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 				select CODE_NAME in $list_ins; do
 				if [ -n "$CODE_NAME" ]; then
 					source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
@@ -210,13 +210,13 @@ mn_debug(){
 # Wallet management
 ## Staking info
 wl_staking(){
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check wallet-staking or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
@@ -230,13 +230,13 @@ wl_staking(){
 	}
 ## wallet info
 wl_info(){
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo "$red Khong co deamon nao dang chay ! $NC "
 		   break
 	else
 			PS3="Vui long chon coin ban muon check staking hoac 'q' de thoat : "
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
@@ -251,13 +251,13 @@ wl_info(){
 ## wallet unlock
 wl_unlock(){
 
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
 		   break
 	else
 			echo -e "$green Please select the cryptos you want to unlock-wallet or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				input_walletpassphrase
@@ -273,13 +273,13 @@ wl_unlock(){
 ## wallet balance
 wl_balance(){
 
-	if [ -z "$(ls -A /root/ezlite/running/ )" ];
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
 		   break
 	else
 			echo -e "$green Please select the cryptos you want to check crypto-balance or [Q]uit $NC"
-			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
@@ -308,7 +308,7 @@ mn_install(){
 		create_config
 		echo " $green Compile deamon $CRYPTO_NAME $NC "
 		build_git
-		touch /root/ezlite/installed/${CODE_NAME}
+		touch /root/ezmn/installed/${CODE_NAME}
 }
 # dashboard
 mn_overview(){
@@ -321,9 +321,9 @@ mn_overview(){
 	width=55
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
-	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+	DEAMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DEAMON_RUN  ; do
-		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
+		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${WL_BALANCE})
 		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
@@ -340,17 +340,17 @@ rp_balance(){
 	header="%-2s %-15s %-10s %-25s\n"
 	format="%-2s %-15s %-10.2f %-25s\n"
 	printf "%$width.${width}s\n" "$divider"
-	if [ -z "$(ls -A /root/ezlite/report/ )" ];
+	if [ -z "$(ls -A /root/ezmn/report/ )" ];
 	then
 		echo "$red Khong tim thay file balance ! $NC "
 		break ;
 	else
 		PS3="Vui long chon coin ban muon check balance hoac 'q' de thoat : "
-		list_ins=$(ls -1 /root/ezlite/report/ | sed -e 's/\.csv$//')
+		list_ins=$(ls -1 /root/ezmn/report/ | sed -e 's/\.csv$//')
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
-                source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-                LS_BALANCE=$(cat /root/ezlite/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
+                source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
+                LS_BALANCE=$(cat /root/ezmn/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
                 printf "$header" "${COIN_NAME}"
                 printf "%$width.${width}s\n" "$divider"
                 printf "$format" "$LS_BALANCE"

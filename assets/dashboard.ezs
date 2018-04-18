@@ -1,7 +1,7 @@
 #/bin/bash
 mn_overview(){
 	tput clear
-	source /usr/local/ezlite/assets/banner.ezs
+	source /usr/local/ezmn/assets/banner.ezs
 	show_main_banner
 	divider===============================
 	divider=$divider$divider
@@ -11,9 +11,9 @@ mn_overview(){
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
 
-	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
+	DEAMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DEAMON_RUN  ; do
-		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
+		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${BALANCE_MN})
 		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')		
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
@@ -24,7 +24,7 @@ mn_overview(){
 
 ls_balance(){
         tput clear
-		source /usr/local/ezlite/assets/banner.ezs
+		source /usr/local/ezmn/assets/banner.ezs
 		show_main_banner
         divider===============================
         divider=$divider$divider
@@ -32,17 +32,17 @@ ls_balance(){
         format="%-2s %-25s\n"
         width=25
         #printf "%$width.${width}s\n" "$divider"
-if [ -z "$(ls -A /root/ezlite/report/ )" ];
+if [ -z "$(ls -A /root/ezmn/report/ )" ];
 then
 	   echo "$red Khong tim thay file balance ! $end "
 	   break
 else
 		PS3="Vui long chon coin ban muon check balance hoac 'q' de thoat : "
-		list_ins=$(ls -1 /root/ezlite/report/ | sed -e 's/\.csv$//')
+		list_ins=$(ls -1 /root/ezmn/report/ | sed -e 's/\.csv$//')
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
-                source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-                LS_BALANCE=$(cat /root/ezlite/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
+                source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
+                LS_BALANCE=$(cat /root/ezmn/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
                 printf "$header" "+" "${COIN_NAME}"
                 printf "%$width.${width}s\n" "$divider"
                 printf "$format" "$LS_BALANCE"
