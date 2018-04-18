@@ -117,8 +117,7 @@ deamon_start(){
 		echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
 		list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
-			condition=$(ls -1 /root/ezlite/installed/ | grep $CODE_NAME | sed -e 's/\.pid$//')
-			if [ $CODE_NAME !=$condition ]; then
+			if [ -n "$CODE_NAME"]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			${DEAMON_START}
 			exit 0 ;
