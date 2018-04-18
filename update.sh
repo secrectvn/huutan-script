@@ -32,7 +32,7 @@ function install_confirm(){
     esac
 }
 fix_deamon(){
-for i in "$(ls -1 /root/ezmn/installed/)"
+for i in "$(ls -1 /root/ezmn/daemon/)"
 do
   unlink /usr/bin/$i
   ln -s /root/ezmn/daemon/$i  /usr/bin/$i
