@@ -117,12 +117,12 @@ deamon_start(){
 		echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
 		list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
-			if [ -n "$CODE_NAME"]; then
+			if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			${DEAMON_START}
-			exit 0 ;
+			break ;
 		else [ $CODE_NAME != "q" ]
-			exit 0 ;
+			break ;
 		fi
 		done
 	fi
@@ -132,16 +132,16 @@ deamon_stop(){
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
 	then
 		echo -e "$red Could not find deamon are running ! $NC "
-		exit 0;
+		break;
 	else
 			echo -e "$green Please select the cryptos you want to stop-deamon or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 			kill $(cat /root/ezlite/running/${CODE_NAME}.csv)
-				exit 0 ;
+				break ;
 			else [ $CODE_NAME != "q" ]
-				exit 0 ;
+				break ;
 			fi
 			done
 		fi
@@ -173,7 +173,7 @@ mn_status(){
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
-		   exit 0 ;
+		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
@@ -181,9 +181,9 @@ mn_status(){
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${MN_STARTUS}
-				exit 0 ;
+				break ;
 			else [ $CODE_NAME != "q" ]
-				exit 0 ;
+				break ;
 			fi
 			done
 		fi
@@ -192,7 +192,7 @@ mn_status(){
 mn_debug(){
 		if [ -z "$(ls -A /root/ezlite/running/ )" ];
 		then			   echo -e "$red Could not find deamon are running ! $NC "
-			   exit 0 ;
+			   break ;
 		else
 				echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
 				list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
@@ -200,9 +200,9 @@ mn_debug(){
 				if [ -n "$CODE_NAME" ]; then
 					source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 					${MN_STARTUS}
-					exit 0 ;
+					break ;
 				else [ $CODE_NAME != "q" ]
-					exit 0 ;
+					break ;
 				fi
 				done
 			fi
@@ -213,7 +213,7 @@ wl_staking(){
 	if [ -z "$(ls -A /root/ezlite/running/ )" ];
 	then
 		   echo -e "$red Could not find deamon are running ! $NC "
-		   exit 0 ;
+		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check wallet-staking or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
@@ -223,7 +223,7 @@ wl_staking(){
 				${WL_STAKTING}
 				break
 			else [ $CODE_NAME !='q' ]
-				exit 0 ;
+				break ;
 			fi
 			done
 		fi
