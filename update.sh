@@ -7,18 +7,18 @@ blu=$(tput setaf 4)
 end=$(tput sgr0)
 #######################-B-A-N-N-E-R-#####################
 display_banner(){
-echo -n $gre
-cat << EOF
-╔═════════════════════════════════════╗
-║╔═╗╔═╗╔╦╗╔═╗╔═╗╔╦╗╔═╗╦═╗╔╗╔╔═╗╔╦╗╔═╗ ║
-║║╣ ╔═╝║║║╠═╣╚═╗ ║ ║╣ ╠╦╝║║║║ ║ ║║║╣  ║
-║╚═╝╚═╝╩ ╩╩ ╩╚═╝ ╩ ╚═╝╩╚═╝╚╝╚═╝═╩╝╚═╝ ║
-║    ╦  ╦╔╦╗╔═╗                       ║
-║    ║  ║ ║ ║╣       by SecrectVN     ║
-║    ╩═╝╩ ╩ ╚═╝ https://secrectvn.com ║
-╚═════════════════════════════════════╝
-EOF
-}
+ echo -n $gre
+ tput bold
+  cat << _banner_
+ ███████╗███████╗███╗   ███╗███╗   ██╗
+ ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
+ █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
+ ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
+ ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
+ ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
+_banner_
+ echo -n $end
+ }
 function install_confirm(){
     # call with a prompt string or use a default
     read -r -p " $red Ban co chac muon update EZLITE script ? [y/N] $end" confirm
@@ -40,6 +40,7 @@ function update_ezlite(){
   chmod +x /usr/local/ezlite/assets/report.sh ;
 	ln -s /usr/local/ezlite/ezlite.sh /usr/bin/ezlite ;
 }
-
+display_banner
+install_confirm
 echo "$yel Update EZLITE ....... $end"
 update_ezlite

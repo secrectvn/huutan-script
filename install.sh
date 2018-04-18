@@ -11,53 +11,31 @@ end=$(tput sgr0)
 error=$(tput cup 22 12)
 bold=$(tput bold)
 #######################-B-A-N-N-E-R-#####################
-text0='╔═════════════════════════════════════╗'
-text1='║╔═╗╔═╗╔╦╗╔═╗╔═╗╔╦╗╔═╗╦═╗╔╗╔╔═╗╔╦╗╔═╗ ║'
-text2='║║╣ ╔═╝║║║╠═╣╚═╗ ║ ║╣ ╠╦╝║║║║ ║ ║║║╣  ║'
-text3='║╚═╝╚═╝╩ ╩╩ ╩╚═╝ ╩ ╚═╝╩╚═╝╚╝╚═╝═╩╝╚═╝ ║'
-text4='║    ╦  ╦╔╦╗╔═╗                       ║'
-text5='║    ║  ║ ║ ║╣       by SecrectVN     ║'
-text6='║    ╩═╝╩ ╩ ╚═╝ https://secrectvn.com ║'
-text7='╚═════════════════════════════════════╝'
-alert1='╔═════════════════════════════════════╗'
-alert2='║         EZLITE-MASTERNODE           ║'
-alert3='║    chi ho tro Ubuntu 16.04 x64      ║'
-alert4='╚═════════════════════════════════════╝'
-#######################-B-A-N-N-E-R-#####################
+display_banner(){
+tput bold
+echo -n $gre
+cat << _banner_
+ ███████╗███████╗███╗   ███╗███╗   ██╗
+ ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
+ █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
+ ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
+ ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
+ ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
+_banner_
+echo -n $end
+}
 alert_distro(){
-			tput cup 10 11
-			echo "$red $alert1 $end"
-			tput cup 11 11
-			echo "$red $alert2 $end"
-			tput cup 12 11
-			echo "$red $alert3 $end"
-			tput cup 13 11
-			echo "$red $alert4 $end"
-			exit 1
+tput setaf 1
+tput bold
+cat << _alert
+╔═════════════════════════════════════╗
+║         EZLITE-MASTERNODE           ║
+║    chi ho tro Ubuntu 16.04 x64      ║
+╚═════════════════════════════════════╝
+_alert
+tput sgr0
 }
 #Function
-function display_banner(){
-	tput clear
-	tput setaf 2
-	tput cup 1 12
-	echo "$text0"
-	tput cup 2 12
-	echo "$text1"
-	tput cup 3 12
-	echo "$text2"
-	tput cup 4 12
-	echo "$text3"
-	tput cup 5 12
-	echo "$text4"
-	tput cup 6 12
-	echo "$text5"
-	tput cup 7 12
-	echo "$text6"
-	tput cup 8 12
-	echo "$text7"
-	tput sgr0
-}
-
 function install_confirm(){
     # call with a prompt string or use a default
     read -r -p " $red Ban co chac muon cai dat EZLITE script ? [y/N] $end" confirm

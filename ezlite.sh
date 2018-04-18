@@ -35,7 +35,7 @@ main_menu(){
 	cat << _main_menu
     1) OVERVIEW MASTERNODE
     2) INSTALL MASTERNODE
-    3) START & STOP DEAMON
+    3) START DEAMON
     4) MASTERNODE START
     5) UNLOCK WALLET
     6) WALLET MANAGEMENT
@@ -147,41 +147,6 @@ deamon_stop(){
 			done
 		fi
 	}
-
-	deamon_start_and_stop(){
-		if [ -z "$(ls -A /root/ezlite/installed/ )" ] ;
-			then
-				echo "$red No cryptos are installed ! $NC"
-		  	    break;
-	  	    else
-	  	    	echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
-			    list_ins=$(ls -1 /root/ezlite/installed/ | sed -e 's/\.pid$//')
-			    select CODE_NAME in $list_ins; do
-			    	if [ $CODE_NAME != "q" ];
-					then
-						condition=$(ls -1 /root/ezlite/running/ | grep $CODE_NAME | sed -e 's/\.pid$//')
-						if [ "$CODE_NAME" == "$condition" ] ;
-						then
-							source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-							echo -e "$yellow${CRYPTO_NAME} deamon has been running !$NC"
-							echo -e " $green Y) ${CRYPTO_NAME} deamon stop"
-							echo -e " $green N) Quit "
-							echo -e " $red If you want to stop ${CRYPTO_NAME} deamon , please choice [Y] or choose [N]o quit !"
-							read -r -p "choice  [Y/N] ? $NC" confirm
-							case "$confirm" in
-						        [yY]) ${DEAMON_START} stop && break ;;
-						        [nN]) break  ;;
-								*   ) echo -e " $red Wrong key , please choice again !" && pause  ;;
-						    esac
-						  else
-					  		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-				  			${DEAMON_START} && echo -e "$red ${CRYPTO_NAME} deamon start $NC" ;
-							break;
-						fi
-					 fi
-		 		done
-	  	    fi
-		}
 # masternode control
 ## masternode start
 mn_start(){
@@ -226,10 +191,8 @@ mn_status(){
 	}
 ## masternode debug
 mn_debug(){
-
 		if [ -z "$(ls -A /root/ezlite/running/ )" ];
-		then
-			   echo -e "$red Could not find deamon are running ! $NC "
+		then			   echo -e "$red Could not find deamon are running ! $NC "
 			   exit 0 ;
 		else
 				echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
@@ -362,7 +325,7 @@ mn_overview(){
 	DEAMON_RUN=$(ls -1 /root/ezlite/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DEAMON_RUN  ; do
 		source /usr/local/ezlite/cryptos/${CODE_NAME}/spec.ezs
-		BALANCE="${WL_BALANCE}"
+		BALANCE=$(${WL_BALANCE})
 		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
 
@@ -407,7 +370,7 @@ function action_main_menu(){
 			case $choice in
 		      1)  mn_overview ;;
 		      2)  mn_install ;;
-					3)  deamon_start_and_stop ;;
+					3)  deamon_start ;;
 		      4)  mn_start ;;
 		      5)  wl_unlock ;;
 		      6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
