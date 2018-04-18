@@ -34,7 +34,10 @@ function install_confirm(){
 
 function update_ezmn(){
 	rm -rf /usr/local/ezmn/
+  rm -rf /usr/local/ezlite/
 	unlink /usr/bin/ezmn
+  unlink /usr/bin/ezlite
+  mv /root/ezlite /root/ezmn
 	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
 	chmod +x /usr/local/ezmn/ezmn.sh ;
   chmod +x /usr/local/ezmn/assets/report.sh ;
