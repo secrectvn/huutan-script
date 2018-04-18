@@ -40,7 +40,8 @@ main_menu(){
     5) UNLOCK WALLET
     6) WALLET MANAGEMENT
     7) REPORT
-    8) EXIT
+		8) DEAMON STOP
+    9) EXIT
 _main_menu
 }
 
@@ -374,6 +375,7 @@ function action_main_menu(){
 		      5)  wl_unlock ;;
 		      6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
 					7)  rp_balance ;;
+					8)  deamon_stop ;;
 					[0qQ])  exit 0;;
 		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
 			 esac

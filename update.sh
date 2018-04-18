@@ -31,16 +31,6 @@ function install_confirm(){
             ;;
     esac
 }
-fix_deamon(){
-for i in "$(ls -1 /root/ezmn/daemon/)"
-do
-  unlink /usr/bin/$i
-  ln -s /root/ezmn/daemon/$i  /usr/bin/$i
-  echo -e "-----"
-  echo -e "$i"
-  echo -e "-----"
-done
-}
 function update_ezmn(){
 	rm -rf /usr/local/ezmn/
   rm -rf /usr/local/ezlite/
@@ -53,7 +43,6 @@ function update_ezmn(){
 	ln -s /usr/local/ezmn/ezmn.sh /usr/bin/ezmn ;
 }
 display_banner
-install_confirm
+#install_confirm
 echo "$yel Update EZMN ....... $end"
 update_ezmn
-fix_deamon
