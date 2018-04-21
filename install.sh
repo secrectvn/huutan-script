@@ -29,7 +29,7 @@ tput setaf 1
 tput bold
 cat << _alert
 ╔═════════════════════════════════════╗
-║         ezmn-MASTERNODE           ║
+║         ezmn-MASTERNODE             ║
 ║    chi ho tro Ubuntu 16.04 x64      ║
 ╚═════════════════════════════════════╝
 _alert
