@@ -34,15 +34,15 @@ _banner_
 
 main_menu(){
 	cat << _main_menu
-    1) OVERVIEW MASTERNODE
-    2) INSTALL MASTERNODE
-    3) START DAEMON
-    4) MASTERNODE START
-    5) UNLOCK WALLET
-    6) WALLET MANAGEMENT
-    7) REPORT
-	8) DAEMON STOP
-    9) EXIT
+1) OVERVIEW MASTERNODE
+2) INSTALL MASTERNODE
+3) START DAEMON
+4) MASTERNODE START
+5) UNLOCK WALLET
+6) WALLET MANAGEMENT
+7) REPORT
+8) DAEMON STOP
+9) EXIT
 _main_menu
 }
 
@@ -370,15 +370,15 @@ function action_main_menu(){
 	    local choice
 	    read -p "$green Enter choice [1-8] or [Q]uit : $NC" choice
 			case $choice in
-		      1)  mn_overview ;;
-		      2)  mn_install ;;
-					3)  DAEMON_START ;;
-		      4)  mn_start ;;
-		      5)  wl_unlock ;;
-		      6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
-					7)  rp_balance ;;
-					8)  daemon_stop ;;
-					[0qQ])  exit 0;;
+				1)  mn_overview ;;
+				2)  mn_install ;;
+				3)  DAEMON_START ;;
+				4)  mn_start ;;
+				5)  wl_unlock ;;
+				6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
+				7)  rp_balance ;;
+				8)  daemon_stop ;;
+			 [0qQ])  exit 0;;
 		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
 			 esac
 			pause
