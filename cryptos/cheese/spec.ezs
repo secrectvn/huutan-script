@@ -1,4 +1,5 @@
 #Specifications
+CRYPTO_NAME=cheese
 CODE_NAME=cheese
 MN_DAEMON=cheesed
 RPC_PORT=44700	

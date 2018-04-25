@@ -329,7 +329,7 @@ mn_overview(){
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${WL_BALANCE})
 		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
-		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
+		printf "$format" " " "${CRYPTO_   3NAME}" "$BALANCE" "$STATUS"
 
 	done
 	printf "%$width.${width}s\n" "$divider"
@@ -372,7 +372,7 @@ function action_main_menu(){
 			case $choice in
 				1)  mn_overview ;;
 				2)  mn_install ;;
-				3)  DAEMON_START ;;
+				3)  daemon_start ;;
 				4)  mn_start ;;
 				5)  wl_unlock ;;
 				6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
