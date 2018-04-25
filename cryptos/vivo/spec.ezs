@@ -18,9 +18,9 @@ function build_daemon(){
 	cd /root/ezmn/build/${CRYPTO_NAME}
 	./autogen.sh && ./configure	--without-gui && make 
 	cp src/${MN_DAEMON} src/${MN_CLI} src/${MN_TX} /root/ezmn/daemon/
-	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/reliefproject/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
-	echo -e "alias ${MN_CLI}='/root/ezmn/daemon/${MN_CLI} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/reliefproject/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
-	echo -e "alias ${MN_TX}='/root/ezmn/daemon/${MN_TX} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/reliefproject/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
+	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
+	echo -e "alias ${MN_CLI}='/root/ezmn/daemon/${MN_CLI} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
+	echo -e "alias ${MN_TX}='/root/ezmn/daemon/${MN_TX} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
 	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
 #Command

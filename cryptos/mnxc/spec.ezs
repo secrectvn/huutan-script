@@ -16,7 +16,7 @@ function build_daemon(){
 	cd /root/ezmn/build/${CRYPTO_NAME}/src/
 	make -f makefile.unix USE_UPNP=-
 	cp ${MN_DAEMON} /root/ezmn/daemon	
-	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/reliefproject/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
+	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
 	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
 #Command
