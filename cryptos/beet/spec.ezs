@@ -1,8 +1,7 @@
 #Specifications
-COIN_NAME='BeetleCoin'
-CRYPTO_NAME=beetle
+CRYPTO_NAME=Beetle
 CODE_NAME=beet
-MN_DEAMON=beetled
+MN_DAEMON=beetled
 RPC_PORT=47620
 MN_PORT=45823
 MN_REQUIRED=50000
@@ -11,21 +10,22 @@ MN_VERSION=2.1.0.3
 #
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
-function build_git(){
+function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
 	cd /root/ezmn/build/${CRYPTO_NAME}/src/
 	make -f makefile.unix USE_UPNP=-
-	cp ${MN_DEAMON} /root/ezmn/daemon
-	ln -s /root/ezmn/daemon/${MN_DEAMON}  /usr/bin/${MN_DEAMON}
+	cp ${MN_DAEMON} /root/ezmn/daemon	
+	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/reliefproject/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
 	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
+
 #Command
-DEAMON_START="${MN_DEAMON} ${DATA_DIR}"
-MN_START="${MN_DEAMON} ${DATA_DIR} masternode start " # need ${walletpassphrase}
-MN_STARTUS="${MN_DEAMON} ${DATA_DIR} masternode status"
-WL_STAKTING="${MN_DEAMON} ${DATA_DIR} getstakinginfo"
-WL_BALANCE="${MN_DEAMON} ${DATA_DIR} getbalance"
-WL_INFO="${MN_DEAMON} ${DATA_DIR} getinfo"
-WL_PRIVKEY="${MN_DEAMON} ${DATA_DIR} dumpprivkey " # need wallet address
-WL_UNLOCK="${MN_DEAMON} ${DATA_DIR} walletpassphrase" # need timeout
+DAEMON_START="${MN_DAEMON} "
+MN_START="${MN_DAEMON} masternode start " # need ${walletpassphrase}
+MN_STARTUS="${MN_DAEMON} masternode status"
+WL_STAKTING="${MN_DAEMON} getstakinginfo"
+WL_BALANCE="${MN_DAEMON} getbalance"
+WL_INFO="${MN_DAEMON} getinfo"
+WL_PRIVKEY="${MN_DAEMON} dumpprivkey " # need wallet address
+WL_UNLOCK="${MN_DAEMON} walletpassphrase" # need timeout

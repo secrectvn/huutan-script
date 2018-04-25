@@ -31,16 +31,17 @@ main_banner(){
    ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
 _banner_
 }
+
 main_menu(){
 	cat << _main_menu
     1) OVERVIEW MASTERNODE
     2) INSTALL MASTERNODE
-    3) START DEAMON
+    3) START DAEMON
     4) MASTERNODE START
     5) UNLOCK WALLET
     6) WALLET MANAGEMENT
     7) REPORT
-		8) DEAMON STOP
+	8) DAEMON STOP
     9) EXIT
 _main_menu
 }
@@ -108,19 +109,20 @@ create_config(){
 				sed -i "s|TX_HASH|$tx_hash|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
 				sed -i "s|TX_ID|$tx_id|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
 }
-# deamon control
-##deamon_start
-deamon_start(){
+
+# daemon control
+##DAEMON_START
+DAEMON_START(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	   echo "$red No cryptos are installed ! $NC"
 	   break;
 	else
-		echo -e "$green Please select the cryptos you want to start-deamon or [Q]uit $NC"
+		echo -e "$green Please select the cryptos you want to start-daemon or [Q]uit $NC"
 		list_ins=$(ls -1 /root/ezmn/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-			${DEAMON_START}
+			${DAEMON_START}
 			break ;
 		else [ $CODE_NAME != "q" ]
 			break ;
@@ -128,14 +130,14 @@ deamon_start(){
 		done
 	fi
 }
-##deamon_stop
-deamon_stop(){
+##daemon_stop
+daemon_stop(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		echo -e "$red Could not find deamon are running ! $NC "
+		echo -e "$red Could not find daemon are running ! $NC "
 		break;
 	else
-			echo -e "$green Please select the cryptos you want to stop-deamon or [Q]uit $NC"
+			echo -e "$green Please select the cryptos you want to stop-daemon or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -152,7 +154,7 @@ deamon_stop(){
 mn_start(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find deamon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to start-masternode or [Q]uit $NC"
@@ -173,7 +175,7 @@ mn_start(){
 mn_status(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find deamon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
@@ -192,7 +194,7 @@ mn_status(){
 ## masternode debug
 mn_debug(){
 		if [ -z "$(ls -A /root/ezmn/running/ )" ];
-		then			   echo -e "$red Could not find deamon are running ! $NC "
+		then			   echo -e "$red Could not find daemon are running ! $NC "
 			   break ;
 		else
 				echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
@@ -213,7 +215,7 @@ mn_debug(){
 wl_staking(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find deamon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $NC "
 		   break ;
 	else
 			echo -e "$green Please select the cryptos you want to check wallet-staking or [Q]uit $NC"
@@ -233,7 +235,7 @@ wl_staking(){
 wl_info(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo "$red Khong co deamon nao dang chay ! $NC "
+		   echo "$red Khong co daemon nao dang chay ! $NC "
 		   break
 	else
 			PS3="Vui long chon coin ban muon check staking hoac 'q' de thoat : "
@@ -254,7 +256,7 @@ wl_unlock(){
 
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find deamon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $NC "
 		   break
 	else
 			echo -e "$green Please select the cryptos you want to unlock-wallet or [Q]uit $NC"
@@ -276,7 +278,7 @@ wl_balance(){
 
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find deamon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $NC "
 		   break
 	else
 			echo -e "$green Please select the cryptos you want to check crypto-balance or [Q]uit $NC"
@@ -307,8 +309,8 @@ mn_install(){
 		input_txhash
 		input_txid
 		create_config
-		echo " $green Compile deamon $CRYPTO_NAME $NC "
-		build_git
+		echo " $green Compile daemon $CRYPTO_NAME $NC "
+		build_daemon
 		touch /root/ezmn/installed/${CODE_NAME}
 }
 # dashboard
@@ -322,8 +324,8 @@ mn_overview(){
 	width=55
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
-	DEAMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
-	for CODE_NAME  in $DEAMON_RUN  ; do
+	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+	for CODE_NAME  in $DAEMON_RUN  ; do
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${WL_BALANCE})
 		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
@@ -370,12 +372,12 @@ function action_main_menu(){
 			case $choice in
 		      1)  mn_overview ;;
 		      2)  mn_install ;;
-					3)  deamon_start ;;
+					3)  DAEMON_START ;;
 		      4)  mn_start ;;
 		      5)  wl_unlock ;;
 		      6)  echo -e "WALLET MANAGEMENT  - wait update " ;;
 					7)  rp_balance ;;
-					8)  deamon_stop ;;
+					8)  daemon_stop ;;
 					[0qQ])  exit 0;;
 		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
 			 esac

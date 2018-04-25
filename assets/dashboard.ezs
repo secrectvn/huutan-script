@@ -11,8 +11,8 @@ mn_overview(){
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
 
-	DEAMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
-	for CODE_NAME  in $DEAMON_RUN  ; do
+	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+	for CODE_NAME  in $DAEMON_RUN  ; do
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${BALANCE_MN})
 		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')		
