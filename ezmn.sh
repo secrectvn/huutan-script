@@ -112,7 +112,7 @@ create_config(){
 
 # daemon control
 ##DAEMON_START
-DAEMON_START(){
+daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	   echo "$red No cryptos are installed ! $NC"
 	   break;

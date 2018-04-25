@@ -18,17 +18,17 @@ function build_daemon(){
 	cd /root/ezmn/build/${CRYPTO_NAME}
 	./autogen.sh && ./configure	--without-gui && make 
 	cp src/${MN_DAEMON} src/${MN_CLI} src/${MN_TX} /root/ezmn/daemon/
-	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
-	echo -e "alias ${MN_CLI}='/root/ezmn/daemon/${MN_CLI} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
-	echo -e "alias ${MN_TX}='/root/ezmn/daemon/${MN_TX} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
-	rm -rf /root/ezmn/build/${CRYPTO_NAME}
+	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
+	ln -s /root/ezmn/daemon/${MN_CLI} /usr/bin/${MN_CLI}
+	ln -s /root/ezmn/daemon/${MN_TX} /usr/bin/${MN_TX}
+	rm -rf /root/ezmn/build/${CRYPTO_NAME}							
 }
 #Command
-DAEMON_START="${MN_DAEMON} 
-MN_START="${MN_CLI}  masternode start " # need ${walletpassphrase}
-MN_STARTUS="${MN_CLI}  masternode status"
-WL_STAKTING="${MN_CLI}  getstakingstatus"
-WL_BALANCE="${MN_CLI}  getbalance"
-WL_INFO="${MN_CLI}  getinfo"
-WL_PRIVKEY="${MN_CLI}  dumpprivkey " # need wallet address 
-WL_UNLOCK="${MN_CLI}  walletpassphrase" # need timeout
+DAEMON_START="${MN_DAEMON} ${DATA_DIR}"
+MN_START="${MN_CLI} ${DATA_DIR}  masternode start " # need ${walletpassphrase}
+MN_STARTUS="${MN_CLI} ${DATA_DIR}  masternode status"
+WL_STAKTING="${MN_CLI} ${DATA_DIR} getstakingstatus"
+WL_BALANCE="${MN_CLI} ${DATA_DIR} getbalance"
+WL_INFO="${MN_CLI} ${DATA_DIR} getinfo"
+WL_PRIVKEY="${MN_CLI} ${DATA_DIR} dumpprivkey " # need wallet address 
+WL_UNLOCK="${MN_CLI} ${DATA_DIR} walletpassphrase" # need timeout

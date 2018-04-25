@@ -7,21 +7,25 @@ MN_PORT=22813
 MN_REQUIRED=50000
 GIT_URL=https://github.com/vantaur/vantaur
 MN_VERSION=1.0.1
+#
+DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
+#function compile
 function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
 	cd /root/ezmn/build/${CRYPTO_NAME}/src/
 	make -f makefile.unix USE_UPNP=-
 	cp ${MN_DAEMON} /root/ezmn/daemon	
-	echo -e "alias ${MN_DAEMON}='/root/ezmn/daemon/${MN_DAEMON} --datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${MN_DAEMON}/${CRYPTO_NAME}.conf' " > /root/.bash_aliases
+	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
 	rm -rf /root/ezmn/build/${CRYPTO_NAME}
 }
+
 #Command
-DAEMON_START="${MN_DAEMON} "
-MN_START="${MN_DAEMON} masternode start " # need ${walletpassphrase}
-MN_STARTUS="${MN_DAEMON} masternode status"
-WL_STAKTING="${MN_DAEMON} getstakinginfo"
-WL_BALANCE="${MN_DAEMON} getbalance"
-WL_INFO="${MN_DAEMON} getinfo"
-WL_PRIVKEY="${MN_DAEMON} dumpprivkey " # need wallet address
-WL_UNLOCK="${MN_DAEMON} walletpassphrase" # need timeout
+DAEMON_START="${MN_DAEMON} ${DATA_DIR}"
+MN_START="${DAEMON_START} masternode start " # need ${walletpassphrase}
+MN_STARTUS="${DAEMON_START} masternode status"
+WL_STAKTING="${DAEMON_START} getstakinginfo"
+WL_BALANCE="${DAEMON_START} getbalance"
+WL_INFO="${DAEMON_START} getinfo"
+WL_PRIVKEY="${DAEMON_START} dumpprivkey " # need wallet address
+WL_UNLOCK="${DAEMON_START} walletpassphrase" # need timeout
