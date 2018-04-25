@@ -32,15 +32,10 @@ function install_confirm(){
     esac
 }
 function update_ezmn(){
-	rm -rf /usr/local/ezmn/
-  rm -rf /usr/local/ezlite/
-	unlink /usr/bin/ezmn
-  unlink /usr/bin/ezlite
-  mv /root/ezlite /root/ezmn
-	git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
-	chmod +x /usr/local/ezmn/ezmn.sh ;
-  chmod +x /usr/local/ezmn/assets/report.sh ;
-	ln -s /usr/local/ezmn/ezmn.sh /usr/bin/ezmn ;
+rm -rf /usr/local/ezmn/
+git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
+chmod +x /usr/local/ezmn/ezmn.sh ;
+chmod +x /usr/local/ezmn/assets/report.sh ;
 }
 display_banner
 #install_confirm
