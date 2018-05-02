@@ -3,6 +3,6 @@
 for CODE_NAME  in $DAEMON_RUN  ; do
 	source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 	DATE=$(date +%d-%m-%y)
-	BALANCE=$(${BALANCE_MN})
+	BALANCE=$(${WL_BALANCE})
 	echo -e "$DATE ; $BALANCE" >> /root/ezmn/report/${CODE_NAME}.csv
 done

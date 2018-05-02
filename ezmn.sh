@@ -305,34 +305,29 @@ mn_install(){
 # dashboard
 mn_overview(){
 	tput clear
-	source /usr/local/ezmn/assets/banner.ezs
-	show_main_banner
-	divider===============================
+	main_banner
+	divider==============================================================
 	divider=$divider$divider
-	header="%-2s %-15s %-10s %-25s %-25s\n"
-	format="%-2s %-15s %-10.2f %-25s %-25s\n"
-	width=60
-	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN" "VERSION"
+	header="%-2s %-20s %-10s %-30s %-25s\n"
+	format="%-2s %-20s %-10.2f %-30s %-25s\n"
+	width=100
+	printf "$header" " " "CRYPTO NAME" "BALANCE" "VERSION" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
 
 	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DAEMON_RUN  ; do
-		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
-		BALANCE=$(${BALANCE_MN})
-		STATUS=${OV_STATUS}
-		if [["$OV_STATUS" == ""] || ["$OV_STATUS" == "Masternode successfully started"]]; then
-		echo "successfully"
-		if ["$OV_STATUS" != "locked"]; then
-		echo "Wallet locked"
-		else 
-			echo "${OV_STATUS}"
+		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs		
+	  BALANCE=$(${WL_BALANCE})
+		if [ "$OV_STATUS" == '""' ] || [ "$OV_STATUS" == '"Masternode successfully started"' ]; then 
+		STATUS="successfully"
+		else   
+		STATUS="$OV_STATUS"
 		fi
-		fi
-		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS" "${OV_VERSION}"
-		printf "%$width.${width}s\n" "$divider"				
+		printf "$format" " " "${CRYPTO_NAME}" "$BALANCE" "${OV_VERSION}" "$STATUS" 
+		printf "%$width.${width}s\n" "$divider$divider"				
 		
 	done
-	printf "%$width.${width}s\n" "$divider"	
+
 }
 rp_balance(){
 	tput clear
