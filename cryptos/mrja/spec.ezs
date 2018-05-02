@@ -23,9 +23,13 @@ function build_daemon(){
 #Command
 DAEMON_START="${MN_DAEMON} ${DATA_DIR}"
 MN_START="${DAEMON_START} masternode start " # need ${walletpassphrase}
-MN_STARTUS="${DAEMON_START} masternode status"
+MN_STATUS="${DAEMON_START} masternode status"
 WL_STAKTING="${DAEMON_START} getstakinginfo"
 WL_BALANCE="${DAEMON_START} getbalance"
 WL_INFO="${DAEMON_START} getinfo"
 WL_PRIVKEY="${DAEMON_START} dumpprivkey " # need wallet address
 WL_UNLOCK="${DAEMON_START} walletpassphrase" # need timeout
+#OVERVIEW
+OV_STATUS=$(${MN_STATUS} | jshon -e "notCapableReason")
+OV_STAKING=$(${WL_STAKTING} | jshon -e "staking")
+OV_VERSION=$(${WL_INFO} | jshon -e "version")

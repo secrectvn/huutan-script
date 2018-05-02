@@ -1,19 +1,10 @@
 #!/bin/bash
-#COLORS
-black=$(tput setaf 0)
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
-magenta=$(tput setaf 5)
-cyan=$(tput setaf 6)
-white=$(tput setaf 7)
-NC=$(tput sgr0)
 # VAR
 DIR_EZMN="/usr/local/ezmn"
 MN_DATA="/root/masternode"
 LS_CRYPTOS="$DIR_EZMN/cryptos"
 EZ_CONFIG="$DIR_EZMN/assets/config/"
+source $DIR_EZMN/assets/colors.ezs
 number_cols=$(((($(tput cols) - 45)) / 5))
 mn_address=$(ip route get 1 | awk '{print $NF;exit}');
 rd_passwd=$(date +%s | sha256sum | base64 | head -c 32 ;);
@@ -61,7 +52,7 @@ input_genkey(){
 	}
 # input txhash
 input_txhash (){
-	read -p  "${green} Input TXHASH (chay lenh masternode outputs): $NC" tx_hash ;
+	read -p  "${green} Input TXHASH : $NC" tx_hash ;
 	}
 # INPUT TXID
 input_txid(){
@@ -117,14 +108,13 @@ daemon_start(){
 	   echo "$red No cryptos are installed ! $NC"
 	   break;
 	else
-		echo -e "$green Please select the cryptos you want to start-daemon or [Q]uit $NC"
+		echo -e "$green Please select the cryptos you want to START-DAEMON or [Q]uit $NC"
 		list_ins=$(ls -1 /root/ezmn/installed/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-			${DAEMON_START}
-			break ;
-		else [ $CODE_NAME != "q" ]
+			${DAEMON_START}			
+		else [ "$CODE_NAME" == "q" ]
 			break ;
 		fi
 		done
@@ -137,13 +127,12 @@ daemon_stop(){
 		echo -e "$red Could not find daemon are running ! $NC "
 		break;
 	else
-			echo -e "$green Please select the cryptos you want to stop-daemon or [Q]uit $NC"
+			echo -e "$green Please select the cryptos you want to ST-DAEMON or [Q]uit $NC"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
-			kill $(cat /root/ezmn/running/${CODE_NAME}.csv)
-				break ;
-			else [ $CODE_NAME != "q" ]
+			kill 	
+			else [ "$CODE_NAME" == "q" ]
 				break ;
 			fi
 			done
@@ -165,7 +154,7 @@ mn_start(){
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${MN_START} $walletpassphrase
 				break ;
-			else [ $CODE_NAME != "q" ]
+			else [ "$CODE_NAME" == "q" ]
 				break ;
 			fi
 			done
@@ -183,9 +172,9 @@ mn_status(){
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
-				${MN_STARTUS}
+				${MN_STATUS}
 				break ;
-			else [ $CODE_NAME != "q" ]
+			else [ "$CODE_NAME" == "q" ]
 				break ;
 			fi
 			done
@@ -202,9 +191,9 @@ mn_debug(){
 				select CODE_NAME in $list_ins; do
 				if [ -n "$CODE_NAME" ]; then
 					source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
-					${MN_STARTUS}
+					${MN_STATUS}
 					break ;
-				else [ $CODE_NAME != "q" ]
+				else [ "$CODE_NAME" == "q" ]
 					break ;
 				fi
 				done
@@ -267,7 +256,7 @@ wl_unlock(){
 				source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
 				${WL_UNLOCK} $walletpassphrase 32000000
 				break
-			else [ $CODE_NAME != "q" ]
+			else [ "$CODE_NAME" == "q" ]
 				break ;
 			fi
 			done
@@ -288,7 +277,7 @@ wl_balance(){
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 				${WL_BALANCE}
 				break
-			else [ $CODE_NAME != "q" ]
+			else [ "$CODE_NAME" == "q" ]
 				break ;
 			fi
 			done
@@ -316,23 +305,34 @@ mn_install(){
 # dashboard
 mn_overview(){
 	tput clear
-	main_banner
+	source /usr/local/ezmn/assets/banner.ezs
+	show_main_banner
 	divider===============================
 	divider=$divider$divider
-	header="%-2s %-15s %-10s %-25s\n"
-	format="%-2s %-15s %-10.2f %-25s\n"
-	width=55
-	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
+	header="%-2s %-15s %-10s %-25s %-25s\n"
+	format="%-2s %-15s %-10.2f %-25s %-25s\n"
+	width=60
+	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN" "VERSION"
 	printf "%$width.${width}s\n" "$divider"
+
 	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DAEMON_RUN  ; do
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
-		BALANCE=$(${WL_BALANCE})
-		STATUS=$(${MN_STARTUS} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')
-		printf "$format" " " "${CRYPTO_   3NAME}" "$BALANCE" "$STATUS"
-
+		BALANCE=$(${BALANCE_MN})
+		STATUS=${OV_STATUS}
+		if [["$OV_STATUS" == ""] || ["$OV_STATUS" == "Masternode successfully started"]]; then
+		echo "successfully"
+		if ["$OV_STATUS" != "locked"]; then
+		echo "Wallet locked"
+		else 
+			echo "${OV_STATUS}"
+		fi
+		fi
+		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS" "${OV_VERSION}"
+		printf "%$width.${width}s\n" "$divider"				
+		
 	done
-	printf "%$width.${width}s\n" "$divider"
+	printf "%$width.${width}s\n" "$divider"	
 }
 rp_balance(){
 	tput clear

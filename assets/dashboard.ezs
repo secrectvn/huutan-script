@@ -5,23 +5,31 @@ mn_overview(){
 	show_main_banner
 	divider===============================
 	divider=$divider$divider
-	header="%-2s %-15s %-10s %-25s\n"
-	format="%-2s %-15s %-10.2f %-25s\n"
-	width=55
-	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN"
+	header="%-2s %-15s %-10s %-25s %-25s\n"
+	format="%-2s %-15s %-10.2f %-25s %-25s\n"
+	width=60
+	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN" "VERSION"
 	printf "%$width.${width}s\n" "$divider"
 
 	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DAEMON_RUN  ; do
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${BALANCE_MN})
-		STATUS=$(${STATUS_MN} | grep -E 'message|notCapableReason' | tr -d '"' |  awk '{print $3, $4, $5}')		
-		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS"
+		STATUS=${OV_STATUS}
+		if [["$OV_STATUS" == ""] || ["$OV_STATUS" == "Masternode successfully started"]]; then
+		echo "successfully"
+		if ["$OV_STATUS" != "locked"]; then
+		echo "Wallet locked"
+		else 
+			echo "${OV_STATUS}"
+		fi
+		fi
+		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS" "${OV_VERSION}"
+		printf "%$width.${width}s\n" "$divider"				
 		
 	done
 	printf "%$width.${width}s\n" "$divider"	
 }
-
 ls_balance(){
         tput clear
 		source /usr/local/ezmn/assets/banner.ezs
@@ -47,7 +55,7 @@ else
                 printf "%$width.${width}s\n" "$divider"
                 printf "$format" "$LS_BALANCE"
 				printf ""
-		else [ $CODE_NAME !='q' ]
+		else [ "$CODE_NAME" != "q" ]
 			break ;
 		fi
 		done

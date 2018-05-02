@@ -6,7 +6,6 @@ blu=$(tput setaf 4)
 NC=$(tput sgr0)
 #######################-B-A-N-N-E-R-#####################
 display_banner(){
-tput bold
 cat << _banner_
 	 ███████╗███████╗███╗   ███╗███╗   ██╗
 	 ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
@@ -15,14 +14,13 @@ cat << _banner_
 	 ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
 	 ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
 _banner_
-echo -n $NC
 }
 alert_distro(){
 tput setaf 1
 cat << _alert
 ╔═════════════════════════════════════╗
-║         ezmn-MASTERNODE             ║
-║    chi ho tro Ubuntu 16.04 x64      ║
+║         EZMN-MASTERNODE             ║
+║    ONLY SUPPORT UBUNTU 16.04 x64    ║
 ╚═════════════════════════════════════╝
 _alert
 tput sgr0
