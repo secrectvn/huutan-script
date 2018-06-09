@@ -1,17 +1,3 @@
-#################### BANNER ##########################
-main_banner(){
-	echo -e ""
-	cat << _banner_
-   ███████╗███████╗███╗   ███╗███╗   ██╗
-   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
-   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
-   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
-   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
-   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
-_banner_
-}
-
-############################################################
 input_cryptos(){
 		source /usr/local/assets/input.ezs
 		input_codename
@@ -82,13 +68,15 @@ check_cryptos(){
 ################## INSTALL MENU ############################
 ### DISPLAY ###
 display_install_menu(){
+	tput clear	
+	main_banner
 	cat << _main_menu
-	1) AUTO INSTALL MASTERNODE (2+4)
-	2) INSTALL WALLET
-	3) UPDATE WALLET
-	4) CREATE FILE CONFIG
-	5) UPDATE FILE CONFIG
-	9) BACK
+ 1) AUTO INSTALL MASTERNODE (2+4)
+ 2) INSTALL WALLET
+ 3) UPDATE WALLET
+ 4) CREATE FILE CONFIG
+ 5) UPDATE FILE CONFIG
+ 9) BACK
 _main_menu
 }
 ### ACTION ###
@@ -105,5 +93,5 @@ function action_install_menu(){
 			 [0qQ])  exit 0;;
 		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
 			 esac
-			pause
+			
 	}

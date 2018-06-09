@@ -1,31 +1,20 @@
-#################### BANNER ##########################
-main_banner(){
-	echo -e ""
-	cat << _banner_
-   ███████╗███████╗███╗   ███╗███╗   ██╗
-   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
-   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
-   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
-   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
-   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
-_banner_
-}
-###################### MAIN MENU #########################
+
 ### DISPLAY ###
 display_main_menu(){
+	main_banner
 	cat << _main_menu
-	1) OVERVIEW MASTERNODE
-	2) INSTALL MENU
-	3) WALLET MENU
-	4) AUTO START 
-	5) REPORT 
-	0) EXIT
+ 1) OVERVIEW MASTERNODE
+ 2) INSTALL MENU
+ 3) WALLET MENU
+ 4) AUTO START 
+ 5) REPORT 
+ 0) EXIT
 _main_menu
 }
 ### ACTION ###
 
 function action_main_menu(){
-	    local choice
+		local choice
 	    read -p "$green Enter choice [1-8] or [Q]uit : $NC" choice
 			case $choice in
 				1)  mn_overview ;;
@@ -77,4 +66,6 @@ wallet_menu(){
 	action_wallet_menu
 
 }
-auto_start(){}
+auto_start(){
+	echo " w8 update"
+}
