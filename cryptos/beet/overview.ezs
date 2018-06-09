@@ -1,0 +1,6 @@
+
+#OVERVIEW
+source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
+OV_STATUS=$(${MN_STATUS} | jshon -e "notCapableReason")
+OV_STAKING=$(${WL_STAKTING} | jshon -e "staking")
+OV_VERSION=$(${WL_INFO} | jshon -e "version")

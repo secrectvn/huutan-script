@@ -1,0 +1,28 @@
+#input
+# input code name
+input_code_name(){
+	read -p  "${green} Enter the code name ( lowcase ) : $NC" CODE_NAME
+	}
+# input walletpassphrase
+input_walletpassphrase(){
+	read -s -p  "${green} Input Walletpassphrase : $NC" walletpassphrase
+	}
+# input masternode genkey
+input_genkey(){
+	read -p  "${green} Input Masternode Genkey : $NC"  mn_genkey ;
+	}
+# input txhash
+input_txhash (){
+	read -p  "${green} Input TXHASH : $NC" tx_hash ;
+	}
+# INPUT TXID
+input_txid(){
+	echo -e " $green 0) TXID = 0 $NC"
+	echo -e " $green 1) TXID = 1 $NC"
+	read -p  "$green Choice TXID [0] or [1]: $NC" tx_id
+	case $tx_id in
+					0) tx_id=0 ;;
+					1) tx_id=1 ;;
+					*) echo "$red The wrong selection, please select again ! $NC " ;;
+	 esac
+	}

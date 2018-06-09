@@ -9,6 +9,7 @@ MN_PORT=5500
 MN_REQUIRED=25000
 GIT_URL=https://github.com/shekeltechnologies/JewNew
 MN_VERSION=1.3.0.0
+GROUP=2
 #
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
@@ -23,16 +24,3 @@ function build_daemon(){
 	ln -s /root/ezmn/daemon/${MN_TX} /usr/bin/${MN_TX}
 	rm -rf /root/ezmn/build/${CRYPTO_NAME}							
 }
-#Command
-DAEMON_START="${MN_DAEMON} ${DATA_DIR}"
-MN_START="${MN_CLI} ${DATA_DIR}  masternode start " # need ${walletpassphrase}
-MN_STATUS="${MN_CLI} ${DATA_DIR}  masternode status"
-WL_STAKTING="${MN_CLI} ${DATA_DIR} getstakingstatus"
-WL_BALANCE="${MN_CLI} ${DATA_DIR} getbalance"
-WL_INFO="${MN_CLI} ${DATA_DIR} getinfo"
-WL_PRIVKEY="${MN_CLI} ${DATA_DIR} dumpprivkey " # need wallet address 
-WL_UNLOCK="${MN_CLI} ${DATA_DIR} walletpassphrase" # need timeout
-#OVERVIEW
-OV_STATUS=$(${MN_STATUS} | jshon -e "message")
-OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
-OV_VERSION=$(${WL_INFO} | jshon -e "version")

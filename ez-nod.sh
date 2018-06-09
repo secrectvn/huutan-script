@@ -10,9 +10,61 @@ mn_address=$(ip route get 1 | awk '{print $NF;exit}');
 rd_passwd=$(date +%s | sha256sum | base64 | head -c 32 ;);
 wl_passwd=$(date +%s | sha256sum | base64 | head -c 16 ;);
 
+#display
+main_banner(){
+	echo -e ""
+	cat << _banner_
+   ███████╗███████╗███╗   ███╗███╗   ██╗
+   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
+   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
+   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
+   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
+   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
+_banner_
+}
+
+
+# Fuction
+# input code name
+input_code_name(){
+	read -p  "${green} Enter the code name ( lowcase ) you want to install : $NC" CODE_NAME
+	}
+# input walletpassphrase
+input_walletpassphrase(){
+	read -s -p  "${green} Input Walletpassphrase : $NC" walletpassphrase
+	}
+# input masternode genkey
+input_genkey(){
+	read -p  "${green} Input Masternode Genkey : $NC"  mn_genkey ;
+	}
+# input txhash
+input_txhash (){
+	read -p  "${green} Input TXHASH : $NC" tx_hash ;
+	}
+# INPUT TXID
+input_txid(){
+	echo -e " $green 0) TXID = 0 $NC"
+	echo -e " $green 1) TXID = 1 $NC"
+	read -p  "$green Choice TXID [0] or [1]: $NC" tx_id
+	case $tx_id in
+					0) tx_id=0 ;;
+					1) tx_id=1 ;;
+					*) echo "$red The wrong selection, please select again ! $NC " ;;
+	 esac
+	}
+
 #action
 # check_cryptos support
-
+check_cryptos(){
+	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];
+		then
+			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/
+		else
+			echo "$red This crypto is not yet supported, please contact us for updates ! $NC"
+			break ;
+		fi
+	}
 # create_config for cryptos
 create_config(){
 			input_genkey
@@ -129,7 +181,7 @@ mn_debug(){
 				select CODE_NAME in $list_ins; do
 				if [ -n "$CODE_NAME" ]; then
 					source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs
-					${MN_DEBUG}
+					${MN_STATUS}
 					break ;
 				else [ "$CODE_NAME" == "q" ]
 					break ;

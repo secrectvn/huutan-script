@@ -1,0 +1,109 @@
+#################### BANNER ##########################
+main_banner(){
+	echo -e ""
+	cat << _banner_
+   ███████╗███████╗███╗   ███╗███╗   ██╗
+   ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
+   █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
+   ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
+   ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
+   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
+_banner_
+}
+
+############################################################
+input_cryptos(){
+		source /usr/local/assets/input.ezs
+		input_codename
+		input_genkey
+		input_txhash
+		input_txid		
+}
+create_config(){
+			source ${LS_CRYPTOS}/$CODE_NAME/spec.ezs ;
+			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/ ;
+	# crypto config
+			cp -p ${EZ_CONFIG}/config.env  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|RPCCOIN|$CRYPTO_NAME-RPC|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|RPCPASS|$rd_passwd|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|RPCPORT|$RPC_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|MN_GENKEY|$mn_genkey|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|MN_ADDR|$mn_address|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|MN_PORT|$MN_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+				sed -i "s|CODE_NAME|${CODE_NAME}|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+	# masternode config
+			cp -p ${EZ_CONFIG}/masternode.env  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|MN_ALIAS|$(hostname)|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|MN_ADDR|$mn_address|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|MN_PORT|$MN_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|MN_GENKEY|$mn_genkey|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|TX_HASH|$tx_hash|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+				sed -i "s|TX_ID|$tx_id|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+}
+
+auto_install_masternode(){
+	source /usr/local/assets/input.ezs
+	input_cryptos
+	create_config
+}
+install_wallet(){
+	source /usr/local/assets/input.ezs
+	input_code_name
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	build_daemon
+	}
+update_wallet(){
+	source /usr/local/assets/input.ezs
+	input_code_name
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	rm /ezmn/daemon/${MN_DAEMON}
+	build_daemon
+}
+update_config(){
+	source /usr/local/assets/input.ezs
+	input_code_name
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	rm /${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
+	rm ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
+	create_config	
+}
+check_cryptos(){
+	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];
+		then
+			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/
+		else
+			echo "$red This crypto is not yet supported, please contact us for updates ! $NC"
+			break ;
+		fi
+	}
+
+
+################## INSTALL MENU ############################
+### DISPLAY ###
+display_install_menu(){
+	cat << _main_menu
+	1) AUTO INSTALL MASTERNODE (2+4)
+	2) INSTALL WALLET
+	3) UPDATE WALLET
+	4) CREATE FILE CONFIG
+	5) UPDATE FILE CONFIG
+	9) BACK
+_main_menu
+}
+### ACTION ###
+
+function action_install_menu(){
+	    local choice
+	    read -p "$green Enter choice [1-8] or [Q]uit : $NC" choice
+			case $choice in
+				1)  auto_install_masternode ;;
+				2)  install_wallet ;;
+				3)  update_wallet ;;
+				4)  input_cryptos && create_config ;;
+				9)  return ;;
+			 [0qQ])  exit 0;;
+		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
+			 esac
+			pause
+	}
