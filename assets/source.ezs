@@ -1,0 +1,35 @@
+# Source 
+EZ_ASSETS="/usr/local/ezmn/assets"
+
+DIR_EZMN="/usr/local/ezmn"
+MN_DATA="/root/masternode"
+LS_CRYPTOS="$DIR_EZMN/cryptos"
+EZ_CONFIG="$DIR_EZMN/assets/config/"
+number_cols=$(((($(tput cols) - 45)) / 5)) ;
+mn_address=$(ip route get 1 | awk '{print $NF;exit}');
+rd_passwd=$(date +%s | sha256sum | base64 | head -c 32 ;);
+wl_passwd=$(date +%s | sha256sum | base64 | head -c 16 ;);
+
+
+
+
+
+s_main_menu(){
+	source ${EZ_ASSETS}/main-menu.ezs
+}
+
+s_install_menu(){
+	source ${EZ_ASSETS}/install-menu.ezs
+}
+s_wallet_menu(){
+	source ${EZ_ASSETS}/wallet-menu.ezs
+}
+s_color(){
+	source ${EZ_ASSETS}/color.ezs
+}
+
+
+s_input(){
+	source ${EZ_ASSETS}/input.ezs
+}
+
