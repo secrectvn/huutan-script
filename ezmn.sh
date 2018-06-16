@@ -1,5 +1,6 @@
 #!/bin/bash
 source /usr/local/ezmn/assets/source.ezs ;
+s_color
 
 ################
 # Trap CTRL+C, CTRL+Z and quit singles

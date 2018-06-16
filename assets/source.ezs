@@ -10,7 +10,7 @@ rd_passwd=$(date +%s | sha256sum | base64 | head -c 32 ;);
 wl_passwd=$(date +%s | sha256sum | base64 | head -c 16 ;);
 #################### BANNER ##########################
 main_banner(){
-	echo -e ""
+	echo $txBold $fgWhite
 	cat << _banner_
    ███████╗███████╗███╗   ███╗███╗   ██╗
    ██╔════╝╚══███╔╝████╗ ████║████╗  ██║ EASY
@@ -23,7 +23,7 @@ _banner_
 ###################### MAIN MENU #########################
 # Pause 
 pause(){
-  read -p "Press [Enter] key to continue..." fackEnterKey
+  read -p "  Press [Enter] key to continue..." fackEnterKey
 }
 s_main_menu(){
 	source ${EZ_ASSETS}/main-menu.ezs
@@ -35,9 +35,13 @@ s_wallet_menu(){
 	source ${EZ_ASSETS}/wallet-menu.ezs
 }
 s_color(){
-	source ${EZ_ASSETS}/color.ezs
+	source ${EZ_ASSETS}/colors.ezs
 }
 s_input(){
 	source ${EZ_ASSETS}/input.ezs
 }
-
+s_color
+s_input
+s_main_menu
+s_install_menu
+s_wallet_menu

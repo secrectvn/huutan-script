@@ -27,7 +27,7 @@ _main_menu
 
 function action_main_menu(){
 	    local choice
-	    read -p "$green Enter choice [1-8] or [Q]uit : $NC" choice
+	    read -p "$fgBlue Enter choice [1-8] or [Q]uit : $txReset" choice
 			case $choice in
 				1)  mn_overview ;;
 				2)  install_menu ;;
@@ -38,7 +38,7 @@ function action_main_menu(){
 				7)  rp_balance ;;
 				8)  daemon_stop ;;
 			 [0qQ])  exit 0;;
-		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
+		      *)	echo "${red} The wrong selection, please select again ! $txReset " ;;
 			 esac
 			pause
 	}

@@ -27,29 +27,29 @@ _banner_
 # Fuction
 # input code name
 input_code_name(){
-	read -p  "${green} Enter the code name ( lowcase ) you want to install : $NC" CODE_NAME
+	read -p  "$fgGreen Enter the code name ( lowcase ) you want to install : $txReset" CODE_NAME
 	}
 # input walletpassphrase
 input_walletpassphrase(){
-	read -s -p  "${green} Input Walletpassphrase : $NC" walletpassphrase
+	read -s -p  "$fgGreen Input Walletpassphrase : $txReset" walletpassphrase
 	}
 # input masternode genkey
 input_genkey(){
-	read -p  "${green} Input Masternode Genkey : $NC"  mn_genkey ;
+	read -p  "$fgGreen Input Masternode Genkey : $txReset"  mn_genkey ;
 	}
 # input txhash
 input_txhash (){
-	read -p  "${green} Input TXHASH : $NC" tx_hash ;
+	read -p  "$fgGreen Input TXHASH : $txReset" tx_hash ;
 	}
 # INPUT TXID
 input_txid(){
-	echo -e " $green 0) TXID = 0 $NC"
-	echo -e " $green 1) TXID = 1 $NC"
-	read -p  "$green Choice TXID [0] or [1]: $NC" tx_id
+	echo -e " $fgBlue 0) TXID = 0 $txReset"
+	echo -e " $fgBlue 1) TXID = 1 $txReset"
+	read -p  "$fgBlue Choice TXID [0] or [1]: $txReset" tx_id
 	case $tx_id in
 					0) tx_id=0 ;;
 					1) tx_id=1 ;;
-					*) echo "$red The wrong selection, please select again ! $NC " ;;
+					*) echo "$red The wrong selection, please select again ! $txReset " ;;
 	 esac
 	}
 
@@ -61,7 +61,7 @@ check_cryptos(){
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/
 		else
-			echo "$red This crypto is not yet supported, please contact us for updates ! $NC"
+			echo "$red This crypto is not yet supported, please contact us for updates ! $txReset"
 			break ;
 		fi
 	}
@@ -95,10 +95,10 @@ create_config(){
 ##DAEMON_START
 daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
-	   echo "$red No cryptos are installed ! $NC"
+	   echo "$red No cryptos are installed ! $txReset"
 	   break;
 	else
-		echo -e "$green Please select the cryptos you want to START-DAEMON or [Q]uit $NC"
+		echo -e "$fgBlue Please select the cryptos you want to START-DAEMON or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/installed/ )
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -114,10 +114,10 @@ daemon_start(){
 daemon_stop(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		echo -e "$red Could not find daemon are running ! $NC "
+		echo -e "$red Could not find daemon are running ! $txReset "
 		break;
 	else
-			echo -e "$green Please select the cryptos you want to ST-DAEMON or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to ST-DAEMON or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -133,10 +133,10 @@ daemon_stop(){
 mn_start(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find daemon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $txReset "
 		   break ;
 	else
-			echo -e "$green Please select the cryptos you want to start-masternode or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -154,10 +154,10 @@ mn_start(){
 mn_status(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find daemon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $txReset "
 		   break ;
 	else
-			echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to check masterode-status or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -173,10 +173,10 @@ mn_status(){
 ## masternode debug
 mn_debug(){
 		if [ -z "$(ls -A /root/ezmn/running/ )" ];
-		then			   echo -e "$red Could not find daemon are running ! $NC "
+		then			   echo -e "$red Could not find daemon are running ! $txReset "
 			   break ;
 		else
-				echo -e "$green Please select the cryptos you want to check masterode-status or [Q]uit $NC"
+				echo -e "$fgBlue Please select the cryptos you want to check masterode-status or [Q]uit $txReset"
 				list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 				select CODE_NAME in $list_ins; do
 				if [ -n "$CODE_NAME" ]; then
@@ -194,10 +194,10 @@ mn_debug(){
 wl_staking(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find daemon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $txReset "
 		   break ;
 	else
-			echo -e "$green Please select the cryptos you want to check wallet-staking or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to check wallet-staking or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -214,7 +214,7 @@ wl_staking(){
 wl_info(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo "$red Khong co daemon nao dang chay ! $NC "
+		   echo "$red Khong co daemon nao dang chay ! $txReset "
 		   break
 	else
 			PS3="Vui long chon coin ban muon check staking hoac 'q' de thoat : "
@@ -235,10 +235,10 @@ wl_unlock(){
 
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find daemon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $txReset "
 		   break
 	else
-			echo -e "$green Please select the cryptos you want to unlock-wallet or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to unlock-wallet or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -257,10 +257,10 @@ wl_balance(){
 
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];
 	then
-		   echo -e "$red Could not find daemon are running ! $NC "
+		   echo -e "$red Could not find daemon are running ! $txReset "
 		   break
 	else
-			echo -e "$green Please select the cryptos you want to check crypto-balance or [Q]uit $NC"
+			echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
@@ -284,7 +284,7 @@ pause(){
 mn_install(){
 		input_code_name
 		check_cryptos
-		echo " $green Compile daemon $CRYPTO_NAME $NC "
+		echo " $fgBlue Compile daemon $CRYPTO_NAME $txReset "
 		build_daemon
 		touch /root/ezmn/installed/${CODE_NAME}
 }
@@ -332,7 +332,7 @@ rp_balance(){
 	printf "%$width.${width}s\n" "$divider"
 	if [ -z "$(ls -A /root/ezmn/report/ )" ];
 	then
-		echo "$red Khong tim thay file balance ! $NC "
+		echo "$red Khong tim thay file balance ! $txReset "
 		break ;
 	else
 		PS3="Vui long chon coin ban muon check balance hoac 'q' de thoat : "
@@ -355,7 +355,7 @@ rp_balance(){
 # Action Main Menu
 function action_main_menu(){
 	    local choice
-	    read -p "$green Enter choice [1-8] or [Q]uit : $NC" choice
+	    read -p "$fgBlue Enter choice [1-8] or [Q]uit : $txReset" choice
 			case $choice in
 				1)  mn_overview ;;
 				2)  mn_install ;;
@@ -366,7 +366,7 @@ function action_main_menu(){
 				7)  rp_balance ;;
 				8)  daemon_stop ;;
 			 [0qQ])  exit 0;;
-		      *)	echo "${red} The wrong selection, please select again ! $NC " ;;
+		      *)	echo "${red} The wrong selection, please select again ! $txReset " ;;
 			 esac
 			pause
 	}

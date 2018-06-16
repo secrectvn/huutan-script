@@ -20,15 +20,15 @@ mn_overview(){
 		echo "successfully"
 		if ["$OV_STATUS" != "locked"]; then
 		echo "Wallet locked"
-		else 
+		else
 			echo "${OV_STATUS}"
 		fi
 		fi
 		printf "$format" " " "${COIN_NAME}" "$BALANCE" "$STATUS" "${OV_VERSION}"
-		printf "%$width.${width}s\n" "$divider"				
-		
+		printf "%$width.${width}s\n" "$divider"
+
 	done
-	printf "%$width.${width}s\n" "$divider"	
+	printf "%$width.${width}s\n" "$divider"
 }
 ls_balance(){
         tput clear
@@ -59,6 +59,6 @@ else
 			break ;
 		fi
 		done
-		printf "%$width.${width}s\n" "$divider"	
+		printf "%$width.${width}s\n" "$divider"
 	fi
 }

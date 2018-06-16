@@ -1,0 +1,21 @@
+#Specifications
+CRYPTO_NAME=Harvest
+CODE_NAME=hc
+MN_DAEMON=Harvestd
+RPC_PORT=12117
+MN_PORT=12116 
+MN_REQUIRED=2500
+GIT_URL=https://github.com/HarvestMasternodecoin/Harvestcoin.git
+MN_VERSION=v1.0.1.2-60028
+#
+DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
+#function compile
+function build_daemon(){
+	cd /root/ezmn/build
+	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
+	cd /root/ezmn/build/${CRYPTO_NAME}/src/
+	make -f makefile.unix USE_UPNP=-
+	cp ${MN_DAEMON} /root/ezmn/daemon	
+	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
+	rm -rf /root/ezmn/build/${CRYPTO_NAME}
+}

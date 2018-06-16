@@ -1,9 +1,10 @@
 #!/bin/bash
-red=$(tput setaf 1)
-gre=$(tput setaf 2)
-yel=$(tput setaf 3)
-blu=$(tput setaf 4)
-NC=$(tput sgr0)
+txReset=$(tput sgr0)   # reset attributes
+fgRed=$(tput setaf 1) # red
+fgGreen=$(tput setaf 2) # green
+fgBlue=$(tput setaf 4) # blue
+txReset=$(tput sgr0)   # reset attributes
+
 #######################-B-A-N-N-E-R-#####################
 display_banner(){
 cat << _banner_
@@ -16,19 +17,19 @@ cat << _banner_
 _banner_
 }
 alert_distro(){
-tput setaf 1
-cat << _alert
-╔═════════════════════════════════════╗
-║         EZMN-MASTERNODE             ║
-║    ONLY SUPPORT UBUNTU 16.04 x64    ║
-╚═════════════════════════════════════╝
+	tput clear
+	display_banner
+	echo $fgRed
+	cat << _alert
+		ONLY SUPPORT UBUNTU 16.04 !
+			STOP INSTALL
 _alert
-tput sgr0
+echo $txReset
 }
 #Function
 function install_confirm(){
     # call with a prompt string or use a default
-    read -r -p " $gre Would you like to install EZMN ? [y/N] $NC" confirm
+    read -r -p " $fgGreen Would you like to install EZMN ? [y/N] $txReset" confirm
     case "$confirm" in
         [yY][eE][sS]|[yY])
             true
@@ -39,47 +40,30 @@ function install_confirm(){
     esac
 }
 
-function reboot_confirm(){
-    # call with a prompt string or use a default
-    read -r -p " $red Khoi dong lai VPS  ? [y/N]} $NC" confirm
-    case "$confirm" in
-        [yY][eE][sS]|[yY])
-            reboot
-            ;;
-        *)
-            false
-            ;;
-    esac
-}
-
 function check_distro(){
-	if [[ -r /etc/os-release ]]; then
-		. /etc/os-release
-		if [[ "${VERSION_ID}" != "16.04" ]]; then
-			echo -e " ${PRETTY_NAME}"
-			alert_distro
-		fi
-	else
-		alert_distro
-		exit 1
+	. /etc/os-release
+	if [[ "$VERSION_ID" == "16.04" ]]; then			
+			install_confirm
+		else
+		alert_distro && exit 1
 	fi
 }
 
 function install_swap(){
-if [ $(free | awk '/^Swap:/ {exit !$2}') ] || [ ! -f "/var/mnode_swap.img" ];then
-	echo "$blu No SWAP, install now! $NC"
+	if [ $(free | awk '/^Swap:/ {exit !$2}') ] || [ ! -f "/var/mnode_swap.img" ];then
+	echo "$fgBlue No SWAP, install now! $txReset"
 	#cai dat bo nho swap
 	fallocate -l 4G /swapfile
 	chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
 	echo "vm.swappiness=10" >> /etc/sysctl.conf
 	echo "/swapfile none swap sw 0 0" >> /etc/fstab
 	else
-		echo "$gre SWAP is installed ! $NC"
+		echo "$fgGreen SWAP is installed ! $txReset"
 	fi
 }
 
 function install_packages(){
-	echo "$gre Install Package ....... $NC"
+	echo "$fgGreen Install Package ....... $txReset"
 	apt-get install -y software-properties-common -y
 	add-apt-repository ppa:bitcoin/bitcoin -y ;
 	add-apt-repository ppa:tsl0922/ttyd-dev -y ;
@@ -91,17 +75,28 @@ function install_packages(){
 }
 
 function install_ezmn(){
-	echo "$gre Install EZMN ....... $NC"
+	echo "$fgGreen Install EZMN ....... $txReset"
 	git clone https://github.com/secrectvn/huutan-script /usr/local/ezmn/  ;
 	chmod +x /usr/local/ezmn/ezmn.sh ;
 	chmod +x /usr/local/ezmn/assets/report.sh ;
 	ln -s /usr/local/ezmn/ezmn.sh /usr/bin/ezmn ;
 }
 
+function reboot_confirm(){
+    # call with a prompt string or use a default
+    read -r -p " $fgRed Khoi dong lai VPS  ? [y/N] $txReset" confirm
+    case "$confirm" in
+        [yY][eE][sS]|[yY])
+            reboot
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
 # ACTION
 	display_banner
-	check_distro
-	install_confirm
+	check_distro	
 	mkdir -p /root/masternode/
 	mkdir -p /root/ezmn/{build,daemon,logs,installed,balance,running,report} ;
 	install_log='/root/ezmn/logs/install.log'	
