@@ -44,6 +44,16 @@ s_masternode-menu(){
 	source ${EZ_ASSETS}/masternode-menu.ezs
  }
 
+check_cryptos(){
+	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];
+		then
+			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/
+		else
+			echo -e "$fgRed $txBold This crypto is not yet supported, please contact us for updates ! $txReset"
+			exit 0 ;
+		fi
+	}
 
 s_color
 s_input

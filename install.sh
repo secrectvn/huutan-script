@@ -4,6 +4,7 @@ fgRed=$(tput setaf 1) # red
 fgGreen=$(tput setaf 2) # green
 fgBlue=$(tput setaf 4) # blue
 txReset=$(tput sgr0)   # reset attributes
+txBold=$(tput bold)   # bold
 
 #######################-B-A-N-N-E-R-#####################
 display_banner(){
@@ -84,7 +85,7 @@ function install_ezmn(){
 
 function reboot_confirm(){
     # call with a prompt string or use a default
-    read -r -p " $fgRed Khoi dong lai VPS  ? [y/N] $txReset" confirm
+    read -r -p " $fgRed $txBold  Khoi dong lai VPS  ? [y/N] $txReset" confirm
     case "$confirm" in
         [yY][eE][sS]|[yY])
             reboot

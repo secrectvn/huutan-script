@@ -28,16 +28,23 @@ mn_overview(){
 
 ############################################################
 install_menu(){
-	source /usr/local/ezmn/assets/install-menu.ezs
+	s_install_menu
 	display_install_menu
 	action_install_menu 
  }
 
 wallet_menu(){
-	source /usr/local/ezmn/assets/wallet-menu.ezs
+	s_wallet_menu
 	display_wallet_menu
 	action_wallet_menu
  }
+
+ masternode_menu(){
+ 	s_wallet_menu
+	display_masternode_menu
+	action_masternode_menu
+ }
+
 
 auto_start(){
 	echo " w8 update"
@@ -46,7 +53,9 @@ auto_start(){
 license_key(){
 	echo "check license"
  }
-
+report(){
+	echo " w8 update"
+}
 ### DISPLAY ###
 display_main_menu(){
 	tput cup 9 0 && tput ed

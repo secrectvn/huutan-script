@@ -23,6 +23,6 @@ input_txid(){
 	case $tx_id in
 					0) tx_id=0 ;;
 					1) tx_id=1 ;;
-					*) echo "$fgRed The wrong selection, please select again ! $txReset " ;;
+					*) echo "$fgRed $txBold The wrong selection, please select again ! $txReset " ;;
 	 esac
 	}

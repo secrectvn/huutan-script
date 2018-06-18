@@ -1,15 +1,4 @@
 
-check_cryptos(){
-	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];
-		then
-			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-			mkdir -p ${MN_DATA}/${CRYPTO_NAME}/
-		else
-			echo -e "$fgRed $txBold This crypto is not yet supported, please contact us for updates ! $txReset"
-			exit 0 ;
-		fi
-	}
-
 input_cryptos(){	
 		input_code_name
 		check_cryptos
@@ -47,7 +36,7 @@ install_update_wallet(){
 		echo $fgYellow " Wallet $CRYPTO_NAME has been install" 
 		read -s -p  " Do you want update Wallet $CRYPTO_NAME $txReset [y/N] ?" choice
     	case "$choice" in
-        [yY])
+        [yY][eE][sS]|[yY])
 			echo $txBold 
             rm /ezmn/daemon/${MN_DAEMON}
             rm /usr/bin/${MN_DAEMON}

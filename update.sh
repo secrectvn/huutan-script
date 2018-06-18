@@ -19,7 +19,7 @@ display_banner(){
 _banner_
  echo -n $end
  }
-function install_confirm(){
+install_confirm(){
     # call with a prompt string or use a default
     read -r -p " $red Ban co chac muon update EZMN script ? [y/N] $end" confirm
     case "$confirm" in
@@ -31,7 +31,7 @@ function install_confirm(){
             ;;
     esac
 }
-function update_ezmn(){
+update_ezmn(){
 rm -rf /usr/local/ezmn
 git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
 chmod +x /usr/local/ezmn/ezmn.sh ;
@@ -41,3 +41,4 @@ display_banner
 #install_confirm
 echo "$yel Update EZMN ....... $end"
 update_ezmn
+
