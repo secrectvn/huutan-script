@@ -14,11 +14,15 @@ main_menu(){
 
 }
 
+
 while true
 do	
+	
 	tput clear
+	main_banner
+	tput cup 9 0
 	main_menu
 
 done
-pause
+
 

@@ -1,38 +1,8 @@
-### DISPLAY ###
-display_main_menu(){	
-	main_banner
-	cat << _main_menu
- 1) OVERVIEW MASTERNODE
- 2) INSTALL MENU
- 3) WALLET MENU
- 4) AUTO START 
- 5) REPORT
- 6) LICENSE KEY
- 0) EXIT
-_main_menu
-echo $txReset
-}
-### ACTION ###
 
-function action_main_menu(){
-		local choice
-	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
-			case $choice in
-				1)  mn_overview ;;
-				2)  install_menu ;;
-				3)  wallet_menu ;;
-				4)  auto_start ;;
-				5)  report ;;
-				6) 	license_key ;;
-			 [0qQ])  exit 0;;
-		      *)	echo $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
-			 esac
-			pause
-	}
-############################################################
 mn_overview(){
-	tput clear
-	main_banner
+	tput cup 9 0 && tput ed
+	tput cup 9 0
+	tput bold
 	divider==============================================================
 	divider=$divider$divider
 	header="%-2s %-20s %-10s %-30s %-25s\n"
@@ -54,24 +24,60 @@ mn_overview(){
 		printf "$format" " " "${CRYPTO_NAME}" "$BALANCE" "${OV_VERSION}" "$STATUS" 
 		printf "%$width.${width}s\n" "$divider$divider"		
 	done
+ }
 
-}
 ############################################################
 install_menu(){
 	source /usr/local/ezmn/assets/install-menu.ezs
 	display_install_menu
-	action_install_menu
-}
+	action_install_menu 
+ }
+
 wallet_menu(){
 	source /usr/local/ezmn/assets/wallet-menu.ezs
 	display_wallet_menu
 	action_wallet_menu
+ }
 
-}
 auto_start(){
 	echo " w8 update"
-}
+ }
 
 license_key(){
 	echo "check license"
-}
+ }
+
+### DISPLAY ###
+display_main_menu(){
+	tput cup 9 0 && tput ed
+	tput cup 9 0
+	cat << _main_menu
+ 1) OVERVIEW MASTERNODE
+ 2) INSTALL MENU
+ 3) MASTERNODE MENU
+ 4) WALLET MENU 
+ 5) REPORT
+ 6) LICENSE KEY
+ 0) EXIT
+_main_menu
+ echo $txReset
+ }
+### ACTION ###
+
+function action_main_menu(){
+		local choice
+	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
+			case $choice in
+				1)  mn_overview ;;
+				2)  install_menu ;;
+				3)  masternode_menu;;
+				4)  wallet_menu ;;
+				5)  report ;;
+				6) 	license_key ;;
+			 [0qQ])  exit 0;;
+		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
+			 esac
+			pause
+ }
+############################################################
+

@@ -22,26 +22,32 @@ _banner_
 }
 ###################### MAIN MENU #########################
 # Pause 
-pause(){
-  read -p "  Press [Enter] key to continue..." fackEnterKey
-}
-s_main_menu(){
-	source ${EZ_ASSETS}/main-menu.ezs
-}
-s_install_menu(){
-	source ${EZ_ASSETS}/install-menu.ezs
-}
-s_wallet_menu(){
-	source ${EZ_ASSETS}/wallet-menu.ezs
-}
 s_color(){
 	source ${EZ_ASSETS}/colors.ezs
-}
+ }
 s_input(){
 	source ${EZ_ASSETS}/input.ezs
-}
+ }
+pause(){
+  read -p "$fgBlue $txBold Press [Enter] key to continue... $txReset" fackEnterKey
+ }
+s_main_menu(){
+	source ${EZ_ASSETS}/main-menu.ezs
+ }
+s_install_menu(){
+	source ${EZ_ASSETS}/install-menu.ezs
+ }
+s_wallet_menu(){
+	source ${EZ_ASSETS}/wallet-menu.ezs
+ }
+s_masternode-menu(){
+	source ${EZ_ASSETS}/masternode-menu.ezs
+ }
+
+
 s_color
 s_input
 s_main_menu
 s_install_menu
 s_wallet_menu
+s_masternode-menu

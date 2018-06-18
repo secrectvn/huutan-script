@@ -1,28 +1,28 @@
 #input
 # input code name
 input_code_name(){
-	read -p  "$fgGreen Enter the code name ( lowcase ) : $txReset" CODE_NAME
+	read -p   "$fgGreen $txBold Enter the code name ( lowcase ) : $txReset" CODE_NAME
 	}
 # input walletpassphrase
 input_walletpassphrase(){
-	read -s -p  "$fgGreen Input Walletpassphrase : $txReset" walletpassphrase
+	read -s -p  "$fgGreen  $txBold Input Walletpassphrase : $txReset" walletpassphrase
 	}
 # input masternode genkey
 input_genkey(){
-	read -p  "$fgGreen Input Masternode Genkey : $txReset"  mn_genkey ;
+	read -p  "$fgGreen $txBold Input Masternode Genkey : $txReset"  mn_genkey ;
 	}
 # input txhash
 input_txhash (){
-	read -p  "$fgGreen Input TXHASH : $txReset" tx_hash ;
+	read -p  "$fgGreen $txBold Input TXHASH : $txReset" tx_hash ;
 	}
 # INPUT TXID
 input_txid(){
-	echo -e " $fgBlue 0) TXID = 0 $txReset"
-	echo -e " $fgBlue 1) TXID = 1 $txReset"
-	read -p  "$fgBlue Choice TXID [0] or [1]: $txReset" tx_id
+	echo -e " $fgBlue $txBold  0) TXID = 0 $txReset"
+	echo -e " $fgBlue $txBold  1) TXID = 1 $txReset"
+	read -p  "$fgBlue $txBold  Choice TXID [0] or [1]: $txReset" tx_id
 	case $tx_id in
 					0) tx_id=0 ;;
 					1) tx_id=1 ;;
-					*) echo "$red The wrong selection, please select again ! $txReset " ;;
+					*) echo "$fgRed The wrong selection, please select again ! $txReset " ;;
 	 esac
 	}
