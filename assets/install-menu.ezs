@@ -11,7 +11,7 @@ check_cryptos(){
 	}
 
 input_cryptos(){	
-		input_codename
+		input_code_name
 		input_genkey
 		input_txhash
 		input_txid	
