@@ -1,4 +1,4 @@
-
+source /usr/local/ezmn/assets/source.ezs ;
 input_cryptos(){	
 		input_code_name
 		check_cryptos

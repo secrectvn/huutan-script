@@ -1,4 +1,4 @@
-
+source /usr/local/ezmn/assets/source.ezs ;
 mn_overview(){
 	tput cup 9 0 && tput ed
 	tput cup 9 0
