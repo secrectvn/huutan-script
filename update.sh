@@ -35,6 +35,7 @@ update_ezmn(){
 rm -rf /usr/local/ezmn
 git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
 chmod +x /usr/local/ezmn/ezmn.sh ;
+chmod +x /usr/local/ezmn/assets/report.sh
 
 }
 display_banner
