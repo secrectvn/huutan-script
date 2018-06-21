@@ -55,9 +55,9 @@ check_cryptos(){
 		fi
 	}
 
-#s_color
-#s_input
-#s_main_menu
-#s_install_menu
-#s_wallet_menu
-#s_masternode_menu
+s_color
+s_input
+s_main_menu
+s_install_menu
+s_wallet_menu
+s_masternode_menu
