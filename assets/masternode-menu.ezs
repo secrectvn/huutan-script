@@ -1,8 +1,8 @@
-
+source /usr/local/ezmn/assets/source.ezs ;
 daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
-	 	echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset"
-	 	return ;
+	 	echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
+	 	exit 1;
 	else
 		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/installed/ )
@@ -13,8 +13,8 @@ daemon_start(){
 			${DAEMON_START}
 			if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
 		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"		 
-		else [ "$CODE_NAME" == "q" ]
-			return ;
+		else [ "$CODE_NAME" == "q" ] 
+		 exit 1 ;			 
 			fi
 		fi
 		done ;
@@ -31,15 +31,16 @@ daemon_stop(){
 			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 			${DAEMON_STOP}			
 		else [ "$CODE_NAME" == "q" ]
-			return ;
+			exit 0 ;
+
 		fi
-		done ;
+		done 
  }
 
 masternode_start(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
 		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
-		break ;
+		return ;
 	else
 		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
@@ -59,7 +60,7 @@ masternode_start(){
 masternode_status(){
 		if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
 		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
-		break ;
+		return  ;
 	else
 		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
@@ -69,7 +70,7 @@ masternode_status(){
 		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 		${MN_STATUS}	
 		else [ "$CODE_NAME" == "q" ]
-			break ;
+			return 1;
 		fi
 			done
 		fi
@@ -87,7 +88,7 @@ masternode_debug(){
 		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 		${MN_DEBUG}
 		else [ "$CODE_NAME" == "q" ]
-			break ;
+			return 1 ;
 		fi
 			done
 		fi
@@ -124,6 +125,5 @@ function action_masternode_menu(){
 				9) 	return ;;
 			 [0qQ])  exit 0;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
-			 esac
-			 pause			
+			 esac			 			
 	}

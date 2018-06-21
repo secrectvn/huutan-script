@@ -68,7 +68,7 @@ report_balance(){
                 printf "$format" "$LS_BALANCE"
 				printf ""
 		else [ $CODE_NAME !='q' ]
-			break ;
+			exit 0 ;
 		fi
 		done
 		printf "%$width.${width}s\n" "$divider"
