@@ -1,4 +1,5 @@
 source /usr/local/ezmn/assets/source.ezs ;
+s_input
 daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	 	echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
