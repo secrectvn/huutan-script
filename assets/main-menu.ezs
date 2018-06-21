@@ -25,7 +25,6 @@ mn_overview(){
 		printf "%$width.${width}s\n" "$divider$divider"		
 	done
  }
-
 ############################################################
 install_menu(){
 	s_install_menu
@@ -40,7 +39,7 @@ wallet_menu(){
  }
 
  masternode_menu(){
- 	s_wallet_menu
+ 	s_masternode_menu
 	display_masternode_menu
 	action_masternode_menu
  }
@@ -86,7 +85,7 @@ function action_main_menu(){
 			 [0qQ])  exit 0;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
 			 esac
-			pause
+			 pause
  }
 ############################################################
 

@@ -7,7 +7,7 @@ MN_PORT=49046
 MN_REQUIRED=2500
 GIT_URL=https://github.com/Ferrumcrypto/ferrum
 MN_VERSION=1.2.0.0
-GROUP1
+GROUP=1
 #
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
@@ -16,7 +16,5 @@ function build_daemon(){
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
 	cd /root/ezmn/build/${CRYPTO_NAME}/src/
 	make -f makefile.unix USE_UPNP=-
-	cp ${MN_DAEMON} /root/ezmn/daemon	
-	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
-	rm -rf /root/ezmn/build/${CRYPTO_NAME}
+
 }

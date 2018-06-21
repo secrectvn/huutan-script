@@ -2,22 +2,99 @@
 daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	   echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset"
-	   break;
+	  	return ;
+	if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
+	 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
+	 	return ; 
 	else
 		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/installed/ )
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 			${DAEMON_START}			
 		else [ "$CODE_NAME" == "q" ]
-			break ;
+			return ;
 		fi
 		done ;
 	fi
+	fi
+ }
 
+daemon_stop(){
+		echo -e "$fgBlue Please select the cryptos you want to stop daemon or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/$CODE_NAME.pid | sed -e 's/\.pid$//' )
+		select CODE_NAME in $list_ins; do
+			if [ -n "$CODE_NAME" ]; then
+			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+			${DAEMON_STOP}			
+		else [ "$CODE_NAME" == "q" ]
+			return ;
+		fi
+		done ;
+ }
 
-}
+masternode_start(){
+	if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
+		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
+		break ;
+	else
+		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+		input_walletpassphrase
+		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+		${MN_START} $walletpassphrase
+		break ;
+		else [ "$CODE_NAME" == "q" ]
+			break ;
+		fi
+			done
+		fi
+	}
+
+masternode_status(){
+		if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
+		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
+		break ;
+	else
+		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+		${MN_STATUS}
+		break ;
+		else [ "$CODE_NAME" == "q" ]
+			break ;
+		fi
+			done
+		fi
+	}
+masternode_debug(){
+		if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
+		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
+		break ;
+	else
+		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+		${MN_DEBUG}
+		break ;
+		else [ "$CODE_NAME" == "q" ]
+			break ;
+		fi
+			done
+		fi
+	}
 ### DISPLAY ###
 display_masternode_menu(){
 	echo $txBold
@@ -33,7 +110,8 @@ display_masternode_menu(){
  0) EXIT
 _main_menu
 echo $txReset
-}
+ }
+
 ### ACTION ###
 
 function action_masternode_menu(){
@@ -42,13 +120,13 @@ function action_masternode_menu(){
 			case $choice in
 				1)  auto_masternode ;;
 				2)  daemon_start ;;
-				3)  masternode_menu ;;
-				4)  auto_start ;;
-				5)  report ;;
+				3)  masternode_start;;
+				4)  masternode_status ;;
+				5)  masternode_debug ;;
 				6) 	license_key ;;
 				9) 	return ;;
 			 [0qQ])  exit 0;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
 			 esac
-			pause
+			 pause			
 	}

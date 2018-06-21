@@ -1,0 +1,96 @@
+wallet_unlock(){
+		if [ -z "$(ls -A /root/ezmn/running/ )" ];
+	then
+		   echo -e $fgRed $txBold " Could not find daemon are running ! $txReset "
+		   break
+	else
+			echo -e "$fgBlue $txBold Please select the cryptos you want to unlock-wallet or [Q]uit $txReset"
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+			select CODE_NAME in $list_ins; do
+			if [ -n "$CODE_NAME" ]; then
+				input_walletpassphrase
+				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+				${WL_UNLOCK} $walletpassphrase 32000000
+				break
+			else [ "$CODE_NAME" == "q" ]
+				break ;
+			fi
+			done
+		fi
+}
+wallet_balance(){
+		if [ -z "$(ls -A /root/ezmn/running/ )" ];
+	then
+		   echo -e "$red Could not find daemon are running ! $txReset "
+		   break
+	else
+			echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+			select CODE_NAME in $list_ins; do
+			if [ -n "$CODE_NAME" ]; then
+				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+				${WL_BALANCE}
+				break
+			else [ "$CODE_NAME" == "q" ]
+				break ;
+			fi
+			done
+		fi
+	}
+wallet_info(){
+		if [ -z "$(ls -A /root/ezmn/running/ )" ];
+	then
+		   echo -e "$red Could not find daemon are running ! $txReset "
+		   break
+	else
+			echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
+			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+			select CODE_NAME in $list_ins; do
+			if [ -n "$CODE_NAME" ]; then
+				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+				${WL_INFO}
+				break
+			else [ "$CODE_NAME" == "q" ]
+				break ;
+			fi
+			done
+		fi
+	}
+### DISPLAY ###
+display_wallet_menu(){
+	echo $txBold
+	tput cup 9 0 && tput ed
+	tput cup 9 0
+	cat << _wallet_menu
+ 1) WALLET UNLOCK
+ 2) BALANCE
+ 3) WALLET INFO
+ 4) W8 UPDATE
+ 5) W8 UPDATE
+ 6) W8 UPDATE
+ 9) BACK
+ 0) EXIT
+_wallet_menu
+echo $txReset
+}
+### ACTION ###
+
+function action_wallet_menu(){
+		local choice
+	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
+			case $choice in
+				1)  wallet_unlock ;;
+				2)  wallet_balance ;;
+				3)  wallet_info ;;
+				4)  echo " update " ;;
+				5)  echo " update " ;;
+				6) 	echo " update " ;;
+				9) 	return ;;
+			 [0qQ])  exit 0;;
+		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
+			 esac
+			pause
+	}

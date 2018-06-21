@@ -6,23 +6,18 @@ s_color
 # Trap CTRL+C, CTRL+Z and quit singles
 #trap '' SIGINT SIGQUIT SIGTSTP
 # LOGIC
-
 main_menu(){
 	s_main_menu
 	display_main_menu
 	action_main_menu
 
 }
-
-
 while true
-do	
-	
+do		
 	tput clear
 	main_banner
 	tput cup 9 0
 	main_menu
-
 done
 
 

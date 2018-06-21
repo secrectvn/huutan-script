@@ -15,9 +15,7 @@ function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
 	cd /root/ezmn/build/${CRYPTO_NAME}/src/
-	make -f makefile.unix USE_UPNP=-
-	cp ${MN_DAEMON} /root/ezmn/daemon	
-	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
-	rm -rf /root/ezmn/build/${CRYPTO_NAME}
+	make -f makefile.unix USE_UPNP=- strip GanjaProjectd
+
 }
 
