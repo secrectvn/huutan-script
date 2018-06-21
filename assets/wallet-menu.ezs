@@ -11,6 +11,7 @@ wallet_unlock(){
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 				${WL_UNLOCK} $walletpassphrase 32000000
+				echo -e ""
 			else [ "$CODE_NAME" == "q" ]
 				return ;
 			fi

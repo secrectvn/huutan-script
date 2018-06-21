@@ -1,7 +1,7 @@
 #Specifications
 CRYPTO_NAME=GanjaProject
 CODE_NAME=mrja
-MN_DAEMON=ganjacoind
+MN_DAEMON=Ganjad
 RPC_PORT=11419
 MN_PORT=11420
 MN_REQUIRED=30000

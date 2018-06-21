@@ -7,7 +7,8 @@ MN_PORT=12116
 MN_REQUIRED=2500
 GIT_URL=https://github.com/HarvestMasternodecoin/Harvestcoin.git
 MN_VERSION=v1.0.1.2-60028
-GROUP=1#
+GROUP=1
+#
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
 function build_daemon(){
