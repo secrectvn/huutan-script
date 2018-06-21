@@ -12,8 +12,7 @@ daemon_start(){
 			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 			${DAEMON_START}
 			if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
-		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
-		 		return ; 
+		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"		 
 		else [ "$CODE_NAME" == "q" ]
 			return ;
 			fi
@@ -49,8 +48,7 @@ masternode_start(){
 		input_walletpassphrase
 		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
-		${MN_START} $walletpassphrase
-		break ;
+		${MN_START} $walletpassphrase		
 		else [ "$CODE_NAME" == "q" ]
 			break ;
 		fi
@@ -69,8 +67,7 @@ masternode_status(){
 		if [ -n "$CODE_NAME" ]; then
 		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
-		${MN_STATUS}
-		break ;
+		${MN_STATUS}	
 		else [ "$CODE_NAME" == "q" ]
 			break ;
 		fi
@@ -89,7 +86,6 @@ masternode_debug(){
 		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 		source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 		${MN_DEBUG}
-		break ;
 		else [ "$CODE_NAME" == "q" ]
 			break ;
 		fi
