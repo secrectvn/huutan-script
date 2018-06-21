@@ -67,9 +67,8 @@ function install_packages(){
 	echo "$fgGreen Install Package ....... $txReset"
 	apt-get install -y software-properties-common -y
 	add-apt-repository ppa:bitcoin/bitcoin -y ;
-	add-apt-repository ppa:tsl0922/ttyd-dev -y ;
 	apt update && apt upgrade -y ;
-	apt install g++ ttyd zip jshon libcurl4-openssl-dev make git apt-utils jp2a virtualenv libcurl3-dev libudev-dev -y   ;
+	apt install g++  zip jshon libcurl4-openssl-dev make git apt-utils jp2a virtualenv libcurl3-dev libudev-dev -y   ;
 	apt install libdb4.8-dev libdb4.8++-dev libwww-perl htop build-essential libtool automake htop autotools-dev autoconf htop pkg-config libssl-dev -y ;
 	apt install libgmp3-dev libevent-dev bsdmainutils libminiupnpc-dev libboost-all-dev libqrencode-dev unzip -y ;
 	apt install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler -y;

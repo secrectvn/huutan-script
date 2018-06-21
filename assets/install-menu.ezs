@@ -41,6 +41,8 @@ install_update_wallet(){
             rm /ezmn/daemon/${MN_DAEMON}
             rm /usr/bin/${MN_DAEMON}
             build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
+            cp ${MN_DAEMON} /root/ezmn/daemon/	
+			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}			
             return
             ;;
         *)
@@ -49,8 +51,8 @@ install_update_wallet(){
     	else
 	    	echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
 			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-				cp ${MN_DAEMON} /root/ezmn/daemon	
-				ln -s /root/ezmn/daemon/${MN_DAEMON} 			
+				cp ${MN_DAEMON} /root/ezmn/daemon/	
+				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
 			if [ -f /root/ezmn/daemon/${MN_DAEMON} ] && [ -f /usr/bin/${MN_DAEMON} ]; then
 				touch /root/ezmn/installed/${CODE_NAME}
 				rm -rf /root/ezmn/build/${CRYPTO_NAME}

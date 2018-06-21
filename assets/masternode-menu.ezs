@@ -1,25 +1,26 @@
 
 daemon_start(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
-	   echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset"
-	  	return ;
-	if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
-	 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
-	 	return ; 
+	 	echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset"
+	 	return ;
 	else
 		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/installed/ )
 		select CODE_NAME in $list_ins; do
-			if [ -n "$CODE_NAME" ]; then
+		if [ -n "$CODE_NAME" ]; then
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
-			${DAEMON_START}			
+			${DAEMON_START}
+			if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
+		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
+		 		return ; 
 		else [ "$CODE_NAME" == "q" ]
 			return ;
+			fi
 		fi
 		done ;
 	fi
-	fi
+
  }
 
 daemon_stop(){
