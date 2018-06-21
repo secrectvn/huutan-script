@@ -44,6 +44,36 @@ wallet_menu(){
 	action_masternode_menu
  }
 
+report_balance(){
+	tput clear
+	main_banner
+	divider===============================
+	divider=$divider$divider
+	width=55
+	header="%-2s %-15s %-10s %-25s\n"
+	format="%-2s %-15s %-10.2f %-25s\n"
+	printf "%$width.${width}s\n" "$divider"
+	if [ -z "$(ls -A /root/ezmn/report/ )" ]; then
+		echo "$fgRed $txBold File balance not found ! $txReset " && return ;
+	else
+		echo -e "$txBold $fgGreen Please cryptos you want report or [Q]uit : $txReset"
+		list_ins=$(ls -1 /root/ezmn/report/ | sed -e 's/\.csv$//')
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+            source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+                LS_BALANCE=$(cat /root/ezmn/report/${CODE_NAME}.csv | awk -F "\"* ; \"*" '{print $1, $2}')
+                printf "$header" "${COIN_NAME}"
+                printf "%$width.${width}s\n" "$divider"
+                printf "$format" "$LS_BALANCE"
+				printf ""
+		else [ $CODE_NAME !='q' ]
+			break ;
+		fi
+		done
+		printf "%$width.${width}s\n" "$divider"
+	fi
+}
 
 auto_start(){
 	echo " w8 update"
@@ -80,7 +110,7 @@ function action_main_menu(){
 				2)  install_menu ;;
 				3)  masternode_menu;;
 				4)  wallet_menu ;;
-				5)  report ;;
+				5)  report_balance ;;
 				6) 	license_key ;;
 			 [0qQ])  exit 0;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
