@@ -108,7 +108,10 @@ create_genkey(){
 			${DAEMON_START} ;
 			sleep 5 ;
 		#create_genkey
-		
+			GN_GENKEY 
+			sleep 5 ;
+			GN_TXHASH 
+			sleep 5
 
 
 }
@@ -142,7 +145,7 @@ function action_masternode_menu(){
 				3)  masternode_start;;
 				4)  masternode_status ;;
 				5)  masternode_debug ;;
-				6) 	create_masternode ;;
+				6) 	create_genkey ;;
 				9) 	return ;;
 			 [0qQ])  exit 0;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
