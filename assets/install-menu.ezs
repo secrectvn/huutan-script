@@ -6,7 +6,6 @@ input_cryptos(){
 		input_txhash
 		input_txid	
 	}
-
 create_config_file(){
 	mkdir -p ${MN_DATA}/${CRYPTO_NAME}/;
 	# crypto config

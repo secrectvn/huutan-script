@@ -20,3 +20,9 @@ WL_BALANCE="${DAEMON_START} getbalance"
 WL_INFO="${DAEMON_START} getinfo"
 WL_PRIVKEY="${DAEMON_START} dumpprivkey " # need wallet address
 WL_UNLOCK="${DAEMON_START} walletpassphrase" # need timeout
+GN_GENKEY="${MN_DAEMON} masternode genkey "
+GN_TXHASH="${MN_DAEMON} masternode outputs "
+#OVERVIEW
+OV_STATUS=$(${MN_STATUS} | jshon -e "message")
+OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
+OV_VERSION=$(${WL_INFO} | jshon -e "version")

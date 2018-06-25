@@ -20,6 +20,8 @@ WL_BALANCE="${MN_CLI} ${DATA_DIR} getbalance"
 WL_INFO="${MN_CLI} ${DATA_DIR} getinfo"
 WL_PRIVKEY="${MN_CLI} ${DATA_DIR} dumpprivkey " # need wallet address 
 WL_UNLOCK="${MN_CLI} ${DATA_DIR} walletpassphrase" # need timeout
+GN_GENKEY="${MN_CLI} masternode genkey "
+GN_TXHASH="${MN_CLI} masternode outputs "
 #OVERVIEW
 OV_STATUS=$(${MN_STATUS} | jshon -e "message")
 OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
