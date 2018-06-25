@@ -160,6 +160,7 @@ create_update_config(){
 
 auto_install_masternode(){
 	install_update_wallet
+	sleep 5
 	create_update_config
  }
 
