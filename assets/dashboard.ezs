@@ -16,9 +16,9 @@ mn_overview(){
 		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 		BALANCE=$(${BALANCE_MN})
 		STATUS=${OV_STATUS}
-		if [["$OV_STATUS" == ""] || ["$OV_STATUS" == "Masternode successfully started"]]; then
+		if  [ "$OV_STATUS" == "" "" ] || [ "$OV_STATUS" == "Masternode successfully started" ] ; then
 		echo "successfully"
-		if ["$OV_STATUS" != "locked"]; then
+		if [ "$OV_STATUS" != "locked" ]; then
 		echo "Wallet locked"
 		else
 			echo "${OV_STATUS}"
