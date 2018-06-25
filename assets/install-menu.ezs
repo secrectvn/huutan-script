@@ -120,10 +120,8 @@ update_config(){
 	create_config_file	
 }
 auto_install_masternode(){
-	input_cryptos
-	check_cryptos
-	install_wallet
-	create_config_file
+	install_update_wallet
+	create_update_config
 }
 
 
@@ -135,9 +133,9 @@ display_install_menu(){
 	tput cup 9 0
 	tput bold
 	cat << _main_menu
- 1) AUTO INSTALL MASTERNODE (2+4)
+ 1) AUTO INSTALL MASTERNODE (1+2)
  2) INSTALL OR UPDATE DAEMON
- 4) CREATE OR UPDATE FILE CONFIG
+ 3) CREATE OR UPDATE FILE CONFIG
  9) BACK
  0) EXIT
 _main_menu
@@ -150,7 +148,7 @@ function action_install_menu(){
 			case $choice in
 				1)  auto_install_masternode ;;
 				2)  install_update_wallet ;;
-				4)  create_update_config ;;
+				3)  create_update_config ;;
 				9)  return  ;;
 			 [0qQ])  exit 0 ;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
