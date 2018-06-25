@@ -17,6 +17,7 @@ mn_overview(){
 		source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
 	  BALANCE=$(${WL_BALANCE})
 		if [ "$OV_STATUS" == '""' ] || [ "$OV_STATUS" == '"Masternode successfully started"' ]; then 
+			
 		STATUS="successfully"
 		else   
 		STATUS="$OV_STATUS"
