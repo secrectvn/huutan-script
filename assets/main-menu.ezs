@@ -17,13 +17,14 @@ mn_overview(){
 
 		if [ "$GROUP" == "1" ] ; then
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
+			OV_STATUS=$(${MN_STATUS} | jshon -e "message")
+			OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
+			OV_VERSION=$(${WL_INFO} | jshon -e "version")
 		else [ "$GROUP" == "2" ];
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
 		fi
-		OV_STATUS=$(${MN_STATUS} | jshon -e "message")
-		OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
-		OV_VERSION=$(${WL_INFO} | jshon -e "version")
 	  	BALANCE=$(${WL_BALANCE})
+
 		if [ "$OV_STATUS" == '""' ] || [ "$OV_STATUS" == '"Masternode successfully started"' ]; then 
 
 		STATUS="successfully"
