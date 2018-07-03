@@ -5,8 +5,8 @@ mn_overview(){
 	tput bold
 	divider==============================================================
 	divider=$divider$divider
-	header="%-2s %-20s %-10s %-30s %-25s\n"
-	format="%-2s %-20s %-10.2f %-30s %-25s\n"
+	header="%-2s %-10s %-10s %-15s %-25s\n"
+	format="%-2s %-10s %-10.2f %-15s %-25s\n"
 	width=100
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "VERSION" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
@@ -19,13 +19,13 @@ mn_overview(){
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
 			OV_STATUS=$(${MN_STATUS} | jshon -e "notCapableReason")
 			OV_STAKING=$(${WL_STAKTING} | jshon -e "staking")
-			OV_VERSION=$(${WL_INFO} | jshon -e "version")
+			OV_VERSION=$(${WL_INFO} | jshon -e "version" | sed -e 's/\"$//' )
 
 		else [ "$GROUP" == "2" ];
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
 			OV_STATUS=$(${MN_STATUS} | jshon -e "message")
 			OV_STAKING=$(${WL_STAKTING} | jshon -e "staking status")
-			OV_VERSION=$(${WL_INFO} | jshon -e "version")
+			OV_VERSION=$(${WL_INFO} | jshon -e "version" | sed -e 's/\"$//' )
 		fi
 	  	BALANCE=$(${WL_BALANCE})
 
