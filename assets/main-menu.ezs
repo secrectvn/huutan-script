@@ -5,10 +5,10 @@ mn_overview(){
 	tput bold
 	divider==============================================================
 	divider=$divider$divider
-	header="%-2s %-10s %-10s %-15s %-25s\n"
-	format="%-2s %-10s %-10.2f %-15s %-25s\n"
+	header="%-1s %-10s %-10s %-15s %-25s\n"
+	format="%-1s %-10s %-10.1f %-15s %-25s\n"
 	width=100
-	printf "$header" " " "CRYPTO NAME" "BALANCE" "VERSION" "STATUS MN"
+	printf "$header" " " "CRYPTO " "BALANCE" "VERSION" "STATUS MN"
 	printf "%$width.${width}s\n" "$divider"
 
 	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
