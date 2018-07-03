@@ -5,8 +5,8 @@ mn_overview(){
 	show_main_banner
 	divider===============================
 	divider=$divider$divider
-	header="%-2s %-15s %-10s %-25s %-25s\n"
-	format="%-2s %-15s %-10.2f %-25s %-25s\n"
+	header="%-2s %-10s %-10s %-10s %-25s\n"
+	format="%-2s %-10s %-10.2f %-10s %-25s\n"
 	width=60
 	printf "$header" " " "CRYPTO NAME" "BALANCE" "STATUS MN" "VERSION"
 	printf "%$width.${width}s\n" "$divider"

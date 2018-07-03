@@ -7,9 +7,9 @@ wallet_unlock(){
 			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 			select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
-				input_walletpassphrase
 				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+				input_walletpassphrase
 				${WL_UNLOCK} $walletpassphrase 32000000
 				echo -e ""
 			else [ "$CODE_NAME" == "q" ]

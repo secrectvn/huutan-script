@@ -36,6 +36,7 @@ install_update_wallet_1(){
 			echo $txBold 
 	            rm /ezmn/daemon/${MN_DAEMON}
 	            rm /usr/bin/${MN_DAEMON}
+	            echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset;
 	            build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
 	            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
 				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
@@ -64,11 +65,11 @@ install_update_wallet_2(){
 		read -p  " Do you want update Wallet $CRYPTO_NAME $txReset [y/N] ?" choice
     	case "$choice" in
         [yY][eE][sS]|[yY])
-			echo $txBold 
-            rm /ezmn/daemon/${MN_DAEMON},${MN_CLI},${MN_TX} ;
+			echo $txBold             
             rm /usr/bin/${MN_DAEMON}
             rm /usr/bin/,${MN_CLI}
             rm  /usr/bin/${MN_TX}
+            echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset;
             build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
             cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
             cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/
