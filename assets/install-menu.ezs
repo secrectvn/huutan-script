@@ -177,7 +177,29 @@ auto_install_masternode(){
 	create_config_file
  }
 
-
+delete_masternode(){
+		if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
+	 	echo "$fgYellow $txBold No crypto has installed ! $txReset" 
+	 	exit 1;
+	else
+		echo -e "$fgBlue Please select the cryptos you want to delete or [q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/installed/ )
+		select CODE_NAME in $list_ins; do
+		if [ -n "$CODE_NAME" ]; then
+			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+			${DAEMON_STOP}
+			rm /root/ezmn/installed/{CODE_NAME}			
+			rm -rf /root/masternode/{CRYPTO_NAME}
+			if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
+		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"		 
+		else [ "$CODE_NAME" == "q" ] 
+		 exit 1 ;			 
+			fi
+		fi
+		done ;
+	fi
+}
 
 ################## INSTALL MENU ############################
 ### DISPLAY ###
@@ -189,6 +211,7 @@ display_install_menu(){
  1) AUTO INSTALL MASTERNODE (1+2)
  2) INSTALL OR UPDATE DAEMON
  3) CREATE OR UPDATE FILE CONFIG
+ 4)	DELETE MASTERNODE 
  9) BACK
  0) EXIT
 _main_menu
@@ -202,6 +225,7 @@ function action_install_menu(){
 				1)  auto_install_masternode ;;
 				2)  install_update_wallet ;;
 				3)  create_update_config ;;
+				4)	delete_masternode ;;
 				9)  return  ;;
 			 [0qQ])  exit 0 ;;
 		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
