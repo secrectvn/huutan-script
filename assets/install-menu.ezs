@@ -189,13 +189,12 @@ delete_masternode(){
 			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 			${DAEMON_STOP}
-			rm /root/ezmn/installed/{CODE_NAME}			
-			rm -rf /root/masternode/{CRYPTO_NAME}
-			if [ -f /root/ezmn/running/$CODE_NAME.pid ]; then 
-		 	echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"		 
+			rm /root/ezmn/daemon/${MN_DAEMON}
+			rm /usr/bin/${MN_DAEMON}
+			rm /root/ezmn/installed/${CODE_NAME}			
+			rm -rf /root/masternode/${CRYPTO_NAME}			
 		else [ "$CODE_NAME" == "q" ] 
-		 exit 1 ;			 
-			fi
+		 exit 1 ;		
 		fi
 		done ;
 	fi
@@ -211,7 +210,7 @@ display_install_menu(){
  1) AUTO INSTALL MASTERNODE (1+2)
  2) INSTALL OR UPDATE DAEMON
  3) CREATE OR UPDATE FILE CONFIG
- 4)	DELETE MASTERNODE 
+ 4) DELETE MASTERNODE 
  9) BACK
  0) EXIT
 _main_menu
