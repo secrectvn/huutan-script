@@ -98,12 +98,17 @@ masternode_debug(){
 
 auto_masternode(){
 	daemon_start
-	sleep 5
-	daemon_start
-	sleep 5
-	masternode_status
-	sleep 2
-	masternode_debug
+	input_walletpassphrase
+	sleep 30	
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+	${MN_START} $walletpassphrase
+	sleep 30
+	echo "$fgBlue $txBold MASTERNODE DEBUG $txReset"
+	${MN_STATUS}
+	echo "$fgBlue $txBold MASTERNODE DEBUG $txReset"
+	${MN_DEBUG}	
+	
 }
 
 ### DISPLAY ###
