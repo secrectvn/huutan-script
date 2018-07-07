@@ -68,13 +68,13 @@ install_update_wallet_2(){
         [yY][eE][sS]|[yY])
 			echo $txBold             
             rm /usr/bin/${MN_DAEMON}
-            rm /usr/bin/,${MN_CLI}
+            rm /usr/bin/${MN_CLI}
             rm  /usr/bin/${MN_TX}
             echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset;
             build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/${MN_DAEMON}
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/${MN_CLI}
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/${MN_TX}
 			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
 			ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
 			ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
@@ -86,9 +86,9 @@ install_update_wallet_2(){
     	else
 	    	echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
 			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/${MN_DAEMON}
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/${MN_CLI}
+            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/${MN_TX}
 			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
 			ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
 			ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
