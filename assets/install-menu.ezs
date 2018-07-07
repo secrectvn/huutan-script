@@ -59,6 +59,7 @@ install_update_wallet_1(){
 				fi
 		fi
 	}
+
 install_update_wallet_2(){
 	if [ -f /root/ezmn/daemon/${MN_DAEMON} ] || [ -f /usr/bin/${MN_DAEMON} ]  ; then
 		echo $fgYellow " Wallet $CRYPTO_NAME has been install" 
@@ -160,9 +161,18 @@ create_update_config(){
  }
 
 auto_install_masternode(){
+	s_input
+	input_code_name
+	check_cryptos
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	if [ "$GROUP" == "1" ] ; then
+			install_update_wallet_1
+	else [ "$GROUP" == "2" ];
+		install_update_wallet_2 
+	fi
 	install_update_wallet
 	sleep 5
-	create_update_config
+	create_config_file
  }
 
 
