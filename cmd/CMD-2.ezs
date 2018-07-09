@@ -1,5 +1,5 @@
 #Command
-MN_START="${MN_CLI} ${DATA_DIR}  masternode start " # need ${walletpassphrase}
+MN_START="${MN_DAEMON} ${DATA_DIR}  masternode start " # need ${walletpassphrase}
 MN_STATUS="${MN_CLI} ${DATA_DIR}  masternode status"
 WL_STAKTING="${MN_CLI} ${DATA_DIR} getstakingstatus"
 WL_BALANCE="${MN_CLI} ${DATA_DIR} getbalance"
