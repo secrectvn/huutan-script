@@ -1,5 +1,8 @@
 #input
 # input code name
+wrong_key(){
+	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset
+}
 input_code_name(){
 	read -p  "$fgGreen $txBold Enter the code name ( lowcase ) : $txReset" CODE_NAME
 	}

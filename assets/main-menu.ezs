@@ -125,7 +125,7 @@ function action_main_menu(){
 				5)  report_balance ;;
 				6) 	license_key ;;
 			 [0qQ])  exit 0;;
-		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
+		      *)	wrong_key ;;
 			 esac
 			 pause
  }

@@ -1,58 +1,68 @@
 wallet_unlock(){
-		if [ -z "$(ls -A /root/ezmn/running/ )" ];then
-		   echo -e $fgRed $txBold " Could not find daemon are running ! $txReset "
-		   return 
-		else
-			echo -e "$fgBlue $txBold Please select the cryptos you want to unlock-wallet or [Q]uit $txReset"
-			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
-			select CODE_NAME in $list_ins; do
-			if [ -n "$CODE_NAME" ]; then
-				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];then
+		echo -e $fgRed $txBold " Could not find daemon are running ! $txReset " 
+		sleep 5
+		return ;
+	else
+		echo -e "$fgBlue $txBold Please select the cryptos you want to unlock-wallet or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+			if  [ "$CODE_NAME" == "q" ]; then
+				return;
+			elif [ -n "$CODE_NAME" ]; then
+				s_input
+				s_crypto
 				input_walletpassphrase
 				${WL_UNLOCK} $walletpassphrase 32000000
-				echo -e ""
-			else [ "$CODE_NAME" == "q" ]
-				return ;
+			else 
+				wrong_key
 			fi
-			done
-		fi
+		done			
+	fi
 }
 wallet_balance(){
-		if [ -z "$(ls -A /root/ezmn/running/ )" ];then
-		   echo -e "$red Could not find daemon are running ! $txReset "
-		   return
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];then
+		echo -e $fgRed $txBold " Could not find daemon are running ! $txReset " 
+		sleep 5;
+		return
 	else
-			echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
-			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
-			select CODE_NAME in $list_ins; do
-			if [ -n "$CODE_NAME" ]; then
-				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+		echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+			if  [ "$CODE_NAME" == "q" ]; then
+				return
+			elif [ -n "$CODE_NAME" ]; then
+				s_input
+				s_crypto
 				${WL_BALANCE}
-			else [ "$CODE_NAME" == "q" ]
-				return ;
+			else 
+				wrong_key
+				sleep 5;
 			fi
-			done
-		fi
+		done			
+	fi
 	}
 wallet_info(){
-		if [ -z "$(ls -A /root/ezmn/running/ )" ];then
-		   echo -e "$red Could not find daemon are running ! $txReset "
-		   return
-		else
-			echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
-			list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
-			select CODE_NAME in $list_ins; do
-			if [ -n "$CODE_NAME" ]; then
-				source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-				source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+	if [ -z "$(ls -A /root/ezmn/running/ )" ];then
+		echo -e $fgRed $txBold " Could not find daemon are running ! $txReset " 
+		sleep 5;
+		return
+	else
+		echo -e "$fgBlue Please select the cryptos you want to check info or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		select CODE_NAME in $list_ins; do
+			if  [ "$CODE_NAME" == "q" ]; then
+				return
+			elif [ -n "$CODE_NAME" ]; then
+				s_input
+				s_crypto
 				${WL_INFO}
-			else [ "$CODE_NAME" == "q" ]
-				return ;
+			else 
+				wrong_key
+				sleep 5;
 			fi
-			done
-		fi
+		done
+	fi
 	}
 ### DISPLAY ###
 display_wallet_menu(){
@@ -85,7 +95,7 @@ function action_wallet_menu(){
 				6) 	echo " update " ;;
 				9) 	return ;;
 			 [0qQ])  exit 0;;
-		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
+		      *)	wrong_key ;;
 			 esac
 			pause
 	}

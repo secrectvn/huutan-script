@@ -132,6 +132,6 @@ function action_masternode_menu(){
 				5)  masternode_debug ;;
 				9) 	return ;;
 			 [0qQ])  exit 0 ;;
-		      *)	echo -e $txBold $fgYellow  " The wrong selection, please select again !" $txReset ;;
+		      *)	wrong_key ;;
 			 esac			 			
 	}
