@@ -1,11 +1,11 @@
 #input
 # input code name
 input_code_name(){
-	read -p   "$fgGreen $txBold Enter the code name ( lowcase ) : $txReset" CODE_NAME
+	read -p  "$fgGreen $txBold Enter the code name ( lowcase ) : $txReset" CODE_NAME
 	}
 # input walletpassphrase
 input_walletpassphrase(){
-	read -p -s "$fgGreen $txBold Input Walletpassphrase : $txReset" walletpassphrase
+	read -p -s "$fgGreen $txBold Input Walletpassphrase : $txReset " passwallet
 	}
 # input masternode genkey
 input_genkey(){

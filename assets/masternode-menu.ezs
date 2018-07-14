@@ -47,7 +47,7 @@ masternode_start(){
 			s_input
 			s_crypto
 			input_walletpassphrase
-			${MN_START} $walletpassphrase
+			${MN_START} $passwallet
 			fi
 		done
 	fi
