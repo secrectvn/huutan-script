@@ -207,7 +207,7 @@ display_install_menu(){
 	tput cup 9 0
 	tput bold
 	cat << _main_menu
- 1) AUTO INSTALL MASTERNODE (1+2)
+ 1) AUTO INSTALL MASTERNODE (2+3)
  2) INSTALL OR UPDATE DAEMON
  3) CREATE OR UPDATE FILE CONFIG
  4) DELETE MASTERNODE 

@@ -41,6 +41,5 @@ chmod +x /usr/local/ezmn/assets/report.sh
 display_banner
 #install_confirm
 echo "$yel Update EZMN ....... $end"
-install_packages
 update_ezmn
 

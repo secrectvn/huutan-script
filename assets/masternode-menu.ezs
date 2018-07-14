@@ -34,21 +34,19 @@ daemon_stop(){
  }
 
 masternode_start(){
-	if [ -z "$(ls -A /root/ezmn/installed/ )" ] ; then
+	if [ -z "$(ls -A /root/ezmn/running/ )" ] ; then
 		echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
 		return ;
 	else 
 		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
-		list_ins=$(ls -1 /root/ezmn/installed/ )
+		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-			if  [ -f /root/ezmn/running/$CODE_NAME.pid ]; then
-				echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
-			elif  [ "$CODE_NAME" == "q" ] ; then
+			if [ "$CODE_NAME" == "q" ]; then
 				return ;
 			else
 			s_input
-			input_walletpassphrase
 			s_crypto
+			input_walletpassphrase
 			${MN_START} $walletpassphrase
 			fi
 		done
@@ -56,36 +54,36 @@ masternode_start(){
 	}
 
 masternode_status(){
-	if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
+	if [ -z "$(ls -A /root/ezmn/running/ )" ] ; then
 		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
-		return  ;
-	else
-		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
-		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		return ;
+	else 
+		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-		if [ "$CODE_NAME" == "q" ]; then
-			return
-		else
+			if [ "$CODE_NAME" == "q" ]; then
+				return ;
+			else
 			s_crypto
 			${MN_STATUS} ;
-		fi
+			fi
 		done
 	fi
  }
  masternode_debug(){
-	if [ -z "$(ls -A /root/ezmn/running/ )" ]; then
+ 	if [ -z "$(ls -A /root/ezmn/running/ )" ] ; then
 		echo -e "$fgYellow $txBold Deamon not already running ! $txReset "
-		return  ;
-	else
-		echo -e "$fgBlue Please select the cryptos you want to start-masternode or [Q]uit $txReset"
-		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
+		return ;
+	else 
+		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
+		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-		if [ "$CODE_NAME" == "q" ]; then
-			return ;
-		else				
+			if [ "$CODE_NAME" == "q" ]; then
+				return ;
+			else
 			s_crypto
 			${MN_DEBUG};
-		fi
+			fi
 		done
 	fi
  }
