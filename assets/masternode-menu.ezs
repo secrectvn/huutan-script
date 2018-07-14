@@ -9,12 +9,17 @@ daemon_start(){
 		select CODE_NAME in $list_ins; do
 		if  [ -f /root/ezmn/running/${CODE_NAME}.pid ]; then
 			echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
-		elif  [ "$CODE_NAME" == "q" ] ; then
+		elif  [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
 			return ;
 		else
-		s_input
-		s_crypto
-		${DAEMON_START}
+			if  [ -n "$CODE_NAME" ] ; then
+				s_input
+				s_crypto
+				${DAEMON_START}
+			else
+				wrong_key 
+				return ;
+			fi
 		fi
 		done
 	fi
@@ -41,13 +46,18 @@ masternode_start(){
 		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//' )
 		select CODE_NAME in $list_ins; do
-			if [ "$CODE_NAME" == "q" ]; then
+			if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
 				return ;
 			else
-			s_input
-			s_crypto
-			input_walletpassphrase
-			${MN_START} $walletpassphrase
+				if  [ -n "$CODE_NAME" ] ; then
+					s_input
+					s_crypto
+					input_walletpassphrase
+					${MN_START} $walletpassphrase
+				else
+					wrong_key 
+					return ;
+				fi
 			fi
 		done
 	fi
@@ -61,11 +71,16 @@ masternode_status(){
 		echo -e "$fgBlue Please select the cryptos you want check masternode status or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-			if [ "$CODE_NAME" == "q" ]; then
+			if[ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ] ; then
 				return ;
 			else
-			s_crypto
-			${MN_STATUS} ;
+				if  [ -n "$CODE_NAME" ] ; then					
+					s_crypto					
+					${MN_STATUS} 
+				else
+					wrong_key 
+					return ;
+				fi
 			fi
 		done
 	fi
@@ -78,11 +93,16 @@ masternode_status(){
 		echo -e "$fgBlue Please select the cryptos you want debug or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-			if [ "$CODE_NAME" == "q" ]; then
+			if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
 				return ;
 			else
-			s_crypto
-			${MN_DEBUG};
+				if  [ -n "$CODE_NAME" ] ; then					
+					s_crypto					
+					${MN_DEBUG} 
+				else
+					wrong_key 
+					return ;
+				fi
 			fi
 		done
 	fi

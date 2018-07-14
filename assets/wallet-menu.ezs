@@ -24,13 +24,13 @@ wallet_balance(){
 	if [ -z "$(ls -A /root/ezmn/running/ )" ];then
 		echo -e $fgRed $txBold " Could not find daemon are running ! $txReset " 
 		sleep 5;
-		return
+		return ; 
 	else
 		echo -e "$fgBlue Please select the cryptos you want to check crypto-balance or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
 			if  [ "$CODE_NAME" == "q" ]; then
-				return
+				return 1;
 			elif [ -n "$CODE_NAME" ]; then
 				s_input
 				s_crypto
@@ -52,7 +52,7 @@ wallet_info(){
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 		select CODE_NAME in $list_ins; do
 			if  [ "$CODE_NAME" == "q" ]; then
-				return
+				return 1 ;
 			elif [ -n "$CODE_NAME" ]; then
 				s_input
 				s_crypto
@@ -84,6 +84,7 @@ echo $txReset
 ### ACTION ###
 
 function action_wallet_menu(){
+		s_input
 		local choice
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
