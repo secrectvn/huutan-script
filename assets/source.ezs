@@ -43,6 +43,10 @@ s_wallet_menu(){
 s_masternode_menu(){
 	source ${EZ_ASSETS}/masternode-menu.ezs
  }
+s_crypto(){
+	source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
+	source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
+}
 
 check_cryptos(){
 	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];

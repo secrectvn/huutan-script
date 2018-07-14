@@ -13,7 +13,7 @@ mn_overview(){
 
 	DAEMON_RUN=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//')
 	for CODE_NAME  in $DAEMON_RUN  ; do
-		source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
+		s_crypto
 		BALANCE=$(${BALANCE_MN})
 		STATUS=${OV_STATUS}
 		if  [ "$OV_STATUS" == "" "" ] || [ "$OV_STATUS" == "Masternode successfully started" ] ; then
