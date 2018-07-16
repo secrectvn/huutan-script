@@ -13,13 +13,13 @@ daemon_start(){
 			    case "$confirm" in
 			        [yY][eE][sS]|[yY])
 			            s_crypto
-			            ${DAEMON_STOP}
+			            kill $(cat /root/ezmn/running/${CODE_NAME}.pid)
 			            return
 			            ;;
 			        *)
 			            exit
 			            ;;
-			    esac						 
+			    esac									 
 		elif  [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
 			exit ;
 		else

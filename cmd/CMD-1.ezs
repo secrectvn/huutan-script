@@ -1,5 +1,6 @@
 #Command
 DAEMON_START="${MN_DAEMON} ${DATA_DIR}"
+DAEMON_STOP="${MN_DAEMON} ${DATA_DIR} stop "
 MN_START="${DAEMON_START} masternode start " # need ${walletpassphrase}
 MN_STATUS="${DAEMON_START} masternode status"
 MN_DEBUG="${DAEMON_START} masternode debug"
