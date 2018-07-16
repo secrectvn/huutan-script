@@ -116,7 +116,7 @@ _main_menu
 ### ACTION ###
 
 function action_main_menu(){
-		s_input
+		
 		local choice
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
@@ -128,7 +128,7 @@ function action_main_menu(){
 				6) 	license_key ;;
 				7) 	bash /usr/local/ezmn/update.sh ;;
 			 [0qQ])  exit 0;;
-		      *)	wrong_key ;;
+		      *)	s_input && wrong_key ;;
 			 esac
 			 pause
  }

@@ -5,7 +5,7 @@ MN_DAEMON=ferrumcoind
 RPC_PORT=49047
 MN_PORT=49046
 MN_REQUIRED=2500
-GIT_URL=https://github.com/Ferrumcrypto/ferrum
+GIT_URL=https://github.com/FerrumCommunity/ferrum
 MN_VERSION=1.2.0.0
 GROUP=1
 #

@@ -84,7 +84,7 @@ echo $txReset
 ### ACTION ###
 
 function action_wallet_menu(){
-		s_input
+		
 		local choice
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
@@ -96,7 +96,7 @@ function action_wallet_menu(){
 				6) 	echo " update " ;;
 				9) 	return ;;
 			 [0qQ])  exit 0;;
-		      *)	wrong_key ;;
+		      *)	s_input && wrong_key ;;
 			 esac
 			pause
 	}
