@@ -71,7 +71,7 @@ masternode_status(){
 		echo -e "$fgBlue Please select the cryptos you want check masternode status or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/ )
 		select CODE_NAME in $list_ins; do
-			if[ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ] ; then
+			if [ "$CODE_NAME" == "q" ] || [ "$CODE_NAME" == "Q" ] ; then
 				return ;
 			else
 				if  [ -n "$CODE_NAME" ] ; then					
