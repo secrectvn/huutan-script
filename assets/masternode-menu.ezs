@@ -8,8 +8,8 @@ daemon_start(){
 		list_ins=$(ls -1 /root/ezmn/installed/ )
 		select CODE_NAME in $list_ins; do
 		if  [ -f /root/ezmn/running/${CODE_NAME}.pid ]; then
-			echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
-			read -r -p " $fgGreen Do you want to stop the $CRYPTO_NAME daemon? ? [y/N] $txReset" confirm
+			echo "$CRYPTO_NAME daemon already running! $txReset"
+			read -r -p " $fgYellow $txBold  Do you want to stop the $CRYPTO_NAME daemon? ? [y/N] $txReset" confirm
 			    case "$confirm" in
 			        [yY][eE][sS]|[yY])
 			            s_crypto
@@ -21,7 +21,7 @@ daemon_start(){
 			            ;;
 			    esac						 
 		elif  [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
-			return ;
+			exit ;
 		else
 			if  [ -n "$CODE_NAME" ] ; then
 				s_input
