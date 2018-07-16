@@ -9,6 +9,17 @@ daemon_start(){
 		select CODE_NAME in $list_ins; do
 		if  [ -f /root/ezmn/running/${CODE_NAME}.pid ]; then
 			echo "$fgYellow $txBold $CRYPTO_NAME daemon already running! $txReset"
+			read -r -p " $fgGreen Do you want to stop the $CRYPTO_NAME daemon? ? [y/N] $txReset" confirm
+			    case "$confirm" in
+			        [yY][eE][sS]|[yY])
+			            s_crypto
+			            ${DAEMON_STOP}
+			            return
+			            ;;
+			        *)
+			            exit
+			            ;;
+			    esac						 
 		elif  [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
 			return ;
 		else
@@ -49,7 +60,7 @@ masternode_start(){
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//' )
 		select CODE_NAME in $list_ins; do
 			if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
-				return ;
+				exit ;
 			else
 				if  [ -n "$CODE_NAME" ] ; then
 					s_input
@@ -75,11 +86,12 @@ masternode_status(){
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//' )
 		select CODE_NAME in $list_ins; do
 			if [ "$CODE_NAME" == "q" ] || [ "$CODE_NAME" == "Q" ] ; then
-				return ;
+				exit ;
 			else
 				if  [ -n "$CODE_NAME" ] ; then					
 					s_crypto					
-					${MN_STATUS} 
+					${MN_STATUS}
+					return ;
 				else
 					wrong_key 
 					return ;
@@ -97,7 +109,7 @@ masternode_status(){
 		list_ins=$(ls -1 /root/ezmn/running/ | sed -e 's/\.pid$//' )
 		select CODE_NAME in $list_ins; do
 			if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
-				return ;
+				exit 0 ;
 			else
 				if  [ -n "$CODE_NAME" ] ; then					
 					s_crypto					

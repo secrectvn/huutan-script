@@ -48,6 +48,12 @@ s_crypto(){
 	source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
 }
 
+update_ezmn(){
+rm -rf /usr/local/ezmn
+git clone https://github.com/secrectvn/huutan-script.git /usr/local/ezmn  ;
+chmod +x /usr/local/ezmn/ezmn.sh ;
+chmod +x /usr/local/ezmn/assets/report.sh
+ }
 check_cryptos(){
 	if [ -r ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs ];
 		then
