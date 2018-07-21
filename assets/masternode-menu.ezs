@@ -42,12 +42,12 @@ daemon_stop(){
 		list_ins=$(ls -1 /root/ezmn/running/$CODE_NAME.pid | sed -e 's/\.pid$//' )
 		select CODE_NAME in $list_ins; do
 			if [ -n "$CODE_NAME" ]; then
-			s_crypto
-			${DAEMON_STOP}
-			return			
-		else [ "$CODE_NAME" == "q" ] ;
-			exit 0 ;
-		fi
+				s_crypto
+				kill $(pidof ${MN_DAEMON})
+				return ;	
+			else [ "$CODE_NAME" == "q" ] ;
+				exit 0 ;
+			fi
 		done 
  }
 

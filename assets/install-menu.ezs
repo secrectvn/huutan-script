@@ -6,6 +6,39 @@ input_cryptos(){
 		input_txhash
 		input_txid	
 	}
+remove_daemon(){
+		if [ "$GROUP" == "1" ] ; then
+			if  [ -f /root/ezmn/daemon/${MN_DAEMON} ] ; then
+				rm /root/ezmn/daemon/${MN_DAEMON}
+			fi
+			if [ -f /usr/bin/${MN_DAEMON} ]; then
+				rm /usr/bin/${MN_DAEMON}
+			fi
+			if [ -f /root/ezmn/installed/${CODE_NAME} ]; then
+				rm /root/ezmn/installed/${CODE_NAME}
+			fi
+		else 
+			if  [ -f /root/ezmn/daemon/${MN_DAEMON} ] ; then
+				rm /root/ezmn/daemon/${MN_DAEMON}
+			fi
+			if [ -f /usr/bin/${MN_DAEMON} ]; then
+				rm /usr/bin/${MN_DAEMON}
+			fi
+			if [ -f /root/ezmn/installed/${CODE_NAME} ]; then
+				rm /root/ezmn/installed/${CODE_NAME}
+			fi
+			if  [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} ] ; then
+				rm /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} 
+			fi
+			if 	[ -f /root/ezmn/daemon/${MN_CLI} ]	; then
+				rm /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} 
+			fi
+			if [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} ] ; then 
+				rm /root/ezmn/daemon/${MN_TX}
+			fi
+		fi
+ }
+
 create_config_file(){
 	mkdir -p ${MN_DATA}/${CRYPTO_NAME}/;
 	# crypto config
@@ -27,79 +60,85 @@ create_config_file(){
 				sed -i "s|TX_ID|$tx_id|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
  }
 
-install_update_wallet_1(){	
-	if [ -f /root/ezmn/daemon/${MN_DAEMON} ] || [ -f /usr/bin/${MN_DAEMON} ] ; then
-		echo $fgYellow " Wallet $CRYPTO_NAME has been install" 
+install_update_wallet_1(){
+	if [ -f /root/ezmn/daemon/${MN_DAEMON} ] || [ -f /usr/bin/${MN_DAEMON} ] || [ -f /root/ezmn/installed/${CODE_NAME} ]; then
+		echo $fgYellow $txBold " Wallet $CRYPTO_NAME has been install ! " $txReset ;
 		read -p  " Do you want update Wallet $CRYPTO_NAME $txReset [y/N] ?" choice
-    	case "$choice" in
-        [yY][eE][sS]|[yY])
-			echo $txBold 
-	            rm /ezmn/daemon/${MN_DAEMON}
-	            rm /usr/bin/${MN_DAEMON}
-	            echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset;
-	            build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-	            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
+		case "$choice" in
+			[yY][eE][sS]|[yY])
+			kill $(pidof ${MN_DAEMON})
+			remove_daemon
+			echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon !" $txReset;
+			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
+			cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
+			if [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} ] ; then
+				echo $txBold $fgGreen "Compile $CRYPTO_NAME success !" $txReset;
 				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
-            return
-            ;;
-        *)
-            return ;;
-    	esac
-    	else
-	    	echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
-				build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-				cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/				
+			else 
+				echo $txBold $fgRed "Compile $CRYPTO_NAME fail !" $txReset;
+				echo $txBold $fgRed "Please check logs file :  /root/ezmn/logs/install_${CODE_NAME}.log !" $txReset;
+			fi 
+			exit 1 ;;
+			*) exit 1 ;;
+		esac
+		else
+			echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
+			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
+			cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
+			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
+			if [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} ] ; then
+				echo $txBold $fgGreen "Compile $CRYPTO_NAME success !" $txReset;
 				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
-
-			if [ -f /root/ezmn/daemon/${MN_DAEMON} ] && [ -f /usr/bin/${MN_DAEMON} ]; then
-				touch /root/ezmn/installed/${CODE_NAME}			
-				echo $fgGreen $txBold  " Compile daemon success !"  $txReset
-				else 
-				echo -e $fgRed  $txBold  " Compile daemon has been fail ! " $txReset
-				fi
-		fi
+				touch /root/ezmn/installed/${CODE_NAME}	
+			else 
+				echo $txBold $fgRed "Compile $CRYPTO_NAME fail !" $txReset;
+				echo $txBold $fgRed "Please check logs file :  /root/ezmn/logs/install_${CODE_NAME}.log !" $txReset;
+			fi 
+	fi 
 	}
 
 install_update_wallet_2(){
-	if [ -f /root/ezmn/daemon/${MN_DAEMON} ] || [ -f /usr/bin/${MN_DAEMON} ]  ; then
-		echo $fgYellow " Wallet $CRYPTO_NAME has been install" 
+	if [ -f /root/ezmn/daemon/${MN_DAEMON} ] || [ -f /usr/bin/${MN_DAEMON} ] || [ -f /root/ezmn/installed/${CODE_NAME} ]; then
+		echo $fgYellow $txBold " Wallet $CRYPTO_NAME has been install ! " $txReset ;
 		read -p  " Do you want update Wallet $CRYPTO_NAME $txReset [y/N] ?" choice
-    	case "$choice" in
-        [yY][eE][sS]|[yY])
-			echo $txBold             
-            rm /usr/bin/${MN_DAEMON}
-            rm /usr/bin/${MN_CLI}
-            rm  /usr/bin/${MN_TX}
-            echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset;
-            build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/${MN_DAEMON}
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/${MN_CLI}
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/${MN_TX}
-			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
-			ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
-			ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
-            return
-            ;;
-        *)
-            return ;;
-    	esac
-    	else
-	    	echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
+		case "$choice" in
+			[yY][eE][sS]|[yY])
+			kill $(pidof ${MN_DAEMON})
+			remove_daemon
+			echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon !" $txReset;
 			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/${MN_DAEMON}
-            cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/${MN_CLI}
+			cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
+			cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_CLI} /root/ezmn/daemon/${MN_CLI}
             cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_TX} /root/ezmn/daemon/${MN_TX}
+			if [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} ] ; then
+				echo $txBold $fgGreen "Compile $CRYPTO_NAME success !" $txReset;
+				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
+				ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
+				ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
+			else 
+				echo $txBold $fgRed "Compile $CRYPTO_NAME fail !" $txReset;
+				echo $txBold $fgRed "Please check logs file :  /root/ezmn/logs/install_${CODE_NAME}.log !" $txReset;
+			fi 
+			exit 1;;
+			*) exit 1 ;;
+		esac
+		else
+			echo $txBold $fgGreen "Compile $CRYPTO_NAME daemon " $txReset
+			build_daemon &> /root/ezmn/logs/install_${CODE_NAME}.log
+			cp /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} /root/ezmn/daemon/
 			ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
-			ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
-			ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
-			if [ -f /root/ezmn/daemon/${MN_DAEMON} ] && [ -f /usr/bin/${MN_DAEMON} ]; then
-				touch /root/ezmn/installed/${CODE_NAME}
-		
-				echo $fgGreen $txBold  " Compile daemon success !"  $txReset
-				else 
-				echo -e $fgRed  $txBold  " Compile daemon has been fail ! " $txReset
-				fi
-		fi
+			if [ -f /root/ezmn/build/${CRYPTO_NAME}/src/${MN_DAEMON} ] ; then
+				echo $txBold $fgGreen "Compile $CRYPTO_NAME success !" $txReset;
+				ln -s /root/ezmn/daemon/${MN_DAEMON}  /usr/bin/${MN_DAEMON}
+				ln -s /root/ezmn/daemon/${MN_CLI}  /usr/bin/${MN_CLI}
+				ln -s /root/ezmn/daemon/${MN_TX}  /usr/bin/${MN_TX}
+				touch /root/ezmn/installed/${CODE_NAME}	
+			else 
+				echo $txBold $fgRed "Compile $CRYPTO_NAME fail !" $txReset;
+				echo $txBold $fgRed "Please check logs file : /root/ezmn/logs/install_${CODE_NAME}.log !" $txReset;
+			fi 
+	fi 
+
 	}
 
 	install_update_wallet(){
@@ -109,7 +148,7 @@ install_update_wallet_2(){
 		source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
 		if [ "$GROUP" == "1" ] ; then
 			install_update_wallet_1
-		else [ "$GROUP" == "2" ];
+		else
 			install_update_wallet_2 
 		fi
 	}
@@ -129,35 +168,17 @@ create_update_config(){
 			input_genkey
 			input_txhash
 			input_txid
-		# crypto config
-			cp -p ${EZ_CONFIG}/config.env  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|RPCCOIN|$CRYPTO_NAME-RPC|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|RPCPASS|$rd_passwd|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|RPCPORT|$RPC_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|MN_GENKEY|$mn_genkey|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|MN_ADDR|$mn_address|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|MN_PORT|$MN_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-				sed -i "s|CODE_NAME|${CODE_NAME}|g"  ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf ;
-		# masternode config
-			cp -p ${EZ_CONFIG}/masternode.env  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|MN_ALIAS|$(hostname)|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|MN_ADDR|$mn_address|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|MN_PORT|$MN_PORT|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|MN_GENKEY|$mn_genkey|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|TX_HASH|$tx_hash|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-				sed -i "s|TX_ID|$tx_id|g"  ${MN_DATA}/${CRYPTO_NAME}/masternode.conf ;
-        return ;;
-        *)
-        exit ;;
+			create_config_file
+       		exit 1 ;;
+        *) exit ;;
     	esac
-		else
+	else
 		input_genkey
 		input_txhash
 		input_txid	
 		create_config_file
-		return ;
+		exit 1 ;
 	fi
-
  }
 
 auto_install_masternode(){
@@ -178,7 +199,7 @@ auto_install_masternode(){
  }
 
 delete_masternode(){
-		if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
+	if [ -z "$(ls -A /root/ezmn/installed/ )" ]; then
 	 	echo "$fgYellow $txBold No crypto has installed ! $txReset" 
 	 	exit 1;
 	else
@@ -186,13 +207,10 @@ delete_masternode(){
 		list_ins=$(ls -1 /root/ezmn/installed/ )
 		select CODE_NAME in $list_ins; do
 		if [ -n "$CODE_NAME" ]; then
-			source ${LS_CRYPTOS}/${CODE_NAME}/spec.ezs
-			source $DIR_EZMN/cmd/CMD-${GROUP}.ezs
-			${DAEMON_STOP}
-			rm /root/ezmn/daemon/${MN_DAEMON}
-			rm /usr/bin/${MN_DAEMON}
-			rm /root/ezmn/installed/${CODE_NAME}			
-			rm -rf /root/masternode/${CRYPTO_NAME}			
+			s_crypto
+			kill $(pidof ${MN_DAEMON})
+			remove_daemon
+			rm -rf /root/masternode/${CRYPTO_NAME}
 		else [ "$CODE_NAME" == "q" ] 
 		 exit 1 ;		
 		fi
