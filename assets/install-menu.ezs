@@ -163,11 +163,11 @@ create_update_config(){
 		case "$choice" in
         [yY][eE][sS]|[yY])
 			echo $txBold
-			rm ${MN_DATA}/${CRYPTO_NAME}/masternode.conf
-			rm ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf
 			input_genkey
 			input_txhash
 			input_txid
+			rm ${MN_DATA}/${CRYPTO_NAME}/masternode.conf
+			rm ${MN_DATA}/${CRYPTO_NAME}/${CRYPTO_NAME}.conf
 			create_config_file
        		exit 1 ;;
         *) exit ;;

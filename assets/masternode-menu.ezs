@@ -166,8 +166,13 @@ function action_masternode_menu(){
 				3)  masternode_start;;
 				4)  masternode_status ;;
 				5)  masternode_debug ;;
+				6)	daemon_stop ;;
 				9) 	return ;;
 			 [0qQ])  exit 0 ;;
 		      *)	wrong_key ;;
 			 esac			 			
 	}
+
+
+
+	 masternodelist full | grep VPSip

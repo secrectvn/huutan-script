@@ -12,4 +12,4 @@ WL_UNLOCK="${DAEMON_START} walletpassphrase" # need timeout
 GN_GENKEY="${MN_DAEMON} masternode genkey "
 GN_TXHASH="${MN_DAEMON} masternode outputs "
 #OVERVIEW
-
+MN_CHECK=""
