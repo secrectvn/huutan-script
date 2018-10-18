@@ -9,10 +9,9 @@ daemon_start(){
             select CODE_NAME in $list_ins; do        
             if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
                 return ;
-            elif [ -n "$CODE_NAME" ] ;                
+            elif [ -n "$CODE_NAME" ]; then
                 s_crypto
-                check_running
-                if [ check_running != 0 ] ; then 
+                if [ check_running != 0 ]; then 
                     ${DAEMON_START}
                 else 
                 echo "$CRYPTO_NAME daemon already running! $txReset"
@@ -21,8 +20,9 @@ daemon_start(){
                 wrong_key 
             return ;
         fi
+		done
     fi
-
+}
 daemon_stop(){
 		echo -e "$fgBlue Please select the cryptos you want to stop daemon or [Q]uit $txReset"
 		list_ins=$(ls -1 /root/ezmn/running/$CODE_NAME.pid | sed -e 's/\.pid$//' )
