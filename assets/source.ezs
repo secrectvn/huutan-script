@@ -17,7 +17,7 @@ main_banner(){
    █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
    ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
    ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
-   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
+   ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝ version : 1.0.0
 _banner_
 }
 ###################### MAIN MENU #########################
@@ -64,4 +64,13 @@ check_cryptos(){
 			exit 0 ;
 		fi
 	}
-
+	
+check_running(){
+ ps auxw | grep $MN_DAEMON | grep -v grep > /dev/null
+ if [ $? != 0 ]
+ then
+   echo $fgYellow $txBold $MN_DAEMON "not start" $txReset;
+ else
+   echo $fgBlue $txBold $MN_DAEMON "running " $txReset;
+ fi;
+}

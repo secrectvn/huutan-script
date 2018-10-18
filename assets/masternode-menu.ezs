@@ -4,38 +4,24 @@ daemon_start(){
 		echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
 		return ;
 	else 
-		echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
-		list_ins=$(ls -1 /root/ezmn/installed/ )
-		select CODE_NAME in $list_ins; do
-		if  [ -f /root/ezmn/running/${CODE_NAME}.pid ]; then
-			echo "$CRYPTO_NAME daemon already running! $txReset"
-			read -r -p " $fgYellow $txBold  Do you want to stop the $CRYPTO_NAME daemon? ? [y/N] $txReset" confirm
-			    case "$confirm" in
-			        [yY][eE][sS]|[yY])
-			            s_crypto
-			            kill $(cat /root/ezmn/running/${CODE_NAME}.pid)
-			            return
-			            ;;
-			        *)
-			            exit
-			            ;;
-			    esac									 
-		elif  [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
-			exit ;
-		else
-			if  [ -n "$CODE_NAME" ] ; then
-				s_input
-				s_crypto
-				${DAEMON_START}
-				return
-			else
-				wrong_key 
-				return ;
-			fi
-		fi
-		done
-	fi
-	}
+            echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
+            list_ins=$(ls -1 /root/ezmn/installed/ )
+            select CODE_NAME in $list_ins; do        
+            if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
+                return ;
+            elif [ -n "$CODE_NAME" ] ;                
+                s_crypto
+                check_running
+                if [ check_running != 0 ] ; then 
+                    ${DAEMON_START}
+                else 
+                echo "$CRYPTO_NAME daemon already running! $txReset"
+                fi
+            else
+                wrong_key 
+            return ;
+        fi
+    fi
 
 daemon_stop(){
 		echo -e "$fgBlue Please select the cryptos you want to stop daemon or [Q]uit $txReset"

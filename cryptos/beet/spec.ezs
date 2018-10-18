@@ -8,7 +8,7 @@ MN_REQUIRED=50000
 GIT_URL=https://github.com/beetledev/BeetleCoin.git
 MN_VERSION=2.1.0.3
 GROUP=1
-#
+#################
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
 function build_daemon(){
