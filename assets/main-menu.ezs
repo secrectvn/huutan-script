@@ -47,7 +47,7 @@ mn_overview(){
             list_ins=$(ls -1 /root/ezmn/installed/ )			
             for CODE_NAME in $list_ins; do
 			check_running
-			if [ check_running != 0 ]; then
+			if [ check_running == "not start" ]; then
 				echo -e ""
 				s_crypto 
 				${DAEMON_START}
