@@ -1,23 +1,26 @@
 #Specifications
-CRYPTO_NAME=Beetle
+CRYPTO_NAME=BeetleCoin
 CODE_NAME=beet
-MN_DAEMON=beetled
+MN_DAEMON=beetlecoind
+MN_CLI=beetlecoin-cli
+MN_TX=beetlecoin-tx
 RPC_PORT=47620
 MN_PORT=45823
 MN_REQUIRED=50000
 GIT_URL=https://github.com/beetledev/Wallet.git
 MN_VERSION=2.1.0.3
-GROUP=1
+GROUP=2
 #################
 DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${CRYPTO_NAME}/${CRYPTO_NAME}.conf"
 #function compile
 function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
-	cd /root/ezmn/build/${CRYPTO_NAME}/
-	./autogen.sh
-	./configure
-	make
-	make install
+	cd /root/ezmn/build/${CRYPTO_NAME}
+	./autogen.sh && ./configure	--without-gui && make && make install
+	cp src/${MN_DAEMON} src/${MN_CLI} src/${MN_TX} /root/ezmn/daemon/
+	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
+	ln -s /root/ezmn/daemon/${MN_CLI} /usr/bin/${MN_CLI}
+	ln -s /root/ezmn/daemon/${MN_TX} /usr/bin/${MN_TX}
+	rm -rf /root/ezmn/build/${CRYPTO_NAME}							
 }
-

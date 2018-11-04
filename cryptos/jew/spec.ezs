@@ -17,7 +17,7 @@ function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
 	cd /root/ezmn/build/${CRYPTO_NAME}
-	./autogen.sh && ./configure	--without-gui && make 
+	./autogen.sh && ./configure	--without-gui && make && make install
 	cp src/${MN_DAEMON} src/${MN_CLI} src/${MN_TX} /root/ezmn/daemon/
 	ln -s /root/ezmn/daemon/${MN_DAEMON} /usr/bin/${MN_DAEMON}
 	ln -s /root/ezmn/daemon/${MN_CLI} /usr/bin/${MN_CLI}

@@ -48,8 +48,8 @@ mn_overview(){
             for CODE_NAME in $list_ins; do
 			source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
-			check_running
-			if [ check_running == "not start" ]; then
+			stt=$(ps auxw | grep $MN_DAEMON | grep -v grep)
+			if [ stt != 0 ]; then
 				echo -e ""
 				s_crypto 
 				${DAEMON_START}
