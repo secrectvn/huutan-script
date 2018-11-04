@@ -67,10 +67,11 @@ check_cryptos(){
 	
 check_running(){
  ps auxw | grep $MN_DAEMON | grep -v grep > /dev/null
+
  if [ $? != 0 ]
  then
-   echo $fgYellow $txBold $MN_DAEMON "not start" $txReset;
+   echo $fgYellow $txBold $CRYPTO_NAME "not start" $txReset; > /dev/null
  else
-   echo $fgBlue $txBold $MN_DAEMON "running " $txReset;
+   echo $fgBlue $txBold $CRYPTO_NAME "running " $txReset; > /dev/null
  fi;
 }

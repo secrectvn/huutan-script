@@ -46,6 +46,7 @@ mn_overview(){
 	source /usr/local/ezmn/assets/source.ezs
             list_ins=$(ls -1 /root/ezmn/installed/ )			
             for CODE_NAME in $list_ins; do
+			source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
 			source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
 			check_running
 			if [ check_running == "not start" ]; then
