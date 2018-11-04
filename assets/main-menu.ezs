@@ -48,6 +48,7 @@ mn_overview(){
             for CODE_NAME in $list_ins; do
 			 if [ check_running != 0 ]; then
 				echo -e ""
+				s_crypto 
 				${DAEMON_START}
              else 
 				echo -e ""
