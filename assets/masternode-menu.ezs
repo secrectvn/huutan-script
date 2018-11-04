@@ -158,7 +158,3 @@ function action_masternode_menu(){
 		      *)	wrong_key ;;
 			 esac			 			
 	}
-
-
-
-	 masternodelist full | grep VPSip

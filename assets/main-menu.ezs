@@ -36,7 +36,32 @@ mn_overview(){
 		printf "$format" " " "${CRYPTO_NAME}" "$BALANCE" "${OV_VERSION}" "$STATUS" 
 		printf "%$width.${width}s\n" "$divider$divider"		
 	done
- }
+ 	}
+
+ auto_start_all(){
+	if [ -z "$(ls -A /root/ezmn/installed/ )" ] ; then
+		echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
+		return ;
+	else 
+            echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
+            list_ins=$(ls -1 /root/ezmn/installed/ )
+            for CODE_NAME in $list_ins; do
+            if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
+                return ;
+            elif [ -n "$CODE_NAME" ]; then
+                s_crypto
+                if [ check_running != 0 ]; then 
+                    ${DAEMON_START}
+                else 
+                echo "$CRYPTO_NAME daemon already running! $txReset"
+                fi
+            else
+                wrong_key 
+            return ;
+        fi
+		done
+    fi
+	}
 ############################################################
 install_menu(){
 	s_install_menu
@@ -103,12 +128,13 @@ display_main_menu(){
 	tput cup 9 0
 	cat << _main_menu
  1) OVERVIEW MASTERNODE
- 2) INSTALL MENU
- 3) MASTERNODE MENU
- 4) WALLET MENU 
- 5) REPORT
- 6) LICENSE KEY
- 7) UPDATE
+ 2) AUTO START ALL
+ 3) INSTALL MENU
+ 4) MASTERNODE MENU
+ 5) WALLET MENU 
+ 6) REPORT
+ 7) LICENSE KEY
+ 8) UPDATE
  0) EXIT
 _main_menu
  echo $txReset
@@ -120,13 +146,14 @@ function action_main_menu(){
 		local choice
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
-				1)  mn_overview ;;
-				2)  install_menu ;;
-				3)  masternode_menu;;
-				4)  wallet_menu ;;
-				5)  report_balance ;;
-				6) 	license_key ;;
-				7) 	update_ezmn ;;
+				1) mn_overview ;;
+				2) auto_start_all ;;
+				3) install_menu ;;
+				4) masternode_menu;;
+				5) wallet_menu ;; 
+				6) report_balance ;;
+				7) license_key ;;	
+				8) update_ezmn ;;
 			 [0qQ])  exit 0;;
 		      *)	s_input && wrong_key ;;
 			 esac

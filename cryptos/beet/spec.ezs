@@ -14,7 +14,10 @@ DATA_DIR="--datadir=/root/masternode/${CRYPTO_NAME}/ --conf=/root/masternode/${C
 function build_daemon(){
 	cd /root/ezmn/build
 	git clone ${GIT_URL} /root/ezmn/build/${CRYPTO_NAME}
-	cd /root/ezmn/build/${CRYPTO_NAME}/src/
-	make -f makefile.unix USE_UPNP=-
+	cd /root/ezmn/build/${CRYPTO_NAME}/
+	./autogen.sh
+	./configure
+	make
+	make install
 }
 

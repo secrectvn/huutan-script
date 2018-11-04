@@ -216,7 +216,7 @@ delete_masternode(){
 		fi
 		done ;
 	fi
-}
+	}
 
 
 ################## INSTALL MENU ############################
