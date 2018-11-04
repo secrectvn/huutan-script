@@ -5,7 +5,7 @@ MN_DAEMON=beetled
 RPC_PORT=47620
 MN_PORT=45823
 MN_REQUIRED=50000
-GIT_URL=https://github.com/beetledev/BeetleCoin.git
+GIT_URL=https://github.com/beetledev/Wallet.git
 MN_VERSION=2.1.0.3
 GROUP=1
 #################

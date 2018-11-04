@@ -10,3 +10,4 @@
 \.idea/vcs\.xml
 
 \.idea/workspace\.xml
+.vscode/sftp.json
