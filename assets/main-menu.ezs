@@ -38,26 +38,20 @@ mn_overview(){
 	done
  	}
 
- auto_start_all(){
+ auto_deamon_all(){
 	if [ -z "$(ls -A /root/ezmn/installed/ )" ] ; then
 		echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset" 
 		return ;
 	else 
-            echo -e "$fgBlue Please select the cryptos you want to start daemon or [Q]uit $txReset"
+	source /usr/local/ezmn/assets/source.ezs
             list_ins=$(ls -1 /root/ezmn/installed/ )
             for CODE_NAME in $list_ins; do
-            if [ "$CODE_NAME" == "q" ]  || [ "$CODE_NAME" == "Q" ]; then
-                return ;
-            elif [ -n "$CODE_NAME" ]; then
-                s_crypto
-                if [ check_running != 0 ]; then 
-                    ${DAEMON_START}
-                else 
+			 if [ check_running != 0 ]; then
+				echo -e ""
+				${DAEMON_START}
+             else 
+				echo -e ""
                 echo "$CRYPTO_NAME daemon already running! $txReset"
-                fi
-            else
-                wrong_key 
-            return ;
         fi
 		done
     fi
@@ -147,7 +141,7 @@ function action_main_menu(){
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
 				1) mn_overview ;;
-				2) auto_start_all ;;
+				2) auto_deamon_all ;;
 				3) install_menu ;;
 				4) masternode_menu;;
 				5) wallet_menu ;; 
