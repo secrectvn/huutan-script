@@ -14,7 +14,7 @@ cat << _banner_
 	 █████╗    ███╔╝ ██╔████╔██║██╔██╗ ██║ CONTROL
 	 ██╔══╝   ███╔╝  ██║╚██╔╝██║██║╚██╗██║ MASTERNODE
 	 ███████╗███████╗██║ ╚═╝ ██║██║ ╚████║ by SECRECTVN
-	 ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝ 
+	 ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝
 _banner_
 }
 alert_distro(){
@@ -43,7 +43,7 @@ function install_confirm(){
 
 function check_distro(){
 	. /etc/os-release
-	if [[ "$VERSION_ID" == "16.04" ]]; then			
+	if [[ "$VERSION_ID" == "16.04" ]]; then
 			install_confirm
 		else
 		alert_distro && exit 1
@@ -84,7 +84,7 @@ function install_ezmn(){
 
 function reboot_confirm(){
     # call with a prompt string or use a default
-    read -r -p " $fgRed $txBold  Khoi dong lai VPS  ? [y/N] $txReset" confirm
+    read -r -p " $fgRed $txBold  Reboot VPS ? [y/N] $txReset" confirm
     case "$confirm" in
         [yY][eE][sS]|[yY])
             reboot
@@ -96,12 +96,12 @@ function reboot_confirm(){
 }
 # ACTION
 	display_banner
-	check_distro	
+	check_distro
 	mkdir -p /root/masternode/
 	mkdir -p /root/ezmn/{build,daemon,logs,installed,balance,running,report} ;
-	install_log='/root/ezmn/logs/install.log'	
+	install_log='/root/ezmn/logs/install.log'
 	install_packages 	&> /root/ezmn/logs/install.log
-	install_swap	
+	install_swap
 	install_ezmn 	 &> /root/ezmn/logs/install.log
 	echo -e  "0 0 * * * root /usr/local/ezmn/assets/report.sh"  >> /etc/crontab
 	reboot_confirm

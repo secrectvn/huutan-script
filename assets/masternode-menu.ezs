@@ -110,19 +110,32 @@ masternode_status(){
 	fi
  }
 
-auto_masternode(){
-	s_input
-	daemon_start
-	input_walletpassphrase
-	sleep 30	
-	s_crypto
-	${MN_START} $walletpassphrase
-	sleep 30
-	echo "$fgBlue $txBold MASTERNODE DEBUG $txReset"
-	${MN_STATUS}
-	echo "$fgBlue $txBold MASTERNODE DEBUG $txReset"
-	${MN_DEBUG}		
- }
+
+auto_start_masternode(){
+		source /usr/local/ezmn/assets/source.ezs
+		source /usr/local/ezmn/assets/input.ezs
+        if [ -z "$(ls -A /root/ezmn/installed/ )" ] ; then
+                echo "$fgYellow $txBold No crypto is installed, Please install crypto before start daemon ! $txReset"
+                return ;
+        else
+            list_ins=$(ls -1 /root/ezmn/installed/ )
+                        input_walletpassphrase
+            for CODE_NAME in $list_ins; do
+                        source /usr/local/ezmn/cryptos/${CODE_NAME}/spec.ezs
+                        source /usr/local/ezmn/cmd/CMD-${GROUP}.ezs
+                        stt=$(ps auxw | grep $MN_DAEMON | grep -v grep)
+                        if [ stt != 1 ]; then
+                                echo -e ""
+                                ${MN_START}  $walletpassphrase
+             else
+			echo -e ""
+            echo "$CRYPTO_NAME not running! $txReset"
+        fi
+                done
+    fi
+    }
+
+
 
 ### DISPLAY ###
 display_masternode_menu(){
@@ -130,7 +143,7 @@ display_masternode_menu(){
 	tput cup 9 0 && tput ed
 	tput cup 9 0
 	cat << _main_menu
- 1) AUTO MASTERNODE ( next update)
+ 1) AUTO START MASTERNODE
  2) DAEMON START
  3) MASTERNODE START
  4) MASTERNODE STATUS
@@ -147,7 +160,7 @@ function action_masternode_menu(){
 		local choice
 	    read -p "$fgGreen $txBold Enter choice [1-6] or [Q]uit : $txReset" choice
 			case $choice in
-				1)  auto_masternode ;;
+				1)  auto_start_masternode ;;
 				2)  daemon_start ;;
 				3)  masternode_start;;
 				4)  masternode_status ;;
